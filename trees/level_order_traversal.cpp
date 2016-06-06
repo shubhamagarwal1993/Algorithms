@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -41,9 +43,9 @@ void inorder_print_tree1(Node* root)
 {
 	if (root == NULL)
 		return;
-	print_tree1(root->left);
+	inorder_print_tree1(root->left);
 	cout << root->data << " ";
-	print_tree1(root->right);
+	inorder_print_tree1(root->right);
 }
 
 int height(Node* node)
@@ -86,20 +88,128 @@ void printLevelOrder(Node* root)
 		printGivenLevel(root, i);
 }
 
+void print_Level_Order_iter(Node* Tree1)
+{
+	if (Tree1 == NULL)
+		return;
+
+	queue<Node*> myqueue;
+	myqueue.push(Tree1);
+	int count = 0;
+
+	while(!myqueue.empty())
+	{
+		count = myqueue.size();
+		while(count > 0)
+		{
+			Node* temp = myqueue.front();
+			myqueue.pop();
+			cout << temp->data << " ";
+
+			if(temp->left != NULL)
+				myqueue.push(temp->left);
+			
+			if(temp->right != NULL)
+				myqueue.push(temp->right);
+			count--;
+		}
+		cout << endl;
+	}
+}
+
+void num_nodes(Node* root, int &num_of_nodes)
+{
+	if (root == NULL)
+		return;
+	num_nodes(root->left, num_of_nodes);
+	num_of_nodes++;
+	num_nodes(root->right, num_of_nodes);
+}
+
+void print_Reverse_Level_Order_iter(Node* Tree1)
+{
+	if (Tree1 == NULL)
+		return;
+	int num_of_nodes = 0;
+	num_nodes(Tree1, num_of_nodes);
+
+	vector<Node*> myvec;
+	myvec.push_back(Tree1);
+	int count = 0;
+	stack<int> mystack;
+	mystack.push(1);
+	int i = 0;
+	int flag = 0;
+	while(num_of_nodes > 0)
+	{
+		Node* temp = myvec[i];
+
+		if(temp->left != NULL)
+		{
+			myvec.push_back(temp->left);
+			num_of_nodes--;
+			flag = 1;
+		}
+		
+		if(temp->right != NULL)
+		{
+			myvec.push_back(temp->right);
+			num_of_nodes--;
+			flag = 1;
+		}
+		if(flag == 1)
+			i++;
+		flag = 0;
+		cout << i << endl;
+		cout << num_of_nodes << endl;
+		cout << endl;
+	}
+
+	//my stack has nodes on each level
+	//myvec has all nodes
+	//reverse vec
+	cout << "here" << endl;
+
+	for(int i = 0; i < myvec.size(); i++)
+		cout << myvec[i]->data << " ";
+	cout << endl;
+	cout << "after here" << endl;
+
+	std::reverse(myvec.begin(), myvec.end());
+	while(!mystack.empty())
+	{
+		int temp = mystack.top();
+		mystack.pop();
+		while(temp > 0)
+		{
+			cout << myvec[0]->data << " ";
+			myvec.erase(myvec.begin());
+		}
+		cout << endl;
+	}
+}
+
 int main()
 {
 	Node* Tree1 = newNode(1);		// tree1
 	construct_tree1(Tree1);
 
-	inorder_print_tree1(Tree1);
-	cout << endl;
+//	inorder_print_tree1(Tree1);
+//	cout << endl;
 
 	// level order 
-	printLevelOrder(Tree1);
+//	printLevelOrder(Tree1);
+//	cout << endl;
+
+//	cout << "======" << endl;
+//	print_Level_Order_iter(Tree1);
+//	cout << "======" << endl;
+//	cout << endl;
+
+	cout << "------" << endl;
+	print_Reverse_Level_Order_iter(Tree1);
+	cout << "------" << endl;
 	cout << endl;
-
-
-
 
 	return 0;
 }
