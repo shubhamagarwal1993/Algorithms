@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-void merge(int array[], int l, int r)
+void merge_recursive(int array[], int l, int r)
 {
 	int mid = (l+r)/2;
 
@@ -54,16 +54,16 @@ void merge(int array[], int l, int r)
 	}
 }
 
-void mergesort(int array[], int l, int r)
+void mergesort_recursive(int array[], int l, int r)
 {
 	if (l < r)
 	{
 		int mid = (l+r)/2;				//if size 10; l=0, r = 9, mid = 5
 
-		mergesort(array, l, mid);
-		mergesort(array, mid+1, r);
+		mergesort_recursive(array, l, mid);
+		mergesort_recursive(array, mid+1, r);
 	
-		merge(array, l, r);
+		merge_recursive(array, l, r);
 	}
 }
 
@@ -71,7 +71,7 @@ int main()
 {
 	int array[] = {6, 5, 2, 1};
 	int array_size = sizeof(array)/sizeof(array[0]);
-	mergesort(array, 0, array_size-1);
+	mergesort_recursive(array, 0, array_size-1);
 	for (int i = 0; i < array_size; i++)
 		cout << array[i] << " ";
 	cout << endl;
