@@ -85,6 +85,17 @@ bool search(TrieNode *root, string key)
 	cout << "word found: " << key << endl;
 }
 
+void delete_trie(TrieNode *root, string key)
+{
+	/*
+	During delete operation we delete the key in bottom up manner using recursion. The following are possible conditions when deleting key from trie,
+	Key may not be there in trie. Delete operation should not modify trie.
+	Key present as unique key (no part of key contains another key (prefix), nor the key itself is prefix of another key in trie). Delete all the nodes.
+	Key is prefix key of another long key in trie. Unmark the leaf node.
+	Key present in trie, having atleast one other key as prefix key. Delete nodes from end of key until first leaf node of longest prefix key.
+	*/
+}
+
 int main()
 {
 	TrieNode* root = newTrieNode();				//will be the root
@@ -102,6 +113,12 @@ int main()
 	search(root, "their");
 	search(root, "thaw");
 	cout << "------" << endl;
+
+	delete_trie(root, keys[0]);
+
+	cout << "======" << endl;
+	search(root, "the");
+	cout << "======" << endl;
 
 	return 0;
 }
