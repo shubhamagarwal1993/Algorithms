@@ -47,6 +47,18 @@ int getMedian_equal_array(int arr1[], int arr2[], int size)
 	return getMedian_equal_array(arr2 + size/2, arr1, size - size/2);
 }
 
+//MEDIAN FOR 2 ARRAYS OF UNEQUAL LENGTHS
+	// Base cases:
+	// The smaller array has only one element
+	// Case 0: N = 0, M = 2
+	// Case 1: N = 1, M = 1.
+	// Case 2: N = 1, M is odd
+	// Case 3: N = 1, M is even
+	// The smaller array has only two elements
+	// Case 4: N = 2, M = 2
+	// Case 5: N = 2, M is odd
+	// Case 6: N = 2, M is even
+
 // A utility function to find median of two integers
 float MO2(int a, int b)
 { return ( a + b ) / 2.0; }
@@ -71,67 +83,101 @@ float medianSingle(int arr[], int arr_size)
 	if (arr_size == 0)
 		return -1;
 	if (arr_size%2 == 0)
-		return (arr[arr_size/2] + arr[arr_size/2-1])/2;
+		return (arr[arr_size/2-1] + arr[arr_size/2])/2;
 	return arr[arr_size/2];
 }
 
 // This function assumes that arr1 is smaller than or equal to arr2 and returns -1 if both arrays are empty
 float getMedian_unequal_array(int arr1[], int arr1_size, int arr2[], int arr2_size)
 {
-	// If smaller array is empty, return median from second array
+	// Case 0:		If smaller array is empty, return median from second array
 	if (arr1_size == 0)
-		return medianSingle(arr2, arr2_size);
-
-	// If the smaller array has only one element
-	if (arr1_size == 1)
 	{
-		// Case 1: If the larger array also has one element,
-		// simply call MO2()
-		if (arr2_size == 1)
-			return MO2(arr1[0], arr2[0]);
-
-		// Case 2: If the larger array has odd number of elements,
-		// then consider the middle 3 elements of larger array and
-		// the only element of smaller array. Take few examples
-		// like following
-		// A = {9}, B[] = {5, 8, 10, 20, 30} and
-		// A[] = {1}, B[] = {5, 8, 10, 20, 30}
-		if (arr2_size & 1)
-			return MO2( arr2[arr2_size/2], MO3(arr1[0], arr2[arr2_size/2 - 1], arr2[arr2_size/2 + 1]) );
-
-		// Case 3: If the larger array has even number of element,
-		// then median will be one of the following 3 elements
-		// ... The middle two elements of larger array
-		// ... The only element of smaller array
-		return MO3( arr2[arr2_size/2], arr2[arr2_size/2 - 1], arr1[0] );
+		if (arr2_size == 0)
+			return -1;
+		else if (arr2_size % 2 == 0)
+			return (arr2[arr2_size/2-1] + arr2[arr2_size/2])/2;
+		return arr2[arr2_size/2];/* condition */
 	}
 
-	// If the smaller array has two elements
+	// Case 1:		If the smaller array has only one element
+	if (arr1_size == 1)
+	{
+		// Case 1: If the larger array also has one element
+		if (arr2_size == 1)
+			return (arr1[0], arr2[0])/2;
+
+		// Case 2: If the larger array has odd number of elements, then consider the middle 3 elements of larger array.
+		else if (arr2_size % 2 == 1)
+		{
+			int a = arr2[arr2_size/2 - 1];
+			int b = arr2[arr2_size/2];
+			int c = arr2[arr2_size/2 + 1];
+
+			if (arr1[0] < a)
+				return (a+b)/2;
+			else if (arr1[0] > a && arr1[0] < b)
+				return (arr1[0] + b)/2;
+			else if (arr1[0] > b && arr1[0] < c)
+				return (arr1[0] + b)/2;
+			else
+				return (b+c)/2;
+		}
+
+		// Case 3: If the larger array has even number of element, then consider the middle 2 elements of larger array.
+		else
+		{
+			int a = arr2[arr2_size/2 - 1];
+			int b = arr2[arr2_size/2];
+
+			if (arr1[0] < a)
+				return a;
+			else if (arr1[0] > a && arr1[0] < b)
+				return arr1[0];
+			else
+				return b;
+		}
+	}
+
+	// Case 4: If the smaller array has two elements
 	else if (arr1_size == 2)
 	{
-		// Case 4: If the larger array also has two elements,
-		// simply call MO4()
+		// Case 4: If the larger array also has two elements, find median of 4 elements
 		if (arr2_size == 2)
-		    return MO4(arr1[0], arr1[1], arr2[0], arr2[1]);
+		{
+			int Max = max(arr1[0], max(arr1[1], max(arr2[0], arr2[1])));
+			int Min = min(arr1[0], min(arr1[1], min(arr2[0], arr2[1])));
+			return (arr1[0] + arr1[1] + arr2[0] + arr2[1] - Max - Min)/2;
+		}
 
-		// Case 5: If the larger array has odd number of elements,
-		// then median will be one of the following 3 elements
+		// Case 5: If the larger array has odd number of elements, then median will be one of the following 3 elements
 		// 1. Middle element of larger array
-		// 2. Max of first element of smaller array and element
-		//    just before the middle in bigger array
-		// 3. Min of second element of smaller array and element
-		//    just after the middle in bigger array
-		if (arr2_size & 1)
-			return MO3 ( arr2[arr2_size/2], max(arr1[0], arr2[arr2_size/2 - 1]), min(arr1[1], arr2[arr2_size/2 + 1]));
+		// 2. Max of first element of smaller array and element just before the middle in bigger array
+		// 3. Min of second element of smaller array and element just after the middle in bigger array
+		else if (arr2_size % 2 == 1)
+		{
+			int a = arr2[arr2_size/2];
+			int b = max(arr1[0], arr2[arr2_size/2 - 1]);
+			int c = min(arr1[1], arr2[arr2_size/2 + 1]);
+			return a + b + c - max(a, max(b, c)) - min(a, min(b, c));
+		}
 
 		// Case 6: If the larger array has even number of elements,
 		// then median will be one of the following 4 elements
 		// 1) & 2) The middle two elements of larger array
-		// 3) Max of first element of smaller array and element
-		//    just before the first middle element in bigger array
-		// 4. Min of second element of smaller array and element
-		//    just after the second middle in bigger array
-		return MO4 ( arr2[arr2_size/2], arr2[arr2_size/2 - 1], max( arr1[0], arr2[arr2_size/2 - 2] ), min( arr1[1], arr2[arr2_size/2 + 1] ) );
+		// 3) Max of first element of smaller array and element just before the first middle element in bigger array
+		// 4. Min of second element of smaller array and element just after the second middle in bigger array
+		else
+		{
+			int a = arr2[arr2_size/2];
+			int b = arr2[arr2_size/2 - 1];
+			int c = max(arr1[0], arr2[arr2_size/2 - 2]);
+			int d = min(arr1[1], arr2[arr2_size/2 + 1]);
+			int Max = max( a, max( b, max( c, d ) ) );
+			int Min = min( a, min( b, min( c, d ) ) );
+
+			return ( a + b + c + d - Max - Min ) / 2.0;
+		}
 	}
 
 	int idxA = ( arr1_size - 1 ) / 2;
