@@ -19,6 +19,7 @@
 using namespace std;
 
 #define ALPHABET_SIZE 26
+int flag = 1;
 
 //tree node
 struct TrieNode
@@ -96,12 +97,12 @@ bool search(TrieNode *root, string key)
 		cout << "word not found: " << key << endl;
 }
 
-void delete_trie(TrieNode *root, string key, int level, int key_length)
+bool delete_trie(TrieNode *root, string key, int level, int key_length)
 {
 	if (root == NULL)
 	{
 		cout << "root is null" << endl;
-		return;
+		return false;
 	}
 
 	// Base case
@@ -118,21 +119,28 @@ void delete_trie(TrieNode *root, string key, int level, int key_length)
 			{
 				//make leaf false
 				root->isLeaf = false;
-				cout << "in leaf" << endl;
 
 				//if no children of last letter
 				if (root->mymap[index]->mymap.size() == 0)
 				{
-					cout << "not more letters" << endl;
+					//first delete the allocated map here so no memory leak
+					delete root->mymap[index];
+
+					//then remove element from map so that this map becomes and empty map in the end
+					root->mymap.erase(index);
+					return true;
 				}
 				else
 				{
-					cout << "some more letters" << endl;					
+					cout << "some more letters" << endl;
+					return false;				
 				}
 			}
+			else
+				return false;
 		}
-
-		return;
+		else
+			return false;
 	}
 
 	char index = key[level];
@@ -142,17 +150,37 @@ void delete_trie(TrieNode *root, string key, int level, int key_length)
 	if (it != root->mymap.end())
 	{
 		root = root->mymap[index];
-		delete_trie(root, key, level+1, key_length);
+		if (delete_trie(root, key, level+1, key_length))
+		{
+			// check keys in upward manner
+			cout << "in recursion: " << index << endl;
+			if (flag == 1)
+			{
+				flag = 0;
+				return true;
+			}
+			cout << root->mymap.size() << endl;
 
-		// check keys in upward manner
-		cout << "in recursion" << endl;
-		return;
+			//if no children of last letter
+			if (root->mymap[index]->mymap.size() == 0)
+			{
+//				cout << "level: " << level << endl;
+				//cout << "not more letters" << endl;
+				//cout << root->mymap.size() << endl;
+				root->mymap.erase(index);
+				//cout << root->mymap.size() << endl;
+				return true;
+			}
+			else
+			{
+
+				//cout << "some more letters" << endl;
+				return false;				
+			}
+		}
+		return false;
 	}
-
-	return;
-
-
-
+	return false;
 }
 
 int main()
@@ -174,8 +202,12 @@ int main()
 	cout << "------" << endl;
 
 	delete_trie(root, keys[2], 0, keys[2].length());
+	delete_trie(root, keys[0], 0, keys[0].length());
 
 	cout << "======" << endl;
+	search(root, "there");
+	search(root, "their");
+	search(root, "the");
 	search(root, "ther");
 	cout << "======" << endl;
 
