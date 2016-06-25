@@ -82,7 +82,11 @@ bool search(TrieNode *root, string key)
 			return false;
 		}
 	}
-	cout << "word found: " << key << endl;
+
+	if (root->isLeaf)
+		cout << "word found: " << key << endl;
+	else
+		cout << "word not found: " << key << endl;
 }
 
 void delete_trie(TrieNode *root, string key)
@@ -94,6 +98,8 @@ void delete_trie(TrieNode *root, string key)
 	Key is prefix key of another long key in trie. Unmark the leaf node.
 	Key present in trie, having atleast one other key as prefix key. Delete nodes from end of key until first leaf node of longest prefix key.
 	*/
+
+
 }
 
 int main()
@@ -117,7 +123,7 @@ int main()
 	delete_trie(root, keys[0]);
 
 	cout << "======" << endl;
-	search(root, "the");
+	search(root, "ther");
 	cout << "======" << endl;
 
 	return 0;
