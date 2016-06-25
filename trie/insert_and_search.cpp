@@ -32,7 +32,7 @@ TrieNode* newTrieNode()
 {
 	TrieNode* trieNode = new TrieNode;
 	trieNode->mymap.clear();
-	trieNode->isLeaf = false;
+	trieNode->isLeaf = false;		
 	return trieNode;
 }
 
@@ -40,8 +40,11 @@ TrieNode* newTrieNode()
 // If the key is prefix of trie node, just marks leaf node
 void insert(TrieNode *root, string key)
 {
+	int level = 0;
+	//root already has a map defined
 	for (int i = 0; i < key.length(); i++)
 	{
+		level++;
 		char index = key[i];
 		std::map<char, TrieNode*>::iterator it;
 		it = root->mymap.find(index);
@@ -55,7 +58,8 @@ void insert(TrieNode *root, string key)
 		{
 			TrieNode* temp = newTrieNode();
 			root->mymap[index] = temp;
-			root = root->mymap[index];
+			if (level < key.length())
+				root = root->mymap[index];
 		}
 	}
 
@@ -66,15 +70,18 @@ void insert(TrieNode *root, string key)
 // Returns true if key presents in trie, else false
 bool search(TrieNode *root, string key)
 {
+	int level = 0;
 	for (int i = 0; i < key.length(); i++)
 	{
+		level++;
 		char index = key[i];
 		std::map<char, TrieNode*>::iterator it;
 		it = root->mymap.find(index);
 
 		if (it != root->mymap.end())
 		{
-			root = root->mymap[index];
+			if (level < key.length())
+				root = root->mymap[index];
 		}
 		else
 		{
@@ -89,22 +96,68 @@ bool search(TrieNode *root, string key)
 		cout << "word not found: " << key << endl;
 }
 
-void delete_trie(TrieNode *root, string key)
+void delete_trie(TrieNode *root, string key, int level, int key_length)
 {
-	/*
-	During delete operation we delete the key in bottom up manner using recursion. The following are possible conditions when deleting key from trie,
-	Key may not be there in trie. Delete operation should not modify trie.
-	Key present as unique key (no part of key contains another key (prefix), nor the key itself is prefix of another key in trie). Delete all the nodes.
-	Key is prefix key of another long key in trie. Unmark the leaf node.
-	Key present in trie, having atleast one other key as prefix key. Delete nodes from end of key until first leaf node of longest prefix key.
-	*/
+	if (root == NULL)
+	{
+		cout << "root is null" << endl;
+		return;
+	}
+
+	// Base case
+	if( level == key_length - 1)
+	{
+		//we are on the last letter of key
+		char index = key[level];
+		std::map<char, TrieNode*>::iterator it;
+		it = root->mymap.find(index);
+
+		if (it != root->mymap.end())
+		{
+			if (root->isLeaf)
+			{
+				//make leaf false
+				root->isLeaf = false;
+				cout << "in leaf" << endl;
+
+				//if no children of last letter
+				if (root->mymap[index]->mymap.size() == 0)
+				{
+					cout << "not more letters" << endl;
+				}
+				else
+				{
+					cout << "some more letters" << endl;					
+				}
+			}
+		}
+
+		return;
+	}
+
+	char index = key[level];
+	std::map<char, TrieNode*>::iterator it;
+	it = root->mymap.find(index);
+
+	if (it != root->mymap.end())
+	{
+		root = root->mymap[index];
+		delete_trie(root, key, level+1, key_length);
+
+		// check keys in upward manner
+		cout << "in recursion" << endl;
+		return;
+	}
+
+	return;
+
 
 
 }
 
 int main()
 {
-	TrieNode* root = newTrieNode();				//will be the root
+	TrieNode* root = newTrieNode();
 
 	string keys[] = {"the", "a", "there", "answer", "any", "by", "bye", "their"};
 	int keys_size = sizeof(keys)/sizeof(keys[0]);
@@ -120,7 +173,7 @@ int main()
 	search(root, "thaw");
 	cout << "------" << endl;
 
-	delete_trie(root, keys[0]);
+	delete_trie(root, keys[2], 0, keys[2].length());
 
 	cout << "======" << endl;
 	search(root, "ther");
