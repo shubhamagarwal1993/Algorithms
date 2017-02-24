@@ -30,7 +30,7 @@ int binary_search_floor_sq_root(int(num))
 	if (num == 0 || num == 1)
 		return num;
 	
-	int ans;
+	int ans = 0;
 	int start = 0;
 	int end = num;
 
@@ -44,9 +44,11 @@ int binary_search_floor_sq_root(int(num))
 		if (mid*mid < num)
 		{
 			start = mid + 1;
+			// if we need floor, we will store ans here
 			ans = mid;
 		}
 		else
+			// if we need ceiling, we will store and here
 			end = mid - 1;
 	}
 	return ans;
@@ -92,9 +94,9 @@ int main()
 	cout << "Enter a value to be square rooted: " << endl;
 	cin >> y;
 
-	cout << newton_sq_root(y) << endl;
+	//cout << newton_sq_root(y) << endl;
 	cout << binary_search_floor_sq_root(int(y)) << endl;
-	cout << sqrt_double(y) << endl;
+	//cout << sqrt_double(y) << endl;
 	return 0;
 }
 

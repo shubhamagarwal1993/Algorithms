@@ -164,7 +164,7 @@ bool delete_trie(TrieNode *root, string key, int level, int key_length)
 			//if no children of last letter
 			if (root->mymap[index]->mymap.size() == 0)
 			{
-//				cout << "level: " << level << endl;
+				//cout << "level: " << level << endl;
 				//cout << "not more letters" << endl;
 				//cout << root->mymap.size() << endl;
 				root->mymap.erase(index);

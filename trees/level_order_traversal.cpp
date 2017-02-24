@@ -201,15 +201,15 @@ int main()
 //	printLevelOrder(Tree1);
 //	cout << endl;
 
-//	cout << "======" << endl;
-//	print_Level_Order_iter(Tree1);
-//	cout << "======" << endl;
-//	cout << endl;
-
-	cout << "------" << endl;
-	print_Reverse_Level_Order_iter(Tree1);
-	cout << "------" << endl;
+	cout << "======" << endl;
+	print_Level_Order_iter(Tree1);
+	cout << "======" << endl;
 	cout << endl;
+
+//	cout << "------" << endl;
+//	print_Reverse_Level_Order_iter(Tree1);
+//	cout << "------" << endl;
+//	cout << endl;
 
 	return 0;
 }
