@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #define M 4
 #define N 4
 using namespace std;
