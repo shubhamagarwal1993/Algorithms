@@ -1,7 +1,6 @@
 # cracking-the-coding-interview
-Some solved questions from the book
 
-Typing out solutions for some good questions from the book.
+Some questions from the book solved in C++
+Different implementations for a particular question are also included in the same file
 
-Different implementations for a particular question are also included in the same file.
-Since C++ is a good OOP language, I have used it.
+Compile a file (E.g. test.cpp) with ```g++ -std=c++0x test.cpp```
