@@ -101,11 +101,11 @@ Graph construct_graph() {
 int main() {
 
     // construct graph
-    //        5     4        5 -> 2    5 -> 0
-    //       / \ / \        4 -> 1    4 -> 0
-    //      2      0      1        2 -> 3
-    //       \     /        3 -> 1
-    //        \    /
+    //        5   4        5 -> 2    5 -> 0
+    //       / \ / \       4 -> 1    4 -> 0
+    //      2       0      1         2 -> 3
+    //       \     /       3 -> 1
+    //        \   /
     //          3
     Graph g = construct_graph();
     cout << "Topological Sort : ";
