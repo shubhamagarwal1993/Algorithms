@@ -5,12 +5,13 @@ using namespace std;
 
 // This class represents a directed graph using adjacency list representation
 class Graph {
-    // No. of vertices
-    int V;
-    // Pointer to an array containing adjacency lists
-    list<int> *adj;
-    // A function used by DFS
-    void DFSUtil(int v, bool visited[]);
+    private:
+        // No. of vertices
+        int V;
+        // Pointer to an array containing adjacency lists
+        list<int> *adj;
+        // A function used by DFS
+        void DFSUtil(int v, bool visited[]);
 
     public:
         // Constructor
