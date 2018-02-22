@@ -39,9 +39,37 @@ void permutation_out_of_order(string str, int index) {
 }
 
 //-----------------------------------------------------
+void permutation_duplicates(string str, int index) {
+
+    int str_length = str.size();
+
+    // reached end of string
+    if(index  == str_length) {
+        cout << str << endl;
+        return;
+    }
+
+    permutation_duplicates(str, index + 1);
+
+    for(int i = index + 1; i < str_length; i++) {
+        if(str[index] == str[i]) {
+            continue;
+        }
+        swap(index, i, str);
+        permutation_duplicates(str, index + 1);
+    }
+}
+
+//-----------------------------------------------------
 int main() {
     permutation_inorder("", "abc");
+    cout << "--------------------------" << endl;
     permutation_out_of_order("abc", 0);
+    cout << "--------------------------" << endl;
+    permutation_duplicates("aabc", 0);
+    cout << "--------------------------" << endl;
+    // Write this function - should avoid duplicates, can avoid swapping with self, and use above methods
+    //permutation_duplicates_inorder("aabc", 0);
     return 0;
 }
 
