@@ -22,6 +22,11 @@ Disjoint data sets
   - add new sets
   - merge existing sets
   - determine whether elements are in the same set
+- common operations:
+  - makeSet - makes a new set by creating a new element with a unique id, rank 0, and parent pointer to itself, to show only element in set
+  - find(x) - follows chain of parent pointers up till an element is a parent of itself. This is the root of the tree and representative of the set to which x belongs
+  - union(x, y) - finds roots of trees x and y and combines them by rank
+
 
 Implementation for sets:
 ```
