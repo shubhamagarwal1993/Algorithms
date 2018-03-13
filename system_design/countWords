@@ -1,0 +1,17 @@
+// Given millions of documents, find all documents that contain a list of complete words
+    - assumption - findWords() function will be called repetedly, thus we can pre-process
+
+Step 1: Solving this with few dozen documents
+    - create hash table with key as word and value as list of documents that contain the word
+    - for multiple words, take intersection of values of those words
+
+problem: with many documents, one hash table cannot contain all the data on one machine
+
+Step 2: concerns of divind up the hash table
+    - divide it by keyword, or divide by documents.
+    - a lookup table to know which machine holds which data
+    ... a lot of other concerns
+
+Step 3: We can also think of a different structure like a trie
+
+

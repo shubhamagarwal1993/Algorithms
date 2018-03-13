@@ -1,0 +1,15 @@
+// System Design and Scalibility
+
+Steps:
+    think broad
+    white board a diagram to show general layout
+    make careful assumptions - ask questions to make better assumptions - estimate when possible
+    identify key issues like bottle necks, memory management, caching (redis is in-memory)
+    point out practical solutions like spitting up databases, webservers - loadbalancers
+    scaling - how do to horizontal scaling - like loadbalancers and multiple servers
+    database can be slow - talk about indexing, mySql is almost always good way to go - inner join and no left join
+
+Concepts to know:
+ - map reduce: calculating avg temperatures, counting word count in a file. Any data that can be split up
+ - AVL trees: 
+ - red black trees:
