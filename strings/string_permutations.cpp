@@ -6,22 +6,19 @@
 using namespace std;
 
 //  swap values for x and y
-void swap(char &x, char &y)
-{
+void swap(char &x, char &y) {
 	char temp;
 	temp = x;
 	x = y;
 	y = temp;
 }
 
-int factorial(int n)
-{
+int factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
 //print permutations of string using recursion
-void permute_recursion(string a, int l_index, int r_index)
-{
+void permute_recursion(string a, int l_index, int r_index) {
 	if (l_index == r_index)
 		cout << a << endl;
 	else
@@ -48,8 +45,7 @@ void permutation_iter(string &st, int st_length, int st_factorial)
 	}
 }
 */
-int main()
-{
+int main() {
 	//using recursion
 	string str = "AA";
 	int length = str.length();
