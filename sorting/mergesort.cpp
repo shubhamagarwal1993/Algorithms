@@ -48,7 +48,7 @@ void merge(int array[], int l, int mid, int r) {
 void mergesort_recursive(int array[], int l, int r) {
 
     if (l < r) {
-        int mid = (l+r)/2;      // if size 10; l=0, r = 9, mid = 5
+        int mid = (l+r)/2;      // if size 10; l=0, r = 9, mid = 4
 
         mergesort_recursive(array, l, mid);
         mergesort_recursive(array, mid+1, r);

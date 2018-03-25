@@ -66,9 +66,6 @@ void quicksort_iterative(int array[], int l, int r)
     }
 }
 
-
-
-
 int main() {
 
     // Recursive quick sort
