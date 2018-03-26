@@ -55,6 +55,18 @@ void mergesort_recursive(int array[], int l, int r) {
 
         merge(array, l, mid, r);
     }
+
+    // Finding time complexity
+    // T(n) = T(n/2) + T(n/2) + O(n)
+    // T(0) = 0
+    //           n
+    //      n/2     n/2
+    //  n/4  n/4  n/4  n/4
+    //
+    //  sum of each level = n
+    //  value of each node = n/(2^l)
+    //  n/(2^l) = 1 at last level. Thus n = 2^l => l = logn base 2
+    //  Total work = height of tree * sum or each level => logn * n => O(nlogn)
 }
 
 void mergesort_iterative(int array[], int array_size) {

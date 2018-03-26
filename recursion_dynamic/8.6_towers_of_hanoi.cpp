@@ -18,6 +18,15 @@ void towers_of_hanoi(int num_of_disks, string origin, string buffer, string dest
     towers_of_hanoi(num_of_disks-1, origin, destination, buffer);
     cout << "move disk " << num_of_disks << " from " << origin << " to  " << destination << endl;
     towers_of_hanoi(num_of_disks-1, buffer, origin, destination);
+
+    // Finding time complexity
+    // T(n) = T(n-1) + O(1) + T(n-1)
+    // T(n) = T(n-1) + 1 + T(n-1)
+    // T(0) = 0 for base case
+    //
+    // n   : 0 1 2 3  4  5  6
+    // T(n): 0 1 3 7 15 31 63 => 63 comes from 31 + 1 + 31 by pluggin in above recursion
+    // T(n) = O((2^n) - 1) = O(2^n)
 }
 
 int main() {
