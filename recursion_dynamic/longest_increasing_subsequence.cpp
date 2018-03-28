@@ -85,7 +85,7 @@ int LIS_vector(vector<int> &vec) {
         }
     }
 
-    for(int i = 0; i < tail.size(); i++) {
+    for(int i = 0; i < length; i++) {
         cout << tail[i] << " ";
     }
     cout << endl;
