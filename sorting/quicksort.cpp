@@ -6,11 +6,11 @@
 using namespace std;
 
 int partition (int array[], int l, int r) {
-    int x = array[r];
+    int pivot = array[r];
     int i = (l - 1);
 
-    for (int j = l; j <= r- 1; j++) {
-        if (array[j] <= x) {
+    for (int j = l; j < r; j++) {
+        if (array[j] <= pivot) {
             i++;
             swap (array[i], array[j]);
         }
