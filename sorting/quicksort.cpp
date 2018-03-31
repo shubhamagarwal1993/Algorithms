@@ -28,8 +28,7 @@ void quicksort_recursive(int array[], int l, int r) {
     }
 }
 
-void quicksort_iterative(int array[], int l, int r)
-{
+void quicksort_iterative(int array[], int l, int r) {
     // Create an auxiliary stack
     int stack[ r - l + 1 ];
 
@@ -41,8 +40,7 @@ void quicksort_iterative(int array[], int l, int r)
     stack[ ++top ] = r;
 
     // Keep popping from stack while is not empty
-    while ( top >= 0 )
-    {
+    while ( top >= 0 ) {
         // Pop h and l
         r = stack[ top-- ];
         l = stack[ top-- ];
@@ -51,15 +49,13 @@ void quicksort_iterative(int array[], int l, int r)
         int p = partition( array, l, r);
 
         // If there are elements on left side of pivot, then push left side to stack
-        if ( p-1 > l )
-        {
+        if ( p-1 > l ) {
             stack[ ++top ] = l;
             stack[ ++top ] = p - 1;
         }
 
         // If there are elements on right side of pivot, then push right side to stack
-        if ( p+1 < r )
-        {
+        if ( p+1 < r ) {
             stack[ ++top ] = p + 1;
             stack[ ++top ] = r;
         }
