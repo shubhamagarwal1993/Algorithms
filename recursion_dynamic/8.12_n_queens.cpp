@@ -1,51 +1,80 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
-#include <stack>
 
+#define N 8
 using namespace std;
 
-// PSEUDO CODE
-//
-// arr is column containes column index for position of queen -> row = i, column arr[i]
-// row is the current row we are on
-// size is the size of the board
-//
-void nQueens(int arr[], int row, int size) {
-    // base case
-    if(row == size + 1) {
-        for(int k = 0; k < size; k++) {
-            cout << arr[k] << " ";
-        }
-    }
+bool isSafe(int chessboard[N][N], int row, int col) {
+    // check all rows above current row
+    for(int j = 0; j < row; j++) {
 
-    for(int j = 0; j < size; j++) {
-        int legal = true;
-        // check all rows above current row
-        for(int i = 0; i < row; i++) {
-            if( (arr[i] = j)               // same column
-             || (arr[i] = j+i-row)           // diagonal
-             || (arr[i] = j-i+row)           // diagonal
-            ) {
-                legal = false;
+        // check for same column
+        if(chessboard[j][col]) {
+            return false;
+        }
+
+        // check for 45 deg and 135 deg diagonal
+        for(int i = 0; i < N; i++) {
+            if((j - row == i - col) && (chessboard[j][i])) {
+                return false;
+            }
+
+            if((j - row == col - i) && (chessboard[j][i])) {
+                return false;
             }
         }
+    }
+    return true;
+}
 
-        if(legal) {
-            arr[row] = j;
-            nQueens(arr, row+1, size);
+bool nQueens(int chessboard[N][N], int row) {
+    // base case
+    if(row >= N) {
+        return true;
+    }
+
+    // check for each column on the chessboard where new queen can be placed
+    for(int col = 0; col < N; col++) {
+
+        if(isSafe(chessboard, row, col)) {
+            // place queen on new position
+            chessboard[row][col] = 1;
+
+            // find next queen's position
+            if(nQueens(chessboard, row+1)) {
+                return true;
+            }
+
+            // if no available position in row, backtrack
+            chessboard[row][col] = 0;
         }
     }
+
+    return false;
 }
 
 
 int main() {
 
-    int board_size = 8;
-    int arr[board_size];
-    nQueens(arr, 0, board_size);
+    // make chessboard and initialize it
+    int chessboard[N][N];
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < N; j++) {
+            chessboard[i][j] = 0;
+        }
+    }
+
+    if(nQueens(chessboard, 0)) {
+        // print chessboard
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++) {
+                cout << chessboard[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+    } else {
+        cout << "No possible solutions" << endl;
+    }
 
     return 0;
 }
