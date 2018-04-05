@@ -1,24 +1,25 @@
 #include <iostream>
-#define M 4
-#define N 4
+
+#define M 6
+#define N 6
 using namespace std;
 
 /* print the path matrix
   '1' is present in the cell which is a part of the path
 */
 void printPathMatrix(int path[M][N]) {
-   int i,j;
+
    cout<<"\nPath in Maze :-\n";
-   for (i=0;i<M;i++) {
-      for (j=0;j<N;j++) {
-         cout<<path[i][j]<<" ";
+   for (int i = 0; i < M; i++) {
+      for (int j = 0; j < N; j++) {
+         cout<<path[i][j] << " ";
       }
       cout<<endl;
    }
 }
 
 // check if we can move to a particular cell
-bool validCell(int maze[M][N], int r_idx, int c_idx) {
+bool validCell(int maze[M][N], int r_idx, int c_idx, int path[M][N]) {
     // invalid M index      
     if (r_idx < 0 || r_idx >= M) return false;
 
@@ -27,6 +28,9 @@ bool validCell(int maze[M][N], int r_idx, int c_idx) {
 
     // cannot move to this cell
     if (maze[r_idx][c_idx] != 0) return false;
+
+    // have already been through this cell
+    if (path[r_idx][c_idx] != 0) return false;
 
     return true;
 }
@@ -44,39 +48,40 @@ bool findPath(int maze[M][N], int r_idx, int c_idx, int path[N][N]) {
       return true;
     }
 
-    if (validCell(maze,r_idx,c_idx)) {
+    if (validCell(maze, r_idx, c_idx, path)) {
         // cell is valid i.e we can move to the cell
         path[r_idx][c_idx] = 1;
 
         // recursively check if a path exists from the current valid (safe) cell
         // start checking from cell (r_idx+1,c_idx)
-        if (findPath(maze,r_idx+1,c_idx,path))
-            return true;
-
         // start checking from cell (r_idx,c_idx+1)
-        if (findPath(maze,r_idx,c_idx+1,path))
+        if( (findPath(maze,r_idx+1,c_idx,path)) 
+         || (findPath(maze,r_idx-1,c_idx,path))
+         || (findPath(maze,r_idx,c_idx+1,path))
+         || (findPath(maze,r_idx,c_idx-1,path))) {
             return true;
-
-        path[r_idx][c_idx] = 0;
-        return false;
+        } else {
+            path[r_idx][c_idx] = 0;
+            return false;
+        }
     }
+
     return false;
 }
 
 // wrapper function
 void pathInMaze(int maze[M][N]) {
    int path[N][N];
-   int i,j;
 
    // initialize path matrix
-   for (i=0;i<M;i++) {
-      for (j=0;j<N;j++) {
+   for (int i = 0; i < M; i++) {
+      for (int j = 0; j < N; j++) {
          path[i][j] = 0;
       }
    }
 
    // find the path if available
-   if (findPath(maze,0,0,path)) {
+   if (findPath(maze, 0, 0, path)) {
       cout<<"\nPath exists ...\n";
       printPathMatrix(path);
    } else {
@@ -86,12 +91,17 @@ void pathInMaze(int maze[M][N]) {
 
 // main
 int main() {
-   int maze[M][N] = {{ 0,0,1,0 },
-                     { 1,0,0,0 },
-                     { 0,1,0,1 },
-                     { 1,0,0,0 }};
+   //int maze[M][N] = {{ 0,0,1,0 },
+   //                  { 1,0,1,0 },
+   //                  { 0,0,0,0 },
+   //                  { 1,0,1,0 }};
+   int maze[M][N] = {{ 0,1,1,1,1,1 },
+                     { 0,1,0,0,0,0 },
+                     { 0,1,0,1,1,0 },
+                     { 0,1,0,0,1,0 },
+                     { 0,1,1,0,1,0 },
+                     { 0,0,0,0,1,0 }};
    // 1s in the maze denotes barriers (dangerous cells),
-   // we cannot move to those cells 
    pathInMaze(maze);
    cout<<endl;
    return 0;
