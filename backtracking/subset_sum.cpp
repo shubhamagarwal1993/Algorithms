@@ -39,39 +39,56 @@ bool subsetSum_test(int arr[], int arr_size, int sum) {
     return subset[arr_size][sum];
 }
 
-bool subsetSum(int arr[], int arr_size, int sum) {
+bool subsetSum(int arr[], int arr_size, int sum, vector<int> vec) {
 
-    if(sum == 0) return true;
-    if((sum != 0) && (arr_size == 0)) return false;
-
-    if(arr[arr_size-1] > sum) {
-        subsetSum(arr, arr_size-1, sum);
+    if(sum == 0) {
+        for(int i = 0; i < vec.size(); i++) {
+            cout << vec[i] << " ";
+        }
+        cout << endl;
+        return true;
     }
 
-    // check with last element included as well as excluded
-    return subsetSum(arr, arr_size-1, sum - arr[arr_size-1]) || subsetSum(arr, arr_size-1, sum);
-}
+    if((sum != 0) && (arr_size == 0)) {
+        return false;
+    }
 
+    if(arr[arr_size-1] > sum) {
+        subsetSum(arr, arr_size-1, sum, vec);
+    }
+
+    vec.push_back(arr[arr_size-1]);
+    bool with = subsetSum(arr, arr_size-1, sum - arr[arr_size-1], vec);
+    if(with) {
+        vec.clear();
+    } else {
+        vec.pop_back();
+    }
+
+    bool withOut = subsetSum(arr, arr_size-1, sum, vec);
+    return with || withOut;
+}
 
 int main() {
 
-    int arr[] = {6,3,4,9,2};
+    int arr[] = {2,5,3,6,1,8};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     int sum = 8;
 
+    vector<int> vec;
     // exponential time
-    if(subsetSum(arr, arr_size, sum)) {
+    if(subsetSum(arr, arr_size, sum, vec)) {
         cout << "found subset" << endl;
     } else {
         cout << "no subset" << endl;
     }
 
     // pseudo-polynomial time
-    if(subsetSum_test(arr, arr_size, sum)) {
-        cout << "found subset" << endl;
-    } else {
-        cout << "no subset" << endl;
-    }
+//    if(subsetSum_test(arr, arr_size, sum)) {
+//        cout << "found subset" << endl;
+//    } else {
+//        cout << "no subset" << endl;
+//    }
 
     return 0;
 }
