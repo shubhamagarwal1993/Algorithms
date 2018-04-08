@@ -53,8 +53,9 @@ bool subsetSum(int arr[], int arr_size, int sum, vector<int> vec) {
         return false;
     }
 
+    bool withOut = false;
     if(arr[arr_size-1] > sum) {
-        subsetSum(arr, arr_size-1, sum, vec);
+        withOut = subsetSum(arr, arr_size-1, sum, vec);
     }
 
     vec.push_back(arr[arr_size-1]);
@@ -65,13 +66,13 @@ bool subsetSum(int arr[], int arr_size, int sum, vector<int> vec) {
         vec.pop_back();
     }
 
-    bool withOut = subsetSum(arr, arr_size-1, sum, vec);
+    withOut = withOut || subsetSum(arr, arr_size-1, sum, vec);
     return with || withOut;
 }
 
 int main() {
 
-    int arr[] = {2,5,3,6,1,8};
+    int arr[] = {2,5,3,9,6,1,8};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     int sum = 8;
 
