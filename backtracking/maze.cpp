@@ -71,7 +71,7 @@ bool findPath(int maze[M][N], int r_idx, int c_idx, int path[N][N]) {
 
 // wrapper function
 void pathInMaze(int maze[M][N]) {
-   int path[N][N];
+   int path[M][N];
 
    // initialize path matrix
    for (int i = 0; i < M; i++) {
