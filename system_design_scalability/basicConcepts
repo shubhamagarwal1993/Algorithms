@@ -1,9 +1,6 @@
 // System Design and Scalibility
 
 Steps:
-    think broad
-    white board a diagram to show general layout
-    make careful assumptions - ask questions to make better assumptions - estimate when possible
     identify key issues like bottle necks, memory management, caching (redis is in-memory)
     point out practical solutions like spitting up databases, webservers - loadbalancers
     scaling - how do to horizontal scaling - like loadbalancers and multiple servers

@@ -1,12 +1,21 @@
 // Features of tinyURL
-  - Shortening a URL to a tinyURL (people can specify their own URL or short URL, it can all be auto-generated)
+  - Shortening a URL to a tinyURL
+    - customer can specify their own URL and this will return a tinyURL
+    - our system will use this to auto-generate a tinyURL for a customer
+
   - Retrieving the URL associated with a tinyURL
 
   - caching - if a tinyURL is hit a lot of times suddenly and others are stale
-  - Analytics for a URL (keep track of any stats on the clicks, they can be out of data by a few minutes)
-  - link management (will the URLs stay alive forever, or do they have a timeout)
-  - memory available (process a max of 1 million new URLs per day - check how much space your system needs)
-  - user accounts
+
+  - Analytics for a URL: they can be out of data by a few minutes
+    - keep track of any stats on the clicks
+
+  - User accounts and link management
+    - will the URLs stay alive forever, or do they have a timeout
+
+// Assumptions
+  - memory availability
+    - process a max of 1 million new URLs per day - check how much space your system needs
 
 make a database table
 |-- id --|-- URL -- |

@@ -59,6 +59,8 @@ int main() {
     Circle c7 = c6;
     Circle c8(c4);
 
+    Circle * c9 = new Circle();
+
     cout << "c1" << " Radius=" << c1.getRadius() << " Area=" << c1.getArea() << " Color=" << c1.getColor() << endl;
     cout << "c2" << " Radius=" << c2.getRadius() << " Area=" << c2.getArea() << " Color=" << c2.getColor() << endl;
     cout << "c3" << " Radius=" << c3.getRadius() << " Area=" << c3.getArea() << " Color=" << c3.getColor() << endl;
@@ -67,6 +69,9 @@ int main() {
     cout << "c6" << " Radius=" << c6.getRadius() << " Area=" << c6.getArea() << " Color=" << c6.getColor() << endl;
     cout << "c7" << " Radius=" << c7.getRadius() << " Area=" << c7.getArea() << " Color=" << c7.getColor() << endl;
     cout << "c8" << " Radius=" << c8.getRadius() << " Area=" << c8.getArea() << " Color=" << c8.getColor() << endl;
+
+    cout << "c9" << " Radius=" << c9->getRadius() << " Area=" << c9->getArea() << " Color=" << c9->getColor() << endl;
+    delete c9;
 
    return 0;
 }
