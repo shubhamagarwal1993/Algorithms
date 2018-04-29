@@ -11,16 +11,14 @@
 using namespace std;
 
 //tree node
-struct Node
-{
+struct Node {
     int data;
     Node* left;
     Node* right;
 };
 
 //constructor for new node
-Node* newNode(int data)
-{
+Node* newNode(int data) {
     Node* node = new Node;
     node->data = data;
     node->left = NULL;
@@ -28,8 +26,7 @@ Node* newNode(int data)
     return node;
 }
 
-void construct_tree1(Node* Tree1)
-{
+void construct_tree1(Node* Tree1) {
     Tree1->right              = newNode(3);
     Tree1->right->right       = newNode(3);
     Tree1->left               = newNode(10);
@@ -39,8 +36,7 @@ void construct_tree1(Node* Tree1)
     return;
 }
 
-void inorder_print_tree1(Node* root)
-{
+void inorder_print_tree1(Node* root) {
     if (root == NULL)
         return;
     inorder_print_tree1(root->left);
@@ -48,8 +44,7 @@ void inorder_print_tree1(Node* root)
     inorder_print_tree1(root->right);
 }
 
-int height(Node* node)
-{
+int height(Node* node) {
     if ( node == NULL) {
         return 0;
     } else {

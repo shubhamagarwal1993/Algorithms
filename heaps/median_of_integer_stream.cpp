@@ -16,15 +16,12 @@ using namespace std;
 //max heap will always have equal or 1 more than min heap
 //max heap will have lower numbers
 //min heap will have upper numbers
-
-int get_median(priority_queue<int> max_heap, priority_queue<int, vector<int>, std::greater<int> > min_heap)
-{
+int get_median(priority_queue<int> max_heap, priority_queue<int, vector<int>, std::greater<int> > min_heap) {
     if(max_heap.size() == min_heap.size() + 1)
         return max_heap.top();
     else if (max_heap.size() == min_heap.size())
         return ((max_heap.top() + min_heap.top())/2);
-    else
-    {
+    else {
         cout << "error in heaps" << endl;
         return -1;
     }
@@ -36,12 +33,11 @@ void insert(priority_queue<int> &max_heap, priority_queue<int, vector<int>, std:
     if (max_heap.size() == min_heap.size() + 1) {
         cout << "insert into min_heap" << endl;
         if(temp < max_heap.top()) {
-            max_heap.push(temp);        // max_heap has 2 more elements than min_heap
-            temp = max_heap.top();      // get the highest value in max heap
-            max_heap.pop();             // temp has lowerest value for min_heap and max_heap is 1 more in size
-            min_heap.push(temp);        // max_heap and min_heap have same size now with corrent ordering of elements
-        }
-        else {
+            max_heap.push(temp);            // max_heap has 2 more elements than min_heap
+            temp = max_heap.top();          // get the highest value in max heap
+            max_heap.pop();                 // temp has lowerest value for min_heap and max_heap is 1 more in size
+            min_heap.push(temp);            // max_heap and min_heap have same size now with corrent ordering of elements
+        } else {
             min_heap.push(temp);
         }
     } else if (max_heap.size() == min_heap.size()) {
@@ -50,19 +46,18 @@ void insert(priority_queue<int> &max_heap, priority_queue<int, vector<int>, std:
         } else if (min_heap.empty()) {
             //we have to insert here after checking with max heap
             if(temp < max_heap.top()) {
-                max_heap.push(temp);                //max heap has 2 more elements than min heap
-                temp = max_heap.top();                //we get the highest value in max heap
-                max_heap.pop();                        //temp has lowerest value for min heap and max heap is 1 more in size
-                min_heap.push(temp);                //max and min heap have same size
-            }
-            else {
+                max_heap.push(temp);        //max heap has 2 more elements than min heap
+                temp = max_heap.top();      //we get the highest value in max heap
+                max_heap.pop();             //temp has lowerest value for min heap and max heap is 1 more in size
+                min_heap.push(temp);        //max and min heap have same size
+            } else {
                 min_heap.push(temp);
             }
-        } else if(temp > min_heap.top()) {               //since same size, max heap will get element {
+        } else if(temp > min_heap.top()) {  //since same size, max heap will get element {
             min_heap.push(temp);
             temp = min_heap.top();
             min_heap.pop();
-            max_heap.push(temp);                //max heap has one extra element now
+            max_heap.push(temp);            //max heap has one extra element now
         } else {
             max_heap.push(temp);
         }
