@@ -11,37 +11,55 @@ class Circle {
         double radius;
         string color;
     public:
-    // member functions (dynamic attributes)
+        // class members defined with static keyword
+        // No matter how many objects of the class are created, there is only one copy of the static member
+        // A static member is shared by all objects of the class. Static data is initialized to 0 when first object is created, if no initialization is present
+        // We cannot initialize static data in the class, but can initialize it outside the class using the scope operator ::
+        //
+        static int objectCount;
 
-    // constructor with default values for data members
-    Circle(double radius = 1.0, string circle = "red") {
-        this->radius = radius;
-        this->color = circle;
-    }
+        // member functions (dynamic attributes)
 
-    // copy constructor - constructs a new object when another object is passed into a function by value
-    // Pass-by-value for object means calling the copy constructor
-    Circle(const Circle &circle) {
-        this->radius = circle.radius;
-        this->color = circle.color;
-    }
+        // constructor with default values for data members
+        Circle(double radius = 1.0, string circle = "red") {
+            this->radius = radius;
+            this->color = circle;
+            objectCount++;
+        }
 
-    double getRadius() const {
-        return radius;
-    }
+        // copy constructor - constructs a new object when another object is passed into a function by value
+        // Pass-by-value for object means calling the copy constructor
+        Circle(const Circle &circle) {
+            this->radius = circle.radius;
+            this->color = circle.color;
+        }
 
-    string getColor() const {
-        return color;
-    }
+        double getRadius() const {
+            return radius;
+        }
 
-    double getArea() const {
-        return radius*radius*3.1416;
-    }
+        string getColor() const {
+            return color;
+        }
 
-    void setRadius(double radius) {
-        this->radius = radius;
-    }
+        double getArea() const {
+            return radius*radius*3.1416;
+        }
+
+        void setRadius(double radius) {
+            this->radius = radius;
+        }
+
+        // static member functions are independent of any particular object of the class, and can be called even if no objects of the class exist
+        // A static member function can only access static data members, other static member functions, and any other functions from outside the class
+        // A statuc member function does not have access to "this" and can only be accessed by scope resolution operator ::, and can be used to determine whether some objects of the class have been created or not
+        static int getObjectCount() {
+            return objectCount;
+        }
 };
+
+// initialize static data
+int Circle::objectCount = 0;
 
 int main() {
 
@@ -49,8 +67,10 @@ int main() {
     Circle c1;
     Circle c2 = Circle();
 
+    cout << "Objects created = " << Circle::getObjectCount() << endl;
     Circle c3(3.4);
     Circle c4 = Circle(3.4);
+    cout << "Objects created = " << Circle::getObjectCount() << endl;
 
     Circle c5(1.2, "blue");
     Circle c6 = Circle(1.2, "blue");
@@ -71,7 +91,10 @@ int main() {
     cout << "c8" << " Radius=" << c8.getRadius() << " Area=" << c8.getArea() << " Color=" << c8.getColor() << endl;
 
     cout << "c9" << " Radius=" << c9->getRadius() << " Area=" << c9->getArea() << " Color=" << c9->getColor() << endl;
+
+    cout << "Total objects = " << Circle::objectCount << endl;
     delete c9;
+    cout << "Total objects = " << Circle::objectCount << endl;
 
    return 0;
 }
