@@ -8,7 +8,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <algorithm>
-#include <stack>
 
 using namespace std;
 
@@ -38,43 +37,21 @@ int countWays_iterative(int total) {
         table[i] += table[i-25];
     }
 
+    cout << endl << "=============================" << endl;
+    for(int i = 0; i < total+1; i++) {
+        cout << table[i] << " ";
+    }
+    cout << endl << "=============================" << endl;
     return table[total];
 }
 
-//int countWays_recursive(int total, int denominations[], int denom_len, int index, int sum) {
-//
-//    // End of all possible denominations
-//    if((total == 0) || (index + 1 == denom_len) {
-//        // if total is not reached but all combinations are over
-//        if((left > 0) && ())
-//    }
-//
-//    int denomAmount = denominations[index];
-//
-//    // total ways
-//    return countWays_recursive(total
-//
-//def count_combs(left, i, comb, add):
-//    if add: comb.append(add)
-//    if left == 0 or (i+1) == len(denominations):
-//        if (i+1) == len(denominations) and left > 0:
-//            comb.append( (left, denominations[i]) )
-//            i += 1
-//        while i < len(denominations):
-//            comb.append( (0, denominations[i]) )
-//            i += 1
-//        print " ".join("%d %s" % (n,names[c]) for (n,c) in comb)
-//        return 1
-//    cur = denominations[i]
-//
-//
-//    return sum(count_combs(left-x*cur, i+1, comb[:], (x,cur)) for x in range(0, int(left/cur)+1))
-//}
-
-int countWays_recursive_naive(int denominations[], int den_size, int total, stack<int> s) {
+int countWays_recursive(int denominations[], int den_size, int total, vector<int> &vec) {
 
     if(total == 0) {
-
+        for(int i = 0; i < vec.size(); i++) {
+            cout << vec[i] << " ";
+        }
+        cout << endl;
         return 1;
     }
 
@@ -86,10 +63,11 @@ int countWays_recursive_naive(int denominations[], int den_size, int total, stac
         return 0;
     }
 
-    int without = countWays_recursive_naive(denominations, den_size - 1, total, s);
+    int without = countWays_recursive(denominations, den_size - 1, total, vec);
 
-    s.push(denominations[den_size - 1]);
-    int with = countWays_recursive_naive(denominations, den_size, total - denominations[den_size - 1], s);
+    vec.push_back(denominations[den_size - 1]);
+    int with = countWays_recursive(denominations, den_size, total - denominations[den_size - 1], vec);
+    vec.pop_back();
     return with + without;
 }
 
@@ -105,10 +83,10 @@ int main() {
     names[10] = "dimes";
     names[25] = "quarters";
 
-    stack<int> s;
-    //cout << countWays_iterative(total) << endl;
-    //cout << countWays_recursive(total, denominations, 4, 0) << endl;
-    cout << countWays_recursive_naive(denominations, 4, total, s) << endl;
+    vector<int> vec;
+    cout << "Total combinations iteratively: " << countWays_iterative(total) << endl;
+    cout << "All Combinations" << endl;
+    cout << "Total combinations recursively: " << countWays_recursive(denominations, 4, total, vec) << endl;
     return 0;
 }
 
