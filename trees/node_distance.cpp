@@ -62,7 +62,7 @@ Node* getLCA(Node* root, int node1, int &node1_height, int node2, int &node2_hei
         return NULL;
     // found LCA, return it
     } else if(LCALeft != NULL && LCARight != NULL) {
-        dist = node1_height + node2_height - (2&level);
+        dist = node1_height + node2_height - (2*level);
         return root;
     // found LCA in either of the branches, return the one with the LCA
     } else {
@@ -86,7 +86,6 @@ void nodeDistance(Node* root, int node1, int node2) {
 
     cout << "LCA: " << lca->data << endl;
     cout << "Dist between " << node1 << " and " << node2 << ": " << dist << endl;
-
 
     return;
 }
