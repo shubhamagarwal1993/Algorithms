@@ -54,7 +54,7 @@ Node* findLCAUtil(Node* root, int node1, bool &node1_exists, int node2, bool &no
     Node* LCALeft = findLCAUtil(root->left, node1, node1_exists, node2, node2_exists);
     Node* LCARight = findLCAUtil(root->right, node1, node1_exists, node2, node2_exists);
 
-    // check if temp is setm which means LCA was found
+    // check if temp is set, which means LCA was found
     if(test != NULL) {
         return test;
     }
