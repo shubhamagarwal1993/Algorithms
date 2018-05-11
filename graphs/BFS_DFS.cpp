@@ -3,13 +3,28 @@
 
 using namespace std;
 
+class Node {
+    private:
+        int data;
+        bool visited;
+    public:
+        Node(int data);
+};
+
+Node::Node(int data) {
+    this->data = data;
+    this->visited = false;
+}
+
 // This class represents a directed graph using adjacency list representation
 class Graph {
     private:
         // No. of vertices
         int V;
+
         // Pointer to an array containing adjacency lists
         list<int> *adj;
+
         // A function used by DFS
         void DFSUtil(int v, bool visited[]);
 
@@ -27,9 +42,10 @@ class Graph {
         void DFS();
 };
 
+
 Graph::Graph(int V) {
     this->V = V;
-    adj = new list<int>[V];
+    this->adj = new list<int>[V];
 }
 
 void Graph::addEdge(int v, int w) {
@@ -101,7 +117,7 @@ void Graph::DFSUtil(int v, bool visited[]) {
 void Graph::DFS() {
     // Mark all the vertices as not visited
     bool *visited = new bool[V];
-    for (int i = 0; i < V; i++) {
+    for(int i = 0; i < V; i++) {
         visited[i] = false;
     }
 
@@ -122,11 +138,15 @@ int main() {
 
     Graph g = construct_graph();
 
+    // Time: O(V + E), Space: O(V^2)
     cout << "Breadth First Traversal" << "(starting from vertex 2): ";
     g.BFS(2);
     cout << endl;
+
+    // Time: O(V + E), Space: O(V^2)
     cout << "Depth First Traversal: ";
     g.DFS();
     cout << endl;
+
     return 0;
 }
