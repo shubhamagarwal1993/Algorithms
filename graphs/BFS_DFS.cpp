@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ class Graph {
 
         // A function used by DFS
         void DFSUtil(int v, bool visited[]);
+        void DFSUtil_trial(int v, bool visited[], vector<int> &vec);
 
     public:
         // Constructor
@@ -40,6 +42,7 @@ class Graph {
 
         // prints DFS traversal of the complete graph
         void DFS();
+        void DFS_trial(vector<int> &vec);
 };
 
 
@@ -130,6 +133,36 @@ void Graph::DFS() {
     }
 }
 
+void Graph::DFSUtil_trial(int v, bool visited[], vector<int> &vec) {
+    // Mark the current node as visited and print it
+    visited[v] = true;
+    vec.push_back(v);
+
+    // Recur for all the vertices adjacent to this vertex
+    list<int>::iterator i;
+    for(i = adj[v].begin(); i != adj[v].end(); ++i) {
+        if(!visited[*i]) {
+            DFSUtil_trial(*i, visited, vec);
+        }
+    }
+}
+
+void Graph::DFS_trial(vector<int> &vec) {
+    // Mark all the vertices as not visited
+    bool *visited = new bool[V];
+    for(int i = 0; i < V; i++) {
+        visited[i] = false;
+    }
+
+    // Call the recursive helper function to print DFS traversal
+    // starting from all vertices one by one
+    for (int i = 0; i < V; i++) {
+        if (visited[i] == false) {
+            DFSUtil_trial(i, visited, vec);
+        }
+    }
+}
+
 int main() {
     // construct graph
     //   ___   0 - 1
@@ -147,6 +180,15 @@ int main() {
     cout << "Depth First Traversal: ";
     g.DFS();
     cout << endl;
+
+
+    cout << endl << endl << "Trial DFS: ";
+    vector<int> vec;
+    g.DFS_trial(vec);
+    for(int i = 0; i < vec.size(); i++) {
+        cout << vec[i] << " ";
+    }
+    cout << endl << endl;
 
     return 0;
 }
