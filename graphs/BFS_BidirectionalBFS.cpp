@@ -130,7 +130,7 @@ void Graph::BBFS(int s, int t) {
         int s_current = s_queue.front();
         s_queue.pop_front();
         list<int>::iterator s_i;
-        for(s_i = adj[s].begin(); s_i != adj[s].end(); s_i++) {
+        for(s_i = adj[s_current].begin(); s_i != adj[s_current].end(); s_i++) {
             if(!s_visited[*s_i]) {
                 s_parent[*s_i] = s_current;
                 s_visited[*s_i] = true;
@@ -142,7 +142,7 @@ void Graph::BBFS(int s, int t) {
         int t_current = t_queue.front();
         t_queue.pop_front();
         list<int>::iterator t_i;
-        for(t_i = adj[t].begin(); t_i != adj[t].end(); t_i++) {
+        for(t_i = adj[t_current].begin(); t_i != adj[t_current].end(); t_i++) {
             if(!t_visited[*t_i]) {
                 t_parent[*t_i] = t_current;
                 t_visited[*t_i] = true;
@@ -151,14 +151,11 @@ void Graph::BBFS(int s, int t) {
         }
 
         // check if any intersecting vertex
-        cout << endl;
         for(int i = 0; i < V; i++) {
-            cout << s_visited[i] << "-" << t_visited[i] << "  " ;
             if(s_visited[i] && t_visited[i]) {
                 intersectNode = i;
             }
         }
-        cout << endl;
 
         // if intersectNode, then we can stop BBFS and print path
         if(intersectNode != -1) {
@@ -181,7 +178,7 @@ void Graph::BBFS(int s, int t) {
 
             // print path
             vector<int>::iterator it;
-            cout << "*****Path*****" << endl;
+            cout << endl << "*****Path*****" << endl;
             for(it = path.begin(); it != path.end(); it++) {
                 cout << *it << " ";
             }
