@@ -163,6 +163,55 @@ void Graph::DFS_trial(vector<int> &vec) {
     }
 }
 
+bool validMatrix(int matrix[2][4], int row, int col, int row_end, int col_end, vector<int> &vec) {
+    if( (row >= 0) 
+     && (row <= row_end)
+     && (col >= 0)
+     && (col <= col_end)
+     && (!(std::find(vec.begin(), vec.end(), matrix[row][col]) != vec.end()))
+    ) {
+        return true;
+    }
+    return false;
+}
+
+bool dfsMatrix(int matrix[2][4], int row, int col, int row_end, int col_end, vector<int> &vec) {
+
+    if(vec.size() == 7) {
+
+        if(validMatrix(matrix, row+1, col, row_end, col_end, vec)) {
+            vec.push_back(matrix[row+1][col]);
+        } else if(validMatrix(matrix, row, col+1, row_end, col_end, vec)) {
+            vec.push_back(matrix[row][col+1]);
+        } else if(validMatrix(matrix, row-1, col, row_end, col_end, vec)) {
+            vec.push_back(matrix[row-1][col]);
+        } else if(validMatrix(matrix, row, col-1, row_end, col_end, vec)) {
+            vec.push_back(matrix[row][col-1]);
+        }
+    }
+
+    if(vec.size() == 8) {
+        return true;
+    }
+
+    if(validMatrix(matrix, row, col, row_end, col_end, vec)) {
+
+        vec.push_back(matrix[row][col]);
+
+        if( (dfsMatrix(matrix, row+1, col, row_end, col_end, vec)) 
+         || (dfsMatrix(matrix, row, col+1, row_end, col_end, vec)) 
+         || (dfsMatrix(matrix, row-1, col, row_end, col_end, vec)) 
+         || (dfsMatrix(matrix, row, col-1, row_end, col_end, vec)) 
+        ) {
+            return true;
+        } else {
+            vec.pop_back();
+            return false;
+        }
+    }
+    return false;
+}
+
 int main() {
     // construct graph
     //   ___   0 - 1
@@ -187,6 +236,17 @@ int main() {
     g.DFS_trial(vec);
     for(int i = 0; i < vec.size(); i++) {
         cout << vec[i] << " ";
+    }
+    cout << endl << endl;
+
+    int matrix[2][4] = {{1, 2, 3, 4}
+                    , {5, 6, 7, 8}
+                     };
+
+    vector<int> vec1;
+    dfsMatrix(matrix, 0, 0, 1, 3, vec1);
+    for(int i = 0; i < vec1.size(); i++) {
+        cout << vec1[i] << " ";
     }
     cout << endl << endl;
 
