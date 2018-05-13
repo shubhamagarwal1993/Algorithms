@@ -18,7 +18,7 @@ class Graph {
     // No. of vertices
     int V;
 
-    // Pointer to an array containing adjacency listsList
+    // Pointer to an array containing adjacency lists
     list<int> *adj;
 
     // Vector to store indegree of vertices
@@ -184,7 +184,7 @@ int main() {
     // construct graph
     //        5   4        5 -> 2    5 -> 0
     //       / \ / \       4 -> 1    4 -> 0
-    //      2       0      1         2 -> 3
+    //      2   0   1      2 -> 3
     //       \     /       3 -> 1
     //        \   /
     //          3
