@@ -38,7 +38,7 @@ bool patternMatch(string str, int str_size, int str_index, string pattern, int p
 
     // this char in pattern is not seen before
     for(int i = 1; i <= str_size - str_index; i++) {
-        // consider substring that starts at i, and spans length and add it to map
+        // consider substring that starts at str_index, and spans length(i is length in substr) and add it to map
         map[pattern_curr_char] = str.substr(str_index, i);
 
         if(patternMatch(str, str_size, str_index + i, pattern, pattern_size, pattern_index + 1, map)) {
