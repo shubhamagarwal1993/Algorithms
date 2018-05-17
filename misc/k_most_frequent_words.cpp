@@ -78,9 +78,10 @@ void k_most_used_words(string input, int k) {
     return;
 }
 
-// Min Heap of size k - keep top k most frequent words
-// Hashmap - keep frequency of each word
 void getKMostUsedWords(string input, int k) {
+
+    // Min heap of size k - these are the k most frequent words
+    MinHeap* minHeap = createMinHeap(k);
     // calculate frequency of all the words in a hashmap with key word and value frequency
 
     // using frequency as key for minHeap, add pair object of word and its frequency
@@ -93,11 +94,9 @@ void getKMostUsedWords(string input, int k) {
 int main() {
 
     // top k most used words
-    int k = 2;
+    int k = 5;
 
-    //finding the kth smallest element
-    // test - 3, a - 4
-    string input = "hi this is a test of a test in a test with a time";
+    string input = "a b b c c c d d d d e e e e e f f f f f f h h h h h h h i i i i i i i i j j j j j j j j j";
 
     //finding the k most used words
     k_most_used_words(input, k);
