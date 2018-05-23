@@ -39,15 +39,16 @@ TrieNode* newTrieNode() {
 // If the key is prefix of trie node, just marks leaf node
 void insert(TrieNode *root, string key) {
     int level = 0;
-    //root already has a map defined
-    for (int i = 0; i < key.length(); i++) {
+
+    // root already has a map defined
+    for(int i = 0; i < key.length(); i++) {
         level++;
         char index = key[i];
         std::map<char, TrieNode*>::iterator it;
         it = root->mymap.find(index);
 
         //found char, move on to next char
-        if (it != root->mymap.end()) {
+        if(it != root->mymap.end()) {
             root = root->mymap[index];
         // new character
         } else {
@@ -164,8 +165,9 @@ int main() {
     int keys_size = sizeof(keys)/sizeof(keys[0]);
 
     // Construct trie
-    for (int i = 0; i < keys_size; i++)
+    for(int i = 0; i < keys_size; i++) {
         insert(root, keys[i]);
+    }
 
     cout << "------" << endl;
     search(root, "the");

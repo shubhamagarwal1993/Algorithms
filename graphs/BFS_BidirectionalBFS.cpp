@@ -11,7 +11,7 @@ class Graph {
         int V;
 
         // Pointer to an array containing adjacency lists
-        list<int> *adj;
+        list<int>* adj;
 
     public:
         // Constructor
@@ -92,7 +92,7 @@ void Graph::BFS(int s) {
     }
 }
 
-// The function to do DFS traversal. It uses recursive DFSUtil()
+// The function to do Bi-directional BFS traversal
 void Graph::BBFS(int s, int t) {
 
     // Mark all the vertices as not visited
@@ -126,7 +126,7 @@ void Graph::BBFS(int s, int t) {
 
     while(!s_queue.empty() && !t_queue.empty()) {
 
-        // Dequeue starting vertex from queue and print it
+        // Dequeue starting vertex from queue and add neighbors to queue
         int s_current = s_queue.front();
         s_queue.pop_front();
         list<int>::iterator s_i;
@@ -138,7 +138,7 @@ void Graph::BBFS(int s, int t) {
             }
         }
 
-        // Dequeue target vertex from queue and print it
+        // Dequeue target vertex from queue and add neighbors to queue
         int t_current = t_queue.front();
         t_queue.pop_front();
         list<int>::iterator t_i;
@@ -154,6 +154,7 @@ void Graph::BBFS(int s, int t) {
         for(int i = 0; i < V; i++) {
             if(s_visited[i] && t_visited[i]) {
                 intersectNode = i;
+                break;
             }
         }
 

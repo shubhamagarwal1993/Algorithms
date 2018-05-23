@@ -4,6 +4,7 @@
 #### Questions and Answers for object oriented design
     `http://www.andiamogo.com/Q-OOD.pdf`
     `http://www.andiamogo.com/S-OOD.pdf`
+    This is from the book CTCI
 
 #### Interesting read
     `http://steve-yegge.blogspot.com/2008/03/get-that-job-at-google.html`
