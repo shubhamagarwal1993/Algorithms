@@ -1,0 +1,24 @@
+Name : Shubham Agarwal
+netid : sagarwl4
+
+CS 425/ECE 428 Distributed Systems (Spring 2015)
+Homework 6 - Answer Sheet
+
+  1.	NO
+	referred here: (http://en.wikipedia.org/wiki/Paxos_%28computer_science%29)
+	It states that "no deterministic fault-tolerant consensus protocol can guarantee progress in an asynchronous network (a result proved in a paper by 
+	Fischer, Lynch and Paterson), Paxos guarantees safety (consistency), and the conditions that could prevent it from making progress are difficult to 
+	provoke".
+
+  2.(a) Picture is in the pdf
+  	(b) successor.key(8)   = 8
+  		successor.key(120) = 2
+  		  
+  3.	YES
+  	The paper here (http://www.cs.indiana.edu/ftp/techreports/TR481.pdf ) says that we can implement the bully algorithm for an asynchronous system.
+
+  4.(a) NO     ->The reason is in the pdf file
+  (b) YES	 ->The reason is in the pdf file
+
+  5.(a) YES    ->The reason is in the pdf file
+  (b)	YES    ->The reason is in the pdf file

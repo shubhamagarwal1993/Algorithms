@@ -1,0 +1,40 @@
+NAME: Shubham Agarwal
+netid: sagarwl4
+
+
+CS 425/ECE 428 Distributed Systems
+Homework 2 Answer Sheet
+
+
+1. Logical timestamps:
+   Event c = 4
+   Event f = 6
+
+2. Events concurrent with e = a, b, h
+
+3. Events happened-before event c = a, b, h, e, g
+
+4. (a) False
+4. (b) True
+
+5. Yes
+ 
+   Explanation: 
+
+Some given facts:
+	-	Nodes use a reliable broadcast channel. Thus, we will not have any conditions in which packets drop or have to be resent, or anything else.
+	-	Each transmitted message is received by all the nodes. Thus, we will also not have the condition of a node sending messages to some of the 
+		nodes and then failing preventing the other nodes from getting the broadcast.
+
+	Let us assume that the nodes have an initial value. By the consensus problem, we agree that all the nodes will choose the value that is supported 
+	by the maximum number of nodes.
+
+	Round 1: {p1 = 0}, {p2 = 1}, {p3 = 0}, {p4 = 1}
+	Now, all the nodes broadcast a message to all the other nodes containing the value they have. Let us assume that node p4 crashes before broadcasting.
+	
+	The following values will be recorded in the nodes .
+	Round 2: {p1 = 0, p2 = 1, p3 = 0}, {p2 = 1, p1 = 0, p3 = 0}, {p3 = 0, p1 = 0, p2 = 1}, {p4 = crashed}
+
+	So, we see here that the first three nodes all have some values and the fourth one does not matter. Based on the values in individual nodes, 
+	we see that all the nodes decide on the value 0 as it occurs the maximum number of times. 
+	

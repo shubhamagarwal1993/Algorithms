@@ -1,0 +1,21 @@
+# my server IP address and port number
+127.0.0.1
+5004
+5005
+# buffer size of my server
+1024
+
+# server 1 IP address and port number
+127.0.0.1
+5001
+
+# server 2 IP address and port number
+127.0.0.1
+5002
+
+# server 3 IP address and port number
+127.0.0.1
+5003
+
+# Max delay time
+10

@@ -52,8 +52,23 @@
    - lec_13_b.pdf
    - lec_13_c.pdf
  - lec 14 (same as lec 13)
- - lec 15 (midterm)
+ - lec 15
+ - midterm 1
  - lec_16.pdf
  - lec_17_a.pdf
    - lec_17_b.pdf
- - 
+ - lec_18.pdf
+ - lec_19.ppt
+ - lec_20.pdf
+ - lec 21 (nothing)
+ - lec_22.pdf
+ - midterm 2
+ - lec 23 (nothing)
+ - lec_24_a.pdf
+   - lec_24_b.ppt
+ - lec_25.pdf
+ - lec_26.pdf
+ - lec 27 (nothing)
+ - lec_28.pdf
+ - lec_29.pdf
+ - final exam
