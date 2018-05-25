@@ -56,7 +56,6 @@
 | successor       | the next node on the identifier circle; finger[1].node |
 | .node           | first node >= n.finger[k].start                        |
 | predecessor     | the previous node on the identifier circle             |
-|-----------------|--------------------------------------------------------|
 
 #### Important characteristics
  - each node stores information about only a small number of other nodes
