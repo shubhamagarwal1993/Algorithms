@@ -26,13 +26,38 @@ Node* newNode(int data) {
     return node;
 }
 
+//             1
+//            / \
+//           /   \
+//          /     \
+//         /       \
+//        /         \
+//      10           3
+//     /  \         / \
+//    /    \       /   \
+//   4      6     2     9
+//    \    / \   / \   / \
+//    30  0   5 21  8 7  11
+//
+
 void construct_tree1(Node* Tree1) {
-    Tree1->right              = newNode(3);
-    Tree1->right->right       = newNode(3);
     Tree1->left               = newNode(10);
+    Tree1->right              = newNode(3);
+
     Tree1->left->left         = newNode(4);
-    Tree1->left->left->right  = newNode(30);
     Tree1->left->right        = newNode(6);
+
+    Tree1->right->left        = newNode(2);
+    Tree1->right->right       = newNode(9);
+
+    Tree1->left->left->right  = newNode(30);
+    Tree1->left->right->left  = newNode(0);
+    Tree1->left->right->right = newNode(5);
+
+    Tree1->right->left->left   = newNode(21);
+    Tree1->right->left->right  = newNode(8);
+    Tree1->right->right->left  = newNode(7);
+    Tree1->right->right->right = newNode(11);
     return;
 }
 
@@ -42,6 +67,20 @@ void inorder_print_tree1(Node* root) {
     inorder_print_tree1(root->left);
     cout << root->data << " ";
     inorder_print_tree1(root->right);
+}
+void preorder_print_tree1(Node* root) {
+    if (root == NULL)
+        return;
+    cout << root->data << " ";
+    preorder_print_tree1(root->left);
+    preorder_print_tree1(root->right);
+}
+void postorder_print_tree1(Node* root) {
+    if (root == NULL)
+        return;
+    postorder_print_tree1(root->left);
+    postorder_print_tree1(root->right);
+    cout << root->data << " ";
 }
 
 int height(Node* node) {
@@ -178,8 +217,12 @@ int main() {
     Node* Tree1 = newNode(1);        // tree1
     construct_tree1(Tree1);
 
-//    inorder_print_tree1(Tree1);
-//    cout << endl;
+    inorder_print_tree1(Tree1);
+    cout << endl;
+    preorder_print_tree1(Tree1);
+    cout << endl;
+    postorder_print_tree1(Tree1);
+    cout << endl;
 
     // level order 
 //    printLevelOrder(Tree1);
