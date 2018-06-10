@@ -20,6 +20,8 @@
    ------------    | Interpreter |    ------------
                     -------------
 
+
+
 #### User Interface:
  - Everything that you can see but cannot manipulate
  - E.g. address bar, settings
