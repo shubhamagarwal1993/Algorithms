@@ -51,6 +51,10 @@ Node* findLCAUtil(Node* root, int node1, bool &node1_exists, int node2, bool &no
         test = root;
     }
 
+    if(node1_exists && node2_exists && test != NULL) {
+        return test;
+    }
+
     Node* LCALeft = findLCAUtil(root->left, node1, node1_exists, node2, node2_exists);
     Node* LCARight = findLCAUtil(root->right, node1, node1_exists, node2, node2_exists);
 
@@ -93,6 +97,7 @@ void findLCA(Node* root, int node1, int node2) {
 int main() {
     Node* root = constructTree();
     findLCA(root, 14, 11);
+    findLCA(root, 8, 3);
 
     return 0;
 }

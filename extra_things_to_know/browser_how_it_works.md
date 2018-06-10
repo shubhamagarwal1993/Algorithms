@@ -15,10 +15,10 @@
          ---------------------------    |
             |         |           |     |
             V         V           V     V
-   ------------   -------------   ------------
-  | Networking | | Javascript  | | UI Backend | 
-   ------------  | Interpreter |  ------------
-                  -------------
+   ------------     -------------     ------------
+  | Networking |   | Javascript  |   | UI Backend | 
+   ------------    | Interpreter |    ------------
+                    -------------
 
 #### User Interface:
  - Everything that you can see but cannot manipulate

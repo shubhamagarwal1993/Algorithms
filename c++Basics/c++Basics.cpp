@@ -34,6 +34,12 @@ class Circle {
             this->color = circle.color;
         }
 
+        Circle operator + (Circle const &circle) {
+            Circle res;
+            res.radius = this->radius + circle.radius;
+            return res;
+        }
+
         double getRadius() const {
             return radius;
         }
@@ -95,6 +101,9 @@ int main() {
     cout << "Total objects = " << Circle::objectCount << endl;
     delete c9;
     cout << "Total objects = " << Circle::objectCount << endl;
+
+    Circle c10 = c4 + c5;
+    cout << "c10" << " Radius=" << c10.getRadius() << " Area=" << c10.getArea() << " Color=" << c10.getColor() << endl;
 
    return 0;
 }

@@ -1,3 +1,7 @@
+#include <iostream>
+
+using namespace std;
+
 class CallHandler {
 
 	private:
@@ -137,3 +141,7 @@ class Director extendes Employee {
 			rank = Rank.Director;
 		}
 };
+
+int main() {
+    return 0;
+}
