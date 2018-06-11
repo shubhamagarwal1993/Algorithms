@@ -16,7 +16,7 @@ void powerSet_iterate(char *set, int set_size) {
         // compare against 001 010 100
         for(int j = 0; j < set_size; j++) {
             // Check if jth bit in counter is set
-            if ( counter & (1 << j) )
+            if( counter & (1 << j) )
                 cout << set[j] << " ";
         }
         cout << "}";
@@ -24,8 +24,7 @@ void powerSet_iterate(char *set, int set_size) {
     }
 }
 
-void printSet(char array[], int size)
-{
+void printSet(char array[], int size) {
     cout << "{ ";
     for (int i = 0; i < size; i++)
         cout << array[i] << " ";
@@ -34,10 +33,8 @@ void printSet(char array[], int size)
     return;
 }
 
-void powerSet_recursive(char *input, char s[], int k, int m, int size)
-{
-    if (m < size)
-    {
+void powerSet_recursive(char *input, char s[], int k, int m, int size) {
+    if(m < size) {
         s[k] = input[m];
         printSet(s, k+1);
         powerSet_recursive(input, s, k+1, m+1, size);

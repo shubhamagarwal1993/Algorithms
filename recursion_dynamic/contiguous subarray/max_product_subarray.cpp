@@ -11,7 +11,7 @@ int min (int x, int y) {return x < y? x : y; }
 // Utility functions to get maximum of two integers
 int max (int x, int y) {return x > y? x : y; }
 
-int maxSubArrayProduct(int arr[], int arr_size) 
+int maxSubArrayProduct(int arr[], int arr_size); 
 
 int main() {
 	int arr[] = {1, -2, -3, 0, 7, -8, -2};
