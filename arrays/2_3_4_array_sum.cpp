@@ -1,4 +1,8 @@
 // compile using g++ -std=c++0x 2_3_4_array_sum.cpp
+//
+// Given array, find 2 numbers that sum up to k
+// Given array, find 3 numbers that sum up to k
+// Given array, find 4 numbers that sum up to k
 
 #include <cmath>
 #include <cstdio>

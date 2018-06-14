@@ -74,7 +74,7 @@ int countWays_recursive(int denominations[], int den_size, int total, vector<int
 int main() {
 
     // total value
-    int total = 10;
+    int total = 15;
     int denominations[] = {25, 10, 5, 1};
 
     unordered_map<int, string> names;
@@ -86,7 +86,8 @@ int main() {
     vector<int> vec;
     cout << "Total combinations iteratively: " << countWays_iterative(total) << endl;
     cout << "All Combinations" << endl;
-    cout << "Total combinations recursively: " << countWays_recursive(denominations, 4, total, vec) << endl;
+    cout << "Total combinations recursively: " << endl;
+    countWays_recursive(denominations, 4, total, vec);
     return 0;
 }
 

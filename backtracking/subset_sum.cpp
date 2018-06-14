@@ -72,9 +72,10 @@ bool subsetSum(int arr[], int arr_size, int sum, vector<int> vec) {
 
 int main() {
 
-    int arr[] = {2,5,3,9,6,1,8};
+    //int arr[] = {2,5,3,9,6,1,8};
+    int arr[] = {1, 5, 10, 25};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
-    int sum = 8;
+    int sum = 25;
 
     vector<int> vec;
     // exponential time
