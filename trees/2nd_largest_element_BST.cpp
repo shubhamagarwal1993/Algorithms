@@ -1,75 +1,128 @@
-#include <iostream>
+#include <cmath>
+#include <cstdio>
 #include <vector>
+#include <iostream>
+#include <algorithm>
 
 using namespace std;
 
-class Node {
-    private:
-        int data;
-        Node* left;
-        Node* right;
-    public:
-        Node(int data) {
-            Node* root = new Node(data);
-            root->left = NULL;
-            root->right = NULL;
-        }
+// tree node
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
 };
 
+// constructor for new node
 Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
+    Node* node = new Node;
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+//        50
+//        / \
+//       /   \
+//      /     \
+//     /       \
+//    10       60
+//   /  \     /  \
+//  5   20  55   70
+//          /   /  \
+//        51   65  80
+
+Node* construct_tree() {
+
+    Node* root = newNode(50);
+    Node* temp = root;
+
+    temp->left = newNode(10);
+    temp->right = newNode(60);
+
+    temp = temp->left;
+    temp->left = newNode(5);
+    temp->right = newNode(20);
+
+    temp = root->right;
+    temp->left = newNode(55);
+    temp->right = newNode(70);
+
+    temp->left->left = newNode(51);
+    temp->right->left = newNode(65);
+    temp->right->right = newNode(80);
+
     return root;
 }
 
-Node* constructTree() {
-    Node* root = newNode(1);
-
-    root->left = newNode(2);
-    root->left->left = newNode(4);
-    root->left->right = newNode(5);
-
-    root->right = newNode(3);
-    root->right->right = newNode(8);
-    root->right->right->left = newNode(6);
-    root->right->right->right = newNode(7);
-    return root;
-//              1
-//             / \
-//            2   3
-//           / \   \
-//          4   5   8
-//                 / \
-//                6   7
-}
-
-int countBelowEachNode(Node* root) {
-
+Node* getRightMostNode(Node* root) {
     if(root == NULL) {
-        return 0;
+        return NULL;
     }
 
-    int left_count = countBelowEachNode(root->left);
-    int right_count = countBelowEachNode(root->right);
-
-    if(root->left != NULL) {
-        left_count += 1;
+    if(root->right == NULL) {
+        return root;
     }
-    if(root->right != NULL) {
-        right_count += 1;
+    return getRightMostNode(root->right);
+}
+
+Node* get2ndLargestInBST(Node* root) {
+    // root cannot be null and must have at least 1 child
+    if((root == NULL) || (root->right == NULL && root->left == NULL)) {
+        return NULL;
     }
 
-    cout << root->data << " " << left_count + right_count << endl;
-    return left_count + right_count;
+    Node* current = root;
+
+    while(current) {
+        // if tree does not have a right subtree, then largest in left subtree
+        if(root->left && (root->right == NULL)) {
+            return getRightMostNode(root->left);
+        }
+
+        // if current is the parent of the largest element, and the largest has no children
+        if(current->right && (current->right->left == NULL) && (current->right->right == NULL)) {
+            return current;
+        }
+
+        current = current->right;
+    }
+    return NULL;
+}
+
+int get2ndLargestInBSTInorder(Node* root, int node_count) {
+    if(root == NULL) {
+        return node_count;
+    }
+
+    node_count = get2ndLargestInBSTInorder(root->right, node_count);
+
+    node_count++;
+    if(node_count == 2) {
+        cout << "2nd largest element = " << root->data << endl;
+    }
+
+    node_count = get2ndLargestInBSTInorder(root->left, node_count);
+    return node_count;
 }
 
 int main() {
-    Node* root = constructTree();
 
-    // O(n) time and O(1) space
-    countBelowEachNode(root);
+    Node* root = construct_tree();
+
+    // By using inorder method - 2nd node in reverse inorder
+    // Running time O(h), Space O(1)
+    int node_count = 0;
+    get2ndLargestInBSTInorder(root, node_count);
+
+    // By finding largest node and then second largest
+    Node* secondLargest = get2ndLargestInBST(root);
+    if(secondLargest == NULL) {
+        cout << "Cannot find the 2nd largest element" << endl;
+    } else {
+        cout << "2nd largest element = " << secondLargest->data << endl;
+    }
 
     return 0;
 }
