@@ -2,13 +2,20 @@
 
 using namespace std;
 
+int charToIntVal(char c) {
+    return (int)c;
+}
+
+char intToCharVal(int input) {
+    return (char)input;
+}
+
 int main() {
 
-    int i = 0;
-    for(i = 0; i < 5; i++) {
-        cout << i << " ";
-    }
-    cout << endl << i << endl;
+    char temp = '#';
+    cout << temp << ": " << charToIntVal(temp) << endl;
+    int ascii = 85;
+    cout << ascii << ": " << intToCharVal(ascii) << endl;
 
     return 0;
 }

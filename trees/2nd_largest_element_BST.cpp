@@ -112,11 +112,12 @@ int main() {
     Node* root = construct_tree();
 
     // By using inorder method - 2nd node in reverse inorder
-    // Running time O(h), Space O(1)
+    // Running time O(n), Space O(1)
     int node_count = 0;
     get2ndLargestInBSTInorder(root, node_count);
 
     // By finding largest node and then second largest
+    // Running time O(n), Space O(1)
     Node* secondLargest = get2ndLargestInBST(root);
     if(secondLargest == NULL) {
         cout << "Cannot find the 2nd largest element" << endl;
