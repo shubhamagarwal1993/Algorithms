@@ -22,3 +22,49 @@
  - Cons:
    - 
 
+### Polynomial vs exponential
+ - Polynomial times:
+   - look like C(n^k) or O(n^k) where n is the size of the input
+   - can be constant, linear, quadratic, cubic
+ - Exponential looks like C(k^n) or O(k^n) where n is the size of the input
+
+### P vs NP vs NP-Complete vs NP-Hard Complexity classes
+ - Decision problem: A problem with a yes or no answer
+ - Refer: https://stackoverflow.com/questions/1857244/what-are-the-differences-between-np-np-complete-and-np-hard
+
+#### P
+ - A complexity class that represents the set of all decision problems that can be solved in polynomial time
+ - Problems can be solved by deterministic turing machine
+ - subset of NP problems
+ - E.g. Given a connected graph G, can its vertices be coloured using two colours so that no edge is monochromatic?
+   - Algorithm: start with an arbitrary vertex, color it red and all of its neighbours blue and continue. Stop when you run out of vertices or you are forced to make an edge have both of its endpoints be the same color.
+
+#### NP
+ - A complexity class that represents the set of all decision problems that can be verified in polynomial time
+ - Problems that cannot be solved in polynomial time
+ - problems that can be solved by non-deterministic turing machine
+ - E.g. Integer factorisation is in NP. This is the problem that given integers n and m, is there an integer f with 1 < f < m, such that f divides n (f is a small factor of n)?
+   - This is a decision problem because the answers are yes or no. If someone hands us an instance of the problem (so they hand us integers n and m) and an integer f with 1 < f < m, and claim that f is a factor of n (the certificate), we can check the answer in polynomial time by performing the division n / f.
+
+#### NP-Complete
+ - A complexity class which represents the set of all problems X in NP for which it is possible to reduce any other NP problem Y to X in polynomial time
+ - Intuitively this means that we can solve Y quickly if we know how to solve X quickly. Precisely, Y is reducible to X, if there is a polynomial time algorithm f to transform instances y of Y to instances x = f(y) of X in polynomial time, with the property that the answer to y is yes, if and only if the answer to f(y) is yes.
+ - E.g. 3-SAT. It can be shown that every NP problem can be reduced to 3-SAT. Also known as Cook's theorem
+
+#### NP-Hard
+ - These are the problems that are at least as hard as the NP-complete problems. Note that NP-hard problems do not have to be in NP, and they do not have to be decision problems
+ - A problem X is NP-hard, if there is an NP-complete problem Y, such that Y is reducible to X in polynomial time
+ - Since any NP-complete problem can be reduced to any other NP-complete problem in polynomial time, all NP-complete problems can be reduced to any NP-hard problem in polynomial time. Then, if there is a solution to one NP-hard problem in polynomial time, there is a solution to all NP problems in polynomial time.
+ - E.g. The halting problem, this is the problem that given a program P, and input I, will it halt?
+ - Any NP-complete problem is NP-hard
+
+-----------------------------------------------------------------
+| Problem Type  | Verifiable in P time  | Solvable in P time    |
+|---------------|-----------------------|-----------------------|
+| P             |        Yes            |        Yes            |
+| NP            |        Yes            |     Yes or No *       |
+| NP-Complete   |        Yes            |      Unknown          |
+| NP-Hard       |     Yes or No **      |      Unknown ***      |
+-----------------------------------------------------------------
+
+
