@@ -50,6 +50,7 @@
  - A complexity class which represents the set of all problems X in NP for which it is possible to reduce any other NP problem Y to X in polynomial time
  - Intuitively this means that we can solve Y quickly if we know how to solve X quickly. Precisely, Y is reducible to X, if there is a polynomial time algorithm f to transform instances y of Y to instances x = f(y) of X in polynomial time, with the property that the answer to y is yes, if and only if the answer to f(y) is yes.
  - E.g. 3-SAT. It can be shown that every NP problem can be reduced to 3-SAT. Also known as Cook's theorem
+ - E.g. Find chromatic number of a given graph 
 
 #### NP-Hard
  - These are the problems that are at least as hard as the NP-complete problems. Note that NP-hard problems do not have to be in NP, and they do not have to be decision problems
@@ -62,9 +63,16 @@
 | Problem Type  | Verifiable in P time  | Solvable in P time    |
 |---------------|-----------------------|-----------------------|
 | P             |        Yes            |        Yes            |
-| NP            |        Yes            |     Yes or No *       |
+| NP            |        Yes            |     Yes or No         |
 | NP-Complete   |        Yes            |      Unknown          |
-| NP-Hard       |     Yes or No **      |      Unknown ***      |
+| NP-Hard       |     Yes or No         |      Unknown          |
 -----------------------------------------------------------------
 
-
+#### Graph coloring Applications:
+ - Making schedule or time table: How do we schedule the exam so that no two exams with a common student are scheduled at same time? How many minimum time slots are needed to schedule all exams? 
+   - This problem can be represented as a graph where every vertex is a subject and an edge between two vertices mean there is a common student. So this is a graph coloring problem where minimum number of time slots is equal to the chromatic number of the graph
+ - Mobile Radio Frequency Assignment: How to assign different frequencies to all towers at the same locatoin? What is the minimum number of frequencies needed ?
+   - This problem is an instance of graph coloring problem where every tower represents a vertex and an edge between two towers represents that they are in range of each other
+ - Sudoku: A variation of graph coloring problem where every cell represents a vertex. There is an edge between two vertices if they are in same row or same column or same block
+ - Bipartitle graph: A variation of graph coloring problem. If a given graph is 2-colorable, then it is Bipartite, otherwise not
+ - Map Coloring: Geographical maps of countries or states where no two adjacent cities cannot be assigned same color. Four colors are sufficient to color any map 
