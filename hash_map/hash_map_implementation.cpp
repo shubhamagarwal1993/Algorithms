@@ -53,17 +53,16 @@ class HashNode {
 };
 
 // Default hash function class
+// takes a key, converts it to unsigned long int, and takes mod
 template <typename K>
 struct KeyHash {
-    unsigned long operator()(const K& key) const
-    {
+    unsigned long operator()(const K key) const {
         return reinterpret_cast<unsigned long>(key) % TABLE_SIZE;
     }
 };
 
 struct MyKeyHash {
-    unsigned long operator()(const int& k) const
-    {
+    unsigned long operator()(const int k) const {
         return k % 10;
     }
 };
@@ -97,7 +96,7 @@ class HashMap {
             delete [] table;
         }
 
-        bool get(const K &key, V &value) {
+        bool get(const K key, V &value) {
             unsigned long hashValue = hashFunc(key);
             HashNode<K, V> *entry = table[hashValue];
 
@@ -111,7 +110,7 @@ class HashMap {
             return false;
         }
 
-        void put(const K &key, const V &value) {
+        void put(const K key, const V value) {
             unsigned long hashValue = hashFunc(key);
             HashNode<K, V> *prev = NULL;
             HashNode<K, V> *entry = table[hashValue];
@@ -135,7 +134,7 @@ class HashMap {
             }
         }
 
-        void remove(const K &key) {
+        void remove(const K key) {
             unsigned long hashValue = hashFunc(key);
             HashNode<K, V> *prev = NULL;
             HashNode<K, V> *entry = table[hashValue];
