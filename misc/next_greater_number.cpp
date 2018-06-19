@@ -4,7 +4,7 @@ using namespace std;
 
 void printNextGreaterNumber(int digits[], int digits_size) {
     if(digits_size <= 1) {
-        cout << "not possible";
+        cout << "  not possible";
         return;
     }
 
@@ -16,7 +16,7 @@ void printNextGreaterNumber(int digits[], int digits_size) {
         }
     }
     if(first_smaller_digit_index == 0) {
-        cout << "not possible";
+        cout << "  not possible" << endl;
         return;
     }
 
@@ -34,19 +34,41 @@ void printNextGreaterNumber(int digits[], int digits_size) {
 
     // sort the rest of the digits to get the smallest number
     sort(digits+first_smaller_digit_index+1, digits+greater_digit_index+1);
+}
 
-    // print the number
-    cout << "next larger number: ";
+void printNumber(int digits[], int digits_size) {
     for(int i = 0; i < digits_size; i++) {
         cout << digits[i];
     }
-    cout << endl;
 }
 
 // Driver Program to test above function
 int main() {
-    int digits[] = {5, 3, 4, 9, 7, 6};
-    int digits_size = sizeof(digits)/sizeof(digits[0]);
-    printNextGreaterNumber(digits, digits_size);
+
+    int digits1[] = {5, 3, 4, 9, 7, 6};
+    int digits_size1 = sizeof(digits1)/sizeof(digits1[0]);
+    cout << "original number: ";
+    printNumber(digits1, digits_size1);
+    printNextGreaterNumber(digits1, digits_size1);
+    cout << "  next larger number: ";
+    printNumber(digits1, digits_size1);
+    cout << endl;
+
+    int digits2[] = {1, 2, 3, 4, 5, 6, 7};
+    int digits_size2 = sizeof(digits2)/sizeof(digits2[0]);
+    cout << "original number: ";
+    printNumber(digits2, digits_size2);
+    printNextGreaterNumber(digits2, digits_size2);
+    cout << "  next larger number: ";
+    printNumber(digits2, digits_size2);
+    cout << endl;
+
+    int digits3[] = {5, 4, 3, 2, 1};
+    int digits_size3 = sizeof(digits3)/sizeof(digits3[0]);
+    cout << "original number: ";
+    printNumber(digits3, digits_size3);
+    printNextGreaterNumber(digits3, digits_size3);
+    cout << endl;
+
 	return 0;
 }
