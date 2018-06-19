@@ -30,6 +30,8 @@ void construct_linkedList(listNode* &head) {
     head->next             = newNode(2);
     head->next->next       = newNode(3);
     head->next->next->next = newNode(4);
+    head->next->next->next->next  = newNode(5);
+    head->next->next->next->next->next = newNode(6);
     return;
 }
 
