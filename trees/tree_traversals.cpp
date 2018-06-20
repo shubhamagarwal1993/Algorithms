@@ -71,6 +71,26 @@ void inOrderRecursive(Node* root) {
     inOrderRecursive(root->right);
 }
 
+string inOrderRecursiveString(Node* root) {
+    if(root == NULL) {
+        return "";
+    }
+
+    string left = "";
+    if(root->left) {
+        left = inOrderRecursiveString(root->left);
+    }
+
+    string ans = to_string(root->data);
+
+    string right = "";
+    if(root->right) {
+        right = inOrderRecursiveString(root->right);
+    }
+
+    return (left.empty() ? "" : left + " ") + ans + (right.empty() ? "" : " " + right);
+}
+
 void inOrderIterative(Node* root) {
     if(root == NULL) {
         return;
@@ -330,6 +350,7 @@ int main() {
     cout << "InOrder Recursive:";
     inOrderRecursive(root);
     cout << endl;
+    cout << "inOrder Recurisve string: " << inOrderRecursiveString(root) << endl;
     cout << "InOrder Iterative:";
     inOrderIterative(root);
     cout << endl;
