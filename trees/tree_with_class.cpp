@@ -21,53 +21,66 @@ Node* newNode(int data) {
     return root;
 }
 
-void destroyTree(Node* root) {
-    if(root == NULL) {
-        return;
-    }
+class Tree {
+    public:
+        Node* root;
 
-    destroyTree(root->right);
-    destroyTree(root->left);
-    root->left = NULL;
-    root->right = NULL;
-    delete root;
-}
+        Tree() {
+            this->root = NULL;
+        }
 
-Node* constructTree() {
-    Node* root = newNode(50);
+        Node* constructTree() {
 
-    root->left = newNode(30);
-    root->right = newNode(70);
+            Node* root = newNode(50);
 
-    root->left->left = newNode(20);
-    root->left->right = newNode(40);
+            root->left = newNode(30);
+            root->right = newNode(70);
 
-    root->right = newNode(70);
-    root->right->left = newNode(60);
-    root->right->right = newNode(80);
+            root->left->left = newNode(20);
+            root->left->right = newNode(40);
 
-    return root;
-}
+            root->right = newNode(70);
+            root->right->left = newNode(60);
+            root->right->right = newNode(80);
 
-void printInorder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
+            return root;
+        }
 
-    printInorder(root->left);
-    cout << root->data << " ";
-    printInorder(root->right);
-}
+        void printInorder(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            printInorder(root->left);
+            cout << root->data << " ";
+            printInorder(root->right);
+        }
+
+        void destroyTree(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            destroyTree(root->right);
+            destroyTree(root->left);
+            root->left = NULL;
+            root->right = NULL;
+            delete root;
+        }
+};
 
 int main() {
-    Node* root = constructTree();
+    // make a tree
+    Tree tree;
+    tree.root = tree.constructTree();
 
-    printInorder(root);
+    // print tree inOrder
+    tree.printInorder(tree.root);
     cout << endl;
 
-    // free memory
-    destroyTree(root);
-    root = NULL;
+    // delete tree
+    tree.destroyTree(tree.root);
+    tree.root = NULL;
 
     return 0;
 }
