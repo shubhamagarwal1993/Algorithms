@@ -13,13 +13,7 @@ class Node {
             this->left = NULL;
             this->right = NULL;
         }
-
 };
-
-Node* newNode(int data) {
-    Node* root = new Node(data);
-    return root;
-}
 
 class Tree {
     public:
@@ -31,17 +25,17 @@ class Tree {
 
         Node* constructTree() {
 
-            Node* root = newNode(50);
+            Node* root = new Node(50);
 
-            root->left = newNode(30);
-            root->right = newNode(70);
+            root->left = new Node(30);
+            root->right = new Node(70);
 
-            root->left->left = newNode(20);
-            root->left->right = newNode(40);
+            root->left->left = new Node(20);
+            root->left->right = new Node(40);
 
-            root->right = newNode(70);
-            root->right->left = newNode(60);
-            root->right->right = newNode(80);
+            root->right = new Node(70);
+            root->right->left = new Node(60);
+            root->right->right = new Node(80);
 
             return root;
         }
@@ -69,16 +63,15 @@ class Tree {
         }
 };
 
+
 int main() {
-    // make a tree
     Tree tree;
     tree.root = tree.constructTree();
 
-    // print tree inOrder
     tree.printInorder(tree.root);
     cout << endl;
 
-    // delete tree
+    // free memory
     tree.destroyTree(tree.root);
     tree.root = NULL;
 
