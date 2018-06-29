@@ -8,14 +8,14 @@ class Node {
     private:
         int data;
         bool visited;
+
     public:
-        Node(int data);
+        Node(int data) {
+            this->data = data;
+            this->visited = false;
+        }
 };
 
-Node::Node(int data) {
-    this->data = data;
-    this->visited = false;
-}
 
 // This class represents a directed graph using adjacency list representation
 class Graph {
@@ -32,10 +32,16 @@ class Graph {
 
     public:
         // Constructor
-        Graph(int V);
+        Graph(int V) {
+            this->V = V;
+            this->adj = new list<int>[V];
+        }
 
         // function to add an edge to graph
-        void addEdge(int v, int w);
+        void addEdge(int v, int w) {
+            // Add w to v’s list
+            adj[v].push_back(w);
+        }
 
         // prints BFS traversal from a given source s
         void BFS(int s);
@@ -43,29 +49,18 @@ class Graph {
         // prints DFS traversal of the complete graph
         void DFS();
         void DFS_trial(vector<int> &vec);
+
+        Graph construct_graph() {
+            Graph g(4);
+            g.addEdge(0, 1);
+            g.addEdge(0, 2);
+            g.addEdge(1, 2);
+            g.addEdge(2, 0);
+            g.addEdge(2, 3);
+            g.addEdge(3, 3);
+            return g;
+        }
 };
-
-
-Graph::Graph(int V) {
-    this->V = V;
-    this->adj = new list<int>[V];
-}
-
-void Graph::addEdge(int v, int w) {
-    // Add w to v’s list
-    adj[v].push_back(w);
-}
-
-Graph construct_graph() {
-    Graph g(4);
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(1, 2);
-    g.addEdge(2, 0);
-    g.addEdge(2, 3);
-    g.addEdge(3, 3);
-    return g;
-}
 
 void Graph::BFS(int s) {
     // Mark all the vertices as not visited
@@ -218,7 +213,8 @@ int main() {
     //   \ /    \ /
     //    3 ---- 2
 
-    Graph g = construct_graph();
+    Graph g(4);
+    g.construct_graph();
 
     // Time: O(V + E), Space: O(V^2)
     cout << "Breadth First Traversal" << "(starting from vertex 2): ";
