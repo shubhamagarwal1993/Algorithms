@@ -17,103 +17,110 @@ class Node {
 
 };
 
-Node* newNode(int data) {
-    Node* root = new Node(data);
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-void destroyTree(Node* root) {
-    if(root == NULL) {
-        return;
-    }
+        Tree() {
+            this->root = NULL;
+        }
 
-    destroyTree(root->right);
-    destroyTree(root->left);
-    root->left = NULL;
-    root->right = NULL;
-    delete root;
-}
+        void destroyTree(Node* root) {
+            if(root == NULL) {
+                return;
+            }
 
-void printInorder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
+            destroyTree(root->right);
+            destroyTree(root->left);
+            root->left = NULL;
+            root->right = NULL;
+            delete root;
+        }
 
-    printInorder(root->left);
-    cout << root->data << " ";
-    printInorder(root->right);
-}
+        void printInorder(Node* root) {
+            if(root == NULL) {
+                return;
+            }
 
-Node* insertBST(Node* root, int data) {
-    if(root == NULL) {
-        Node* root = newNode(data);
-        return root;
-    }
+            printInorder(root->left);
+            cout << root->data << " ";
+            printInorder(root->right);
+        }
 
-    if((data < root->data) && (root->left == NULL)) {
-        root->left = newNode(data);
-        return root;
-    } else if((data > root->data) && (root->right == NULL)) {
-        root->right = newNode(data);
-        return root;
-    }
+        Node* insertBST(Node* root, int data) {
+            if(root == NULL) {
+                Node* root = new Node(data);
+                return root;
+            }
 
-    if(data < root->data) {
-        insertBST(root->left, data);
-    } else {
-        insertBST(root->right, data);
-    }
+            if((data < root->data) && (root->left == NULL)) {
+                root->left = new Node(data);
+                return root;
+            } else if((data > root->data) && (root->right == NULL)) {
+                root->right = new Node(data);
+                return root;
+            }
 
-    return root;
-}
+            if(data < root->data) {
+                insertBST(root->left, data);
+            } else {
+                insertBST(root->right, data);
+            }
 
-Node* insertLowestLevel(Node* root, int data) {
-    if(root == NULL) {
-        return newNode(data);
-    }
-
-    queue<Node*> myQ;
-    myQ.push(root);
-
-    while(!myQ.empty()) {
-        Node* temp = myQ.front();
-        myQ.pop();
-
-        if(temp->left == NULL) {
-            temp->left = newNode(data);
-            return root;
-        } else if(temp->right == NULL) {
-            temp->right = newNode(data);
             return root;
         }
 
-        myQ.push(temp->left);
-        myQ.push(temp->right);
-    }
-    return root;
-}
+        Node* insertLowestLevel(Node* root, int data) {
+            if(root == NULL) {
+                return new Node(data);
+            }
+
+            queue<Node*> myQ;
+            myQ.push(root);
+
+            while(!myQ.empty()) {
+                Node* temp = myQ.front();
+                myQ.pop();
+
+                if(temp->left == NULL) {
+                    temp->left = new Node(data);
+                    return root;
+                } else if(temp->right == NULL) {
+                    temp->right = new Node(data);
+                    return root;
+                }
+
+                myQ.push(temp->left);
+                myQ.push(temp->right);
+            }
+            return root;
+        }
+};
 
 int main() {
-    Node* root = insertBST(root, 50);
-    insertBST(root, 30);
-    insertBST(root, 20);
-    insertBST(root, 40);
-    insertBST(root, 70);
-    //insertBST(root, 60);
-    insertBST(root, 80);
 
-    printInorder(root);
+    Tree tree;
+
+    tree.root = tree.insertBST(tree.root, 50);
+    tree.insertBST(tree.root, 30);
+    tree.insertBST(tree.root, 20);
+    tree.insertBST(tree.root, 40);
+    tree.insertBST(tree.root, 70);
+    //insertBST(root, 60);
+    tree.insertBST(tree.root, 80);
+
+    tree.printInorder(tree.root);
     cout << endl;
 
     // insert a node at lowerst possible level in the tree
-    insertLowestLevel(root, 60);
+    tree.insertLowestLevel(tree.root, 60);
 
-    printInorder(root);
+    tree.printInorder(tree.root);
     cout << endl;
 
     // free memory
-    destroyTree(root);
-    root = NULL;
+    tree.destroyTree(tree.root);
+    tree.root = NULL;
 
     return 0;
 }
