@@ -2,123 +2,152 @@
 
 using namespace std;
 
-struct Node{
-    int data;
-    Node* left;
-    Node* right;
-    Node* nextLeft;
+class Node{
+    public:
+        int data;
+        Node* left;
+        Node* right;
+        Node* nextLeft;
+
+        // don't set nextLeft to NULL
+        // connect nodes logic will do that
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
-Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    // leave nextLeft garbage value
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-Node* constructTree() {
-    Node* root              = newNode(5);
-
-    root->left              = newNode(6);
-    root->left->left        = newNode(2);
-    root->left->left->right = newNode(3);
-
-    root->right             = newNode(7);
-    root->right->left       = newNode(5);
-    root->right->left->right= newNode(8);
-
-    return root;
-}
-
-Node* getNextLeft(Node* root) {
-    if(root == NULL) {
-        return NULL;
-    }
-
-    Node* temp = root->nextLeft;
-    while(temp != NULL) {
-        if(temp->right) {
-            return temp->right;
-        } else if(temp->left) {
-            return temp->left;
-        } else {
-            temp = temp->nextLeft;
+        Tree() {
+            this->root = NULL;
         }
-    }
-    return NULL;
-}
 
-void connectLevelIter(Node* root) {
+        Node* constructTree() {
+            Node* root              = new Node(5);
 
-    if(root == NULL) {
-        return;
-    }
+            root->left              = new Node(6);
+            root->left->left        = new Node(2);
+            root->left->left->right = new Node(3);
 
-    // make nextLeft NULL for root
-    root->nextLeft = NULL;
+            root->right             = new Node(7);
+            root->right->left       = new Node(5);
+            root->right->left->right= new Node(8);
 
-    while(root != NULL) {
+            return root;
+        }
 
-        Node* temp = root;
+        Node* getNextLeft(Node* root) {
+            if(root == NULL) {
+                return NULL;
+            }
 
-        while(temp != NULL) {
-            // start from the right most child and go left
-            if(temp->right) {
+            Node* temp = root->nextLeft;
+            while(temp != NULL) {
+                if(temp->right) {
+                    return temp->right;
+                }
                 if(temp->left) {
-                    temp->right->nextLeft = temp->left;
+                    return temp->left;
+                }
+                temp = temp->nextLeft;
+            }
+            return NULL;
+        }
+
+        void connectLevelIter(Node* root) {
+
+            if(root == NULL) {
+                return;
+            }
+
+            // make nextLeft NULL for root
+            root->nextLeft = NULL;
+
+            while(root != NULL) {
+
+                Node* temp = root;
+
+                while(temp != NULL) {
+                    // start from the right most child and go left
+                    if(temp->right) {
+                        if(temp->left) {
+                            temp->right->nextLeft = temp->left;
+                        } else {
+                            temp->right->nextLeft = getNextLeft(temp);
+                        }
+                    }
+                    if(temp->left) {
+                        temp->left->nextLeft = getNextLeft(temp);
+                    }
+                    temp = temp->nextLeft;
+                }
+
+                // start assigning elements from left most
+                if(root->right) {
+                    root = root->right;
+                } else if(root->left) {
+                    root = root->left;
                 } else {
-                    temp->right->nextLeft = getNextLeft(temp);
+                    root = getNextLeft(root);
                 }
             }
-            if(temp->left) {
-                temp->left->nextLeft = getNextLeft(temp);
+        }
+
+        void printTreeLevelOrder(Node* root) {
+            if(root == NULL) {
+                return;
             }
-            temp = temp->nextLeft;
+
+            while(root != NULL) {
+
+                Node* temp = root;
+                cout << temp->data << " ";
+                temp = temp->nextLeft;
+
+                while(temp != NULL) {
+                    cout << temp->data << " ";
+                    temp = temp->nextLeft;
+                }
+                cout << endl;
+
+                if(root->right) {
+                    root = root->right;
+                } else if(root->left) {
+                    root = root->left;
+                } else {
+                    root = getNextLeft(root);
+                }
+            }
         }
 
-        // start assigning elements from left most
-        if(root->right) {
-            root = root->right;
-        } else if(root->left) {
-            root = root->left;
-        } else {
-            root = getNextLeft(root);
+        void inOrder(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            inOrder(root->left);
+            cout << root->data << " ";
+            inOrder(root->right);
         }
-    }
-}
-
-void printTreeLevelOrder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
-
-    while(root != NULL) {
-
-        Node* temp = root;
-        cout << temp->data << " ";
-        temp = temp->nextLeft;
-
-        while(temp != NULL) {
-            cout << temp->data << " ";
-            temp = temp->nextLeft;
-        }
-        cout << endl;
-
-        if(root->right) {
-            root = root->right;
-        } else if(root->left) {
-            root = root->left;
-        } else {
-            root = getNextLeft(root);
-        }
-    }
-}
+};
 
 int main() {
-    Node* root = constructTree();
-    connectLevelIter(root);
-    printTreeLevelOrder(root);
+    Tree tree;
+    tree.root = tree.constructTree();
+
+    cout << " ====  Inorder ==== " << endl;
+    tree.inOrder(tree.root);
+    cout << endl << endl;
+
+    cout << " ====  Connect Iter ==== " << endl;
+    tree.connectLevelIter(tree.root);
+    tree.printTreeLevelOrder(tree.root);
+    cout << endl;
+
     return 0;
 }
+

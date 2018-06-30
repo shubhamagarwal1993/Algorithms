@@ -46,18 +46,18 @@ class Tree {
         Node* getNextRight(Node* root) {
 
             Node* temp = root->nextRight;
-         
+
             // Traverse nodes at root's level and return the first node's first child
             while(temp != NULL) {
                 if(temp->left != NULL) {
                     return temp->left;
-                } else if(temp->right != NULL) {
-                    return temp->right;
-                } else {
-                    temp = temp->nextRight;
                 }
+                if(temp->right != NULL) {
+                    return temp->right;
+                }
+                temp = temp->nextRight;
             }
-         
+
             // If all the nodes at p's level are leaf nodes then return NULL
             return NULL;
         }
@@ -69,26 +69,23 @@ class Tree {
 
             // set nextRight of root
             root->nextRight = NULL;
-            if(root->left) {
-                root->left->nextRight = root->right;
-            }
 
             // set nextRight of all levels one by one
-            while(root != NULL) {
+            while(root) {
 
                 Node* temp = root;
 
                 // set nextRight for children of root and nodes on root's level
                 while(temp) {
-                    if(root->left) {
-                        if(root->right) {
-                            root->left->nextRight = root->right;
+                    if(temp->left) {
+                        if(temp->right) {
+                            temp->left->nextRight = temp->right;
                         } else {
-                            root->left->nextRight = getNextRight(root);
+                            temp->left->nextRight = getNextRight(temp);
                         }
                     }
-                    if(root->right) {
-                        root->right->nextRight = getNextRight(root);
+                    if(temp->right) {
+                        temp->right->nextRight = getNextRight(temp);
                     }
 
                     temp = temp->nextRight;
@@ -141,13 +138,62 @@ class Tree {
             root->nextRight = NULL;
             connectLevelRecursiveUtil(root);
         }
+
+        void printTreeLevelOrder(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            while(root) {
+
+                Node* temp = root;
+                cout << temp->data << " ";
+                temp = temp->nextRight;
+
+                while(temp) {
+                    cout << temp->data << " ";
+                    temp = temp->nextRight;
+                }
+                cout << endl;
+
+                if(root->left) {
+                    root = root->left;
+                } else if(root->right) {
+                    root = root->right;
+                } else {
+                    root = getNextRight(root);
+                }
+            }
+        }
+
+        void inOrder(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+            inOrder(root->left);
+            cout << root->data << " ";
+            inOrder(root->right);
+        }
 };
 
 int main() {
     Tree tree;
     tree.root = tree.constructTree();
+
+    cout << " ====  Inorder ==== " << endl;
+    tree.inOrder(tree.root);
+    cout << endl << endl;
+
+    cout << " ====  Connect Iter ==== " << endl;
     tree.connectLevelIter(tree.root);
+    tree.printTreeLevelOrder(tree.root);
+    cout << endl;
+
+    cout << " ====  Connect Recursive ==== " << endl;
     tree.connectLevelRecursive(tree.root);
+    tree.printTreeLevelOrder(tree.root);
+    cout << endl;
+
     return 0;
 }
 
