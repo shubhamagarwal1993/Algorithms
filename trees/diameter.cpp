@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 using namespace std;
 
 class Node {
@@ -43,6 +42,7 @@ class Tree {
             return root;
         }
 
+        // O(N^2) time complexity
         int diameter(Node* root, int &sum) {
             if(root == NULL) {
                 return 0;
@@ -67,6 +67,7 @@ class Tree {
             return max(lHeight, rHeight) + 1;
         }
 
+        // O(N^2) time complexity
         int diameter(Node* root) {
             if(root == NULL) {
                 return 0;
@@ -80,6 +81,24 @@ class Tree {
 
             return max(leftHeight + rightHeight + 1, max(leftDiameter, rightDiameter));
         }
+
+        // O(N) time complexity
+        int diameterRecursive(Node* root, int &diameter) {
+
+            if(root == NULL) {
+                return 0;
+            }
+
+            int leftResult = diameterRecursive(root->left, diameter);
+            int rightResult = diameterRecursive(root->right, diameter);
+
+            int curr_diameter = leftResult + rightResult + 1;
+            if(curr_diameter > diameter) {
+                diameter = curr_diameter;
+            }
+
+            return max(leftResult, rightResult) + 1;
+        }
 };
 
 int main() {
@@ -90,6 +109,11 @@ int main() {
     tree.diameter(tree.root, sum);
     cout << "Diameter: " << sum << endl;
     cout << tree.diameter(tree.root) << endl;
+
+    int diameter = 0;
+    tree.diameterRecursive(tree.root, diameter);
+    cout << "max diameter: " << diameter << endl;
+
     return 0;
 }
 
