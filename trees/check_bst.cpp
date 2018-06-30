@@ -4,64 +4,79 @@
 
 using namespace std;
 
-struct Node {
+class Node {
+    public:
     int data;
     Node* left;
     Node* right;
+
+    Node(int data) {
+        this->data = data;
+        this->left = NULL;
+        this->right = NULL;
+    }
 };
 
-Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-Node* constructTree() {
-    Node* root = newNode(8);
+        Tree() {
+            this->root = NULL;
+        }
 
-    root->left = newNode(3);
-    root->left->left = newNode(1);
-    root->left->right = newNode(6);
-    root->left->right->left = newNode(4);
-    root->left->right->right = newNode(7);
+        Node* constructTree() {
 
-    root->right = newNode(12);
-    root->right->left = newNode(11);
-    root->right->right = newNode(15);
-    root->right->right->left = newNode(14);
+            Node* root = new Node(8);
 
-    return root;
-}
+            root->left = new Node(3);
+            root->left->left = new Node(1);
+            root->left->right = new Node(6);
+            root->left->right->left = new Node(4);
+            root->left->right->right = new Node(7);
 
-void printTree(Node* root) {
-    if(root == NULL) {
-        return;
-    }
+            root->right = new Node(12);
+            root->right->left = new Node(11);
+            root->right->right = new Node(15);
+            root->right->right->left = new Node(14);
 
-    cout << root->data << " ";
-    printTree(root->left);
-    printTree(root->right);
-}
+            return root;
+        }
 
-bool checkBST(Node* root, int min, char min_char, int max, char max_char) {
-    if(root == NULL) {
-        return true;
-    }
+        void printTree(Node* root) {
+            if(root == NULL) {
+                return;
+            }
 
-    if( ((min_char != 'a') && (root->data < min)) || ((max_char != 'a') && (root->data > max)) ) {
-        return false;
-    }
+            cout << root->data << " ";
+            printTree(root->left);
+            printTree(root->right);
+        }
 
-    return checkBST(root->left, min, min_char, root->data, 'b') && checkBST(root->right, root->data, 'b', max, max_char);
-}
+        bool checkBST(Node* root, int min, bool min_char, int max, bool max_char) {
+
+            if(root == NULL) {
+                return true;
+            }
+
+            if( ((min_char == true) && (root->data < min)) || ((max_char == true) && (root->data > max)) ) {
+                return false;
+            }
+
+            return checkBST(root->left, min, min_char, root->data, false) && checkBST(root->right, root->data, false, max, max_char);
+        }
+};
 
 int main() {
-    Node* root = constructTree();
-    printTree(root);
+    Tree tree;
+    tree.root = tree.constructTree();
+
+    // print tree
+    tree.printTree(tree.root);
     cout << endl;
-    if(checkBST(root, 0, 'a', 0, 'a')) {
+
+    // check if tree is BST
+    if(tree.checkBST(tree.root, 0, false, 0, false)) {
         cout << "IS BST" << endl;
     } else {
         cout << "IS not BST" << endl;

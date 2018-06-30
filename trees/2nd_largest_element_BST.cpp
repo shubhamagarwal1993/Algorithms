@@ -7,20 +7,50 @@
 using namespace std;
 
 // tree node
-struct Node {
-    int data;
-    Node* left;
-    Node* right;
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
+
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
-// constructor for new node
-Node* newNode(int data) {
-    Node* node = new Node;
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
+class Tree {
+
+    public:
+        Node* root;
+        Tree() {
+            this->root = NULL;
+        }
+
+        Node* construct_tree() {
+
+            Node* root = new Node(50);
+            Node* temp = root;
+
+            temp->left = new Node(10);
+            temp->right = new Node(60);
+
+            temp = temp->left;
+            temp->left = new Node(5);
+            temp->right = new Node(20);
+
+            temp = root->right;
+            temp->left = new Node(55);
+            temp->right = new Node(70);
+
+            temp->left->left = new Node(51);
+            temp->right->left = new Node(65);
+            temp->right->right = new Node(80);
+
+            return root;
+        }
+};
 
 //        50
 //        / \
@@ -33,28 +63,6 @@ Node* newNode(int data) {
 //          /   /  \
 //        51   65  80
 
-Node* construct_tree() {
-
-    Node* root = newNode(50);
-    Node* temp = root;
-
-    temp->left = newNode(10);
-    temp->right = newNode(60);
-
-    temp = temp->left;
-    temp->left = newNode(5);
-    temp->right = newNode(20);
-
-    temp = root->right;
-    temp->left = newNode(55);
-    temp->right = newNode(70);
-
-    temp->left->left = newNode(51);
-    temp->right->left = newNode(65);
-    temp->right->right = newNode(80);
-
-    return root;
-}
 
 Node* getRightMostNode(Node* root) {
     if(root == NULL) {
@@ -109,16 +117,17 @@ int get2ndLargestInBSTInorder(Node* root, int node_count) {
 
 int main() {
 
-    Node* root = construct_tree();
+    Tree tree;
+    tree.root = tree.construct_tree();
 
     // By using inorder method - 2nd node in reverse inorder
     // Running time O(n), Space O(1)
     int node_count = 0;
-    get2ndLargestInBSTInorder(root, node_count);
+    get2ndLargestInBSTInorder(tree.root, node_count);
 
     // By finding largest node and then second largest
     // Running time O(n), Space O(1)
-    Node* secondLargest = get2ndLargestInBST(root);
+    Node* secondLargest = get2ndLargestInBST(tree.root);
     if(secondLargest == NULL) {
         cout << "Cannot find the 2nd largest element" << endl;
     } else {
