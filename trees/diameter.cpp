@@ -3,57 +3,93 @@
 
 using namespace std;
 
-struct Node {
-    int data;
-    Node* left;
-    Node* right;
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
+
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
-Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-Node* constructTree() {
-    Node* root = newNode(8);
+        Tree() {
+            this->root = NULL;
+        }
 
-    // 4 including root
-    root->left = newNode(3);
-    root->left->left = newNode(1);
-    root->left->right = newNode(6);
-    root->left->right->left = newNode(4);
-    root->left->right->right = newNode(7);
+        Node* constructTree() {
+            Node* root = new Node(8);
 
-    // 3 excluding root
-    root->right = newNode(12);
-    root->right->left = newNode(11);
-    root->right->right = newNode(15);
-    root->right->right->left = newNode(14);
+            // 4 including root
+            root->left = new Node(3);
+            root->left->left = new Node(1);
+            root->left->right = new Node(6);
+            root->left->right->left = new Node(4);
+            root->left->right->right = new Node(7);
 
-    return root;
-}
+            // 3 excluding root
+            root->right = new Node(12);
+            root->right->left = new Node(11);
+            root->right->right = new Node(15);
+            root->right->right->left = new Node(14);
 
-int diameter(Node* root, int &sum) {
-    if(root == NULL) {
-        return 0;
-    }
+            return root;
+        }
 
-    int left = diameter(root->left, sum);
-    int right = diameter(root->right, sum);
+        int diameter(Node* root, int &sum) {
+            if(root == NULL) {
+                return 0;
+            }
 
-    if(left + right + 1 > sum) {
-        sum = left + right + 1;
-    }
-    return std::max(left, right) + 1;
-}
+            int left = diameter(root->left, sum);
+            int right = diameter(root->right, sum);
+
+            if(left + right + 1 > sum) {
+                sum = left + right + 1;
+            }
+            return std::max(left, right) + 1;
+        }
+
+        int getHeight(Node* root) {
+            if(root == NULL) {
+                return 0;
+            }
+
+            int lHeight = getHeight(root->left);
+            int rHeight = getHeight(root->right);
+            return max(lHeight, rHeight) + 1;
+        }
+
+        int diameter(Node* root) {
+            if(root == NULL) {
+                return 0;
+            }
+
+            int leftHeight = getHeight(root->left);
+            int rightHeight = getHeight(root->right);
+
+            int leftDiameter = diameter(root->left);
+            int rightDiameter = diameter(root->right);
+
+            return max(leftHeight + rightHeight + 1, max(leftDiameter, rightDiameter));
+        }
+};
 
 int main() {
-    Node* root = constructTree();
+    Tree tree;
+    tree.root = tree.constructTree();
+
     int sum = 0;
-    diameter(root, sum);
+    tree.diameter(tree.root, sum);
     cout << "Diameter: " << sum << endl;
+    cout << tree.diameter(tree.root) << endl;
     return 0;
 }
+
