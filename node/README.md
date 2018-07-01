@@ -42,4 +42,42 @@
    console.log(string1);    // This will print str3
    ```
 
+### Mode details on Object data type
+  - Each data property (object property that store data) has not only the name-value pair, but also 3 attributes
+  - All 3 attributes are set to true by default
+    - Configurable Attribute: Specifies whether the property can be deleted or changed
+    — Enumerable: Specifies whether the property can be returned in a for/in loop
+    — Writable: Specifies whether the property can be changed
+  - ECMAScript 5 specifies accessor properties along with the data properties noted above. The accessor properties are functions (getters and setters)
+
+### Creating Objects (2 common ways):
+  - Both ways are the same, there is no difference
+  - Object Literals
+    ```
+    // Empty object
+    var myBooks = {};
+
+    // object with 4 items
+    var mango = {
+      color: "yellow",
+      shape: "round",
+      sweetness: 8,
+
+    howAreYou: function () {
+      console.log("very good");
+    }
+    ```
+  - Object Constructor (using `new` keyword calls the constructor)
+    ```
+    var mango =  new Object ();
+
+    mango.color = "yellow";
+    mango.shape= "round";
+    mango.sweetness = 8;
+
+    mango.howSweetAmI = function () {
+        console.log("Hmm Hmm Good");
+    }
+    ```
+
 ###
