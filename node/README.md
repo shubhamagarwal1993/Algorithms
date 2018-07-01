@@ -309,5 +309,29 @@
      console.log(school.educationLevel2); University 2
    ```
  
- ### test
- sbcd
+ ### Serialize and Deserialize objects
+ - Serialize: convert object to string. Use `JSON.stringify`
+ - Deserialize: convert string to object. Use JSON.parse
+ ```
+   var christmasList = {
+       mike: "Book",
+       jason: "sweater",
+       chelsea: "iPad"
+   }
+   JSON.stringify(christmasList);    // Prints this string: "{"mike":"Book","jason":"sweater","chels":"iPad"}"
+   JSON.stringify(christmasList, null, 4);    // Prints string with formatting
+                                              // "{
+                                              //      "mike": "Book",
+                                              //      "jason": "sweater",
+                                              //      "chels": "iPad"
+                                              // }"
+
+   // The following is a JSON string, so we cannot access the properties with dot notation
+   var christmasListStr = '{"mike":"Book","jason":"sweater","chels":"iPad"}';
+
+   // Convert it to an object
+   var christmasListObj = JSON.parse(christmasListStr);
+
+   // Now that it is an object, we use dot notation
+   console.log(christmasListObj.mike);    // Book
+ ```
