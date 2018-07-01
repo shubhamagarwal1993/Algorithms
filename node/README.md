@@ -1,13 +1,13 @@
 ## Basics JS
- - functions are called methods
-
 
 ### Data types
  - complex data type (mutable)
    - Object data type
-     - Unordered list of data types (primitive or reference) stored at name-value pairs
-     - Each item in the list is called a property
-     - E.g.
+     - Unordered list of name-value pairs:
+       - property:
+         - data types (primitive or reference)
+       - methods:
+         - also called functions
      ```
      var myFirstObject = {
         firstName: "abcd",
