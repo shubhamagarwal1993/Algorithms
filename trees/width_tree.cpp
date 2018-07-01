@@ -116,9 +116,13 @@ class Tree {
             }
             return maxWidth;
         }
-};
 
-int main() {
+        ~Tree() {
+            cout << "Destroy tree" << endl;
+        }
+};
+ 
+void help() {
     Tree tree;
     tree.root = tree.constructTree();
     cout << "Inorder Traversal: ";
@@ -130,6 +134,10 @@ int main() {
 
     // O(n) time and O(n) space
     cout << "Max width recursively: " << tree.getMaximumWidth(tree.root) << endl;
+}
 
+int main() {
+    help();
+    cout << "after all logic" << endl;
     return 0;
 }
