@@ -1,4 +1,5 @@
 ## Basics JS
+ - need to add some info on starting JS
 
 ### Data types
  - complex data type (mutable)
@@ -80,4 +81,4 @@
     }
     ```
 
-###
+### 
