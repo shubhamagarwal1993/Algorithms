@@ -192,4 +192,64 @@
        console.log(book["pages"]);    // 280
      ```
 
-### test
+### Own and Inherited properties
+ - Objects have inherited properties and own properties. The own properties are properties that were defined on the object, while the inherited properties were inherited from the object’s Prototype object
+ - To find out if a property exists on an object (either as an inherited or an own property), you use the in operator:
+   ```
+     var school = {schoolName: "MIT"};    // Create new school object with a property name schoolName
+
+     console.log("schoolName" in school); // true    Prints true because schoolName is an own property on the school object
+     console.log("schoolType" in school); // false   Prints false because we did not define a schoolType property on the school object, and neither did the object inherit a schoolType property from its prototype object Object.prototype
+     console.log("toString" in school);   // true    Prints true because the school object inherited the toString method from Object.prototype
+   ```
+ - hasOwnProperty
+     To find out if an object has a specific property as one of its own property, you use the hasOwnProperty method.
+     This method is very useful because from time to time you need to enumerate an object and you want only the own properties, not the inherited ones
+     ```
+       var school = {schoolName: "MIT"};    // Create new school object with a property name schoolName
+
+       console.log(school.hasOwnProperty ("schoolName"));    // true    Prints true because schoolName is an own property on the school object
+
+       console.log(school.hasOwnProperty ("toString"));      // false    Prints false because the school object inherited the toString method from Object.prototype, therefore toString is not an own property of the school object
+     ```
+ - Accessing and Enumerating Properties on Objects
+     To access the enumerable(own and inherited) properties on objects, you use the for/in loop or a general for loop
+     ```
+       var school = {schoolName: "MIT", schoolAccredited: true, schoolLocation: "Massachusetts"};    // Create a new school object with 3 own properties: schoolName, schoolAccredited, and schoolLocation
+
+       for (var eachItem in school) {     // Prints schoolName, schoolAccredited, schoolLocation
+           console.log(eachItem);
+       }
+     ```
+ - Accessing inherited properties
+     Properties inherited from Object.prototype are not enumerable, so the for/in loop does not show them
+     However, inherited properties that are enumerable are revealed in the for/in loop iteration
+     ```
+       var school = {schoolName: "MIT", schoolAccredited: true, schoolLocation: "Massachusetts"};    // Create a new school object with 3 own properties: schoolName, schoolAccredited, and schoolLocation
+
+       for(var eachItem in school) {
+           console.log(eachItem);    // Prints schoolName, schoolAccredited, schoolLocation
+       }
+
+       // Create a new HigherLearning function that the school object will inherit from
+       function HigherLearning () {
+           this.educationLevel = "University";
+       }
+
+       // Implement inheritance with the HigherLearning constructor
+       var school = new HigherLearning ();
+       school.schoolName = "MIT";
+       school.schoolAccredited = true;
+       school.schoolLocation = "Massachusetts";
+
+       for (var eachItem in school) {
+           console.log(eachItem);    // Prints educationLevel, schoolName, schoolAccredited, and schoolLocation
+       }
+
+       // The educationLevel property is not actually inherited by objects that use the HigherLearning constructor; instead,
+          the educationLevel property is created as a new property on each object that uses the HigherLearning constructor.
+          The reason the property is not inherited is because we use of the "this" keyword to define the property.
+     ```
+
+### Deleting properties of an object
+ - 
