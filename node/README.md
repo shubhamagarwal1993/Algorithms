@@ -252,4 +252,62 @@
      ```
 
 ### Deleting properties of an object
- - 
+ - To delete a property from an object, use the delete operator. The delete operator returns true if the delete was successful, or if the property to delete was nonexistent or the property could not be deleted (such as non-configurable or not owned by the object)
+ - Cannot delete properties that were inherited, can only delete the inherited properties on the prototype object (where the properties were defined)
+ - Cannot delete properties with their attributes set to configurable
+ - Cannot delete properties of the global object, which were declared with the var keyword
+   ```
+     var christmasList = {mike: "Book", jason: "sweater"}
+     delete christmasList.mike;    // deletes the mike property
+
+     for (var people in christmasList) {
+         console.log(people);    // Prints only jason, mike property was deleted
+     }
+
+     delete christmasList.toString;    // returns true, but toString not deleted because it is an inherited method
+     christmasList.toString();    //"[object Object]"    Here we call the toString method and it works just fine—wasn’t deleted
+   ```
+   Another example
+   ```
+     function HigherLearning () {
+         this.educationLevel = "University";
+     }
+
+     // Implement inheritance with the HigherLearning constructor
+     var school = new HigherLearning ();
+     school.schoolName = "MIT";
+     school.schoolAccredited = true;
+     school.schoolLocation = "Massachusetts";
+
+     // You can delete a property of an instance if the property is an own property of that instance
+     // The educationLevel property is defined on the instance: we used the "this" keyword to define the property when we declare the HigherLearning function. We did not define the educationLevel property on the HigherLearning function's prototype
+     console.log(school.hasOwnProperty("educationLevel"));    // true
+
+     // educationLevel is an own property on school, so we can delete it
+     delete school.educationLevel;    // true
+
+     // The educationLevel property was deleted from the school instance
+     console.log(school.educationLevel);    // undefined
+
+     // But the educationLevel property is still on the HigherLearning function
+     var newSchool = new HigherLearning ();
+     console.log(newSchool.educationLevel);    // University
+
+     // If we had defined a property on the HigherLearning function's prototype, such as this educationLevel2 property:
+     HigherLearning.prototype.educationLevel2 = "University 2";
+
+     // Then the educationLevel2 property on the instances of HigherLearning would not be own property. 
+
+     // The educationLevel2 property is not an own property on the school instance
+     console.log(school.hasOwnProperty("educationLevel2"));    // false
+     console.log(school.educationLevel2);    // University 2
+
+     // Let's try to delete the inherited educationLevel2 property
+     delete school.educationLevel2;    // true    Always returns true, as noted earlier
+
+     // The inherited educationLevel2 property was not deleted
+     console.log(school.educationLevel2); University 2
+   ```
+ 
+ ### test
+ sbcd
