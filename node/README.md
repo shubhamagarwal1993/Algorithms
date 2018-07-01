@@ -168,28 +168,28 @@
 ### Accessing properties of an object
  Accessing a property on an object that does not exist will result in `undefined`
  - Dot Notation
-       ```
+     ```
        var book = {
            title: "Ways to Go",
            pages: 280,
            bookMark1: "Page 20"
-       };
+       }
 
        // To access properties of book object with dot notation:
        console.log(book.title);    // Ways to Go
        console.log(book.pages);    // 280
-       ```
+     ```
  - Bracket Notation
-        ```
+     ```
        var book = {
            title: "Ways to Go",
            pages: 280,
            bookMark1: "Page 20"
-       };
+       }
 
        // To access properties of book object with dot notation:
        console.log(book["title"]);    // Ways to Go
        console.log(book["pages"]);    // 280
-       ```
+     ```
 
 ### test
