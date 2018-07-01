@@ -102,20 +102,94 @@
   ```
  - For application needing a more robust method to avoid repetition, we can use one of the following:
    - Constructor Pattern for creating objects
-   ```
-   function Fruit(theColor, theSweetness, theFruitName, theNativeToLand) {
-       this.color = theColor;
-       this.sweetness = theSweetness;
-       this.fruitName = theFruitName;
-       this.nativeToLand = theNativeToLand;
-       this.showName = function () {
+       The pattern encapsulates all the functionalities and characteristics of all the fruits in by making just the single Fruit function with inheritance
+       ```
+       function Fruit(theColor, theSweetness, theFruitName, theNativeToLand) {
+           this.color = theColor;
+           this.sweetness = theSweetness;
+           this.fruitName = theFruitName;
+           this.nativeToLand = theNativeToLand;
+           this.showName = function () {
+               console.log("This is a " + this.fruitName);
+           }
+           this.nativeTo = function () {
+               this.nativeToLand.forEach(function (eachCountry)  {
+                   console.log("Grown in:" + eachCountry);
+               });
+           }
+       }
+       ```
+       With this pattern in place, we can create all sorts of fruits.
+       ```
+       var mangoFruit = new Fruit("Yellow", 8, "Mango", ["South America", "Central America", "West Africa"]);
+       mangoFruit.showName();        // This is a Mango
+       mangoFruit.nativeTo();        // Grown in:South America, Grown in:Central America, Grown in:West Africa
+
+       var pineappleFruit = new Fruit("Brown", 5, "Pineapple", ["United States"]);
+       pineappleFruit.showName();    // This is a Pineapple
+       ```
+       We can further create own properties (not inherited) directly on the object itself
+       ```
+       var aMango = new Fruit("Yellow", 8, "Mango", ["South America", "Central America", "West Africa"]);    // create object
+
+       // mangoSpice property is defined directly on aMango object, it is aMango's own property, not an inherited property
+       aMango.mangoSpice = “some value”;    // Define a new property, mangoSpice directly on the aMango object
+       console.log(aMango.mangoSpice);      // “some value”.   To access property of an object, use object.property
+
+       aMango.printStuff = function () {return “Printing”;}.   // add a method
+       aMango.printStuff ();    // To invoke a method of an object, use object.method()
+       ```
+
+   - Prototype Pattern for creating objects
+       ```
+       function Fruit() {
+       }
+
+       Fruit.prototype.color = "Yellow";
+       Fruit.prototype.sweetness = 7;
+       Fruit.prototype.fruitName = "Generic Fruit";
+       Fruit.prototype.nativeToLand = "USA";
+
+       Fruit.prototype.showName = function () {
            console.log("This is a " + this.fruitName);
        }
-       this.nativeTo = function () {
-           this.nativeToLand.forEach(function (eachCountry)  {
-               console.log("Grown in:" + eachCountry);
-           });
+
+       Fruit.prototype.nativeTo = function () {
+           console.log("Grown in:" + this.nativeToLand);
        }
-   }
-   ```
-   - 
+       ```
+       Call the Fruit() constructor to make a fruit object
+       ```
+       var mangoFruit = new Fruit ();
+       mangoFruit.showName();    // This is a Generic Fruit
+       mangoFruit.nativeTo();    // Grown in:USA
+       ```
+
+### Accessing properties of an object
+ Accessing a property on an object that does not exist will result in `undefined`
+ - Dot Notation
+       ```
+       var book = {
+           title: "Ways to Go",
+           pages: 280,
+           bookMark1: "Page 20"
+       };
+
+       // To access properties of book object with dot notation:
+       console.log(book.title);    // Ways to Go
+       console.log(book.pages);    // 280
+       ```
+ - Bracket Notation
+        ```
+       var book = {
+           title: "Ways to Go",
+           pages: 280,
+           bookMark1: "Page 20"
+       };
+
+       // To access properties of book object with dot notation:
+       console.log(book["title"]);    // Ways to Go
+       console.log(book["pages"]);    // 280
+       ```
+
+### test
