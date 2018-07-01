@@ -11,7 +11,10 @@
      ```
      var myFirstObject = {
         firstName: "abcd",
-        lastName: "efgh"
+        lastName: "efgh",
+        fullName : function() {
+            return this.firstName + " " + this.lastName;
+        }
      };
      ```
  - primitive/simple data types (immutable)
