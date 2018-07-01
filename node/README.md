@@ -60,12 +60,13 @@
 
     // object with 4 items
     var mango = {
-      color: "yellow",
-      shape: "round",
-      sweetness: 8,
+        color: "yellow",
+        shape: "round",
+        sweetness: 8
 
-    howAreYou: function () {
-      console.log("very good");
+        howAreYou: function () {
+            console.log("very good");
+        }
     }
     ```
   - Object Constructor (using `new` keyword calls the constructor)
@@ -81,4 +82,40 @@
     }
     ```
 
-### 
+### Practical patterns for creating objects:
+ - a normal object to be created and used once can simple be made using object literal, or object constructor and will look something like:
+ ```
+ var mangoFruit = {
+     color: "yellow",
+     sweetness: 8,
+     fruitName: "Mango",
+     nativeToLand: ["South America", "Central America"],
+     showName: function () {
+         console.log("This is " + this.fruitName);
+      },
+      nativeTo: function () {
+          this.nativeToLand.forEach(function (eachCountry) {
+              console.log("Grown in:" + eachCountry);
+          });
+      }
+  }
+  ```
+ - For application needing a more robust method to avoid repetition, we can use one of the following:
+   - Constructor Pattern for creating objects
+   ```
+   function Fruit(theColor, theSweetness, theFruitName, theNativeToLand) {
+       this.color = theColor;
+       this.sweetness = theSweetness;
+       this.fruitName = theFruitName;
+       this.nativeToLand = theNativeToLand;
+       this.showName = function () {
+           console.log("This is a " + this.fruitName);
+       }
+       this.nativeTo = function () {
+           this.nativeToLand.forEach(function (eachCountry)  {
+               console.log("Grown in:" + eachCountry);
+           });
+       }
+   }
+   ```
+   - 
