@@ -1,5 +1,7 @@
 ## Basics JS
- - need to add some info on starting JS
+ - Taken from following articles:
+   - https://medium.com/@andrea.chiarelli/is-javascript-a-true-oop-language-c87c5b48bdf0
+   - http://javascriptissexy.com/javascript-objects-in-detail/
 
 ### Data types
  - complex data type (mutable)
