@@ -58,13 +58,15 @@
  - JavaScript objects do not care about privacy, and dosen't have an advanced native support to hide internal details
  - All the properties and methods are publicly accessible if no caution is taken
    - We can apply several techniques in order to define an object’s internal state and protect it from external access
-     by using getters and setters to exploiting closures.
+     by using `getters` and `setters` to exploiting `closures`.
+ - Continue reading article `https://www.intertech.com/Blog/encapsulation-in-javascript/`
 
 ### Showing that JavaScript objects support Inheritance
  - supported by JavaScript in its basic level through the so-called Prototypal Inheritance
 
 ### Showing that JavaScript objects support Polymorphism
- - 
+ - Usually polymorphism involves items like `generics`, `overloading`, and `structural subtyping`.
+ - Continue reading article `https://stackoverflow.com/questions/27642239/what-is-polymorphism-in-javascript#40816947`
 
 ## What makes JS not an OOP
  - JS does not have classes
