@@ -81,6 +81,7 @@
         console.log("Hmm Hmm Good");
     }
     ```
+  - Now you can also create objects with Object.create() method that allows you to set the new object's prototype object
 
 ### Practical patterns for creating objects:
  - a normal object to be created and used once can simple be made using object literal, or object constructor and will look something like:
