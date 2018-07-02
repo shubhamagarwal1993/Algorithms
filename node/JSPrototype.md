@@ -112,4 +112,86 @@
        var anObj = new Object();
        // anObj's prototype is Object.prototype
      ```
-   - 
+
+### Use of Prototype
+ - 2 important ways the prototype is used in JavaScript:
+   - Prototype property: Prototype-bases inheritance
+     - JavaScript has a prototype-based inheritance mechanism
+     - Example of inheritance in JavaScript
+     ```
+       function Plant() {
+           this.country = "Mexico";
+           this.isOrganic = true;
+       }
+
+       // Add the showNameAndColor method to the Plant prototype property
+       Plant.prototype.showNameAndColor = function () {
+           console.log("I am a " + this.name + " and my color is " + this.color);
+       }
+
+       // Add the amIOrganic method to the Plant prototype property
+       Plant.prototype.amIOrganic = function() {
+         if(this.isOrganic) {
+             console.log("I am organic, Baby!");
+         }
+       }
+
+       function Fruit(fruitName, fruitColor) {
+           this.name = fruitName;
+           this.color = fruitColor;
+       }
+
+       // Set the Fruit's prototype to Plant's constructor, thus inheriting all of Plant.prototype methods and properties
+       Fruit.prototype = new Plant();
+
+       // Creates a new object, aBanana, with the Fruit constructor
+       var aBanana = new Fruit("Banana", "Yellow");
+
+       // aBanana uses the name property from the aBanana object prototype, which is Fruit.prototype
+       console.log(aBanana.name);    // Banana
+
+       // Use showNameAndColor method from Fruit object prototype, which is Plant.prototype
+       // The aBanana object inherits all the properties and methods from both the Plant and Fruit functions
+       console.log(aBanana.showNameAndColor());    // I am a Banana and my color is yellow
+     ```
+     - Any object that uses the Fruit() constructor will inherit all the Fruit.prototype properties and methods and all the
+       properties and methods from the Fruit’s prototype, which is Plant.prototype
+     - This is the principal manner in which inheritance is implemented in JavaScript and the integral role the prototype chain has in the process
+   - Prototype Attribute: Accessing Properties on Objects
+     - Prototype is important for accessing properties and methods of objects
+     - The prototype attribute (or prototype object) of any object is the “parent” object where the inherited properties were originally defined. If we wanted to find out where the prototype properties came from, we would first check to see if the object created it itself; if not, the search will move to it's prototype parent to see if the object inherited it from parent object. If it was not created by parent object, then the search continues to the parent of the parent's object
+     - The prototype chain
+        ```
+          The chain from an object’s prototype to its prototype’s prototype and onwards. And JavaScript uses this prototype chain to look for properties and methods of an object.
+
+          If you want to access a property of an object, the search for the property begins directly on the object. If the JS runtime can’t find the property there, it then looks for the property on the object’s prototype—the object it inherited its properties from.
+
+          If the property is not found on the object’s prototype, the search for the property then moves to prototype of the object’s prototype (the father of the object’s father—the grandfather). And this continues until there is no more prototype (no more great-grand father; no more lineage to follow).
+
+          If the property does not exist on any of the object’s prototype in its prototype chain, then the property does not exist and undefined is returned.
+        ```
+     - Example of the prototype chain
+     ```
+       function People() {
+           this.superstar = "Michael Jackson";
+       }
+
+       // Define "athlete" property on the People prototype so that "athlete" is accessible by all objects that use the People() constructor
+       People.prototype.athlete = "Tiger Woods";
+
+       var famousPerson = new People();
+       famousPerson.superstar = "Steve Jobs";
+
+       // The search for superstar will first look for the superstar property on the famousPerson object, and since we defined it there, that is the property that will be used. Because we have overwritten the famousPerson’s superstar property with one directly on the famousPerson object, the search will NOT proceed up the prototype chain. 
+       console.log(famousPerson.superstar);    // Steve Jobs
+
+       // Note that in ECMAScript 5 you can set a property to read only, and in that case you cannot overwrite it as we just did.
+
+      // This will show the property from the famousPerson prototype (People.prototype), since the athlete property was not defined on the famousPerson object itself.
+      console.log(famousPerson.athlete);    // Tiger Woods
+
+       // In this example, the search proceeds up the prototype chain and find the toString method on Object.prototype, from which the Fruit object inherited—all objects ultimately inherits from Object.prototype as we have noted before.
+       console.log(famousPerson.toString());    // [object Object]
+     ```
+     - All built-in constructors (Array(), Number(), String(), etc.) were created from the Object constructor, and as such their prototype is Object.prototype
+     
