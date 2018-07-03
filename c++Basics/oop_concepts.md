@@ -133,3 +133,5 @@
         return 0;
     }
  ```
+ - Hierarchical Inheritance:
+ - Hybrid (Virtual) Inheritance
