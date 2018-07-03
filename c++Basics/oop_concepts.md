@@ -74,3 +74,62 @@
         return 0;
     }
  ```
+ - Multiple Inheritance
+   - Derived class inherits from one or more base classes
+ ```
+    #include <iostream>
+    using namespace std;
+
+    // 1st base class
+    class Vehicle {
+        public:
+            Vehicle() {
+                cout << "This is a Vehicle" << endl;
+            }
+
+            void print() {
+                cout << "I am of class Vehicle" << endl;
+            }
+    };
+
+    // 2nd base class
+    class FourWheeler {
+        public:
+            FourWheeler() {
+                cout << "This ia 4 wheeler vehicle" << endl;
+            }
+
+            void print() {
+                cout << "I am of class FourWheeler" << endl;
+            }
+    };
+
+    // sub class derived from two base classes
+    class Car: public Vehicle, public FourWheeler {
+        public:
+            Car() {
+                cout << "Car has 4 Wheels" << endl;
+            }
+    };
+
+    int main() {
+        // creating object of sub class will invoke the constructor of base classes
+        // This will print:
+            // This is a Vehicle
+            // Objects with 4 wheels are vehicles
+            // Car has 4 Wheels
+        Car mycar;
+
+        // This will print:
+            // I am of class Vehicle
+        Vehicle& veh = mycar;
+        veh.print();
+
+        // This will print:
+            // I am of class FourWheeler
+        FourWheeler& fourW = mycar;
+        fourW.print();
+
+        return 0;
+    }
+ ```
