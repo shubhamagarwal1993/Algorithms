@@ -87,7 +87,8 @@ int main() {
     cout << "Total combinations iteratively: " << countWays_iterative(total) << endl;
     cout << "All Combinations" << endl;
     cout << "Total combinations recursively: " << endl;
-    countWays_recursive(denominations, 4, total, vec);
+    int total_ways = countWays_recursive(denominations, 4, total, vec);
+    cout << "total combinations = " << total_ways << endl;
     return 0;
 }
 
