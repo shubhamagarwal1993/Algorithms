@@ -24,17 +24,20 @@ void printParentheses(int index, int count, int open, int close, string str) {
     }
 }
 
-void print_parentheses(int index, int leftRem, int rightRem, string str) {
+void print_parentheses(int index, int leftRem, int rightRem, char char_arr[]) {
     if(leftRem < 0 || rightRem < leftRem) return;
 
     if(leftRem == 0 && rightRem == 0) {
-        cout << str << endl;
+        for(int i = 0; i < 6; i++) {
+            cout << char_arr[i];
+        }
+        cout << endl;
     } else {
-        str[index] = '(';
-        print_parentheses(index + 1, leftRem - 1, rightRem, str);
-    
-        str[index] = ')';
-        print_parentheses(index + 1, leftRem, rightRem - 1, str);
+        char_arr[index] = '(';
+        print_parentheses(index + 1, leftRem - 1, rightRem, char_arr);
+
+        char_arr[index] = ')';
+        print_parentheses(index + 1, leftRem, rightRem - 1, char_arr);
     }
 }
 
@@ -45,7 +48,8 @@ int main() {
     int open = 0;
     int close = 0;
     string str = "";
+    char char_arr[4];
     //printParentheses(index, count, open, close, str);
-    print_parentheses(index, 0, 0, str);
+    print_parentheses(index, 3, 3, char_arr);
     return 0;
 }

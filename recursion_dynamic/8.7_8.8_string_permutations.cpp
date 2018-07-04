@@ -6,12 +6,12 @@ using namespace std;
 void permutation_inorder(string prefix, string str) {
     int n = str.length();
     if (n == 0) {
-        cout << "---" << prefix <<  "---" << endl << endl;
+        cout << prefix <<  endl;
     } else {
         for (int i = 0; i < n; i++) {
             string temp = prefix + str[i];
             string temp1 = str.substr(0, i) + str.substr(i+1, n);
-            cout << "temp " << temp << "  \ttemp1 " << temp1 << "  \t " << i << endl;
+            //cout << "temp " << temp << "  \ttemp1 " << temp1 << "  \t " << i << endl;
             permutation_inorder(prefix + str[i], str.substr(0, i) + str.substr(i+1, n));
         }
     }
@@ -26,7 +26,7 @@ void swap(int l, int r, string &str) {
 }
 
 void permutation_out_of_order(string str, int index) {
-    
+
     if(index == str.size()) {
         cout << str << endl;
     }
