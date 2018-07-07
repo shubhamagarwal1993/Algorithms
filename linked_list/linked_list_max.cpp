@@ -1,76 +1,81 @@
-// compile using g++ -std=c++0x 2_3_4_array_sum.cpp
-
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
-#include <unordered_map>
+
 using namespace std;
 
-//linkedlist Node
-struct listNode {
-    int data;
-    listNode* next;
+class Node {
+    public:
+        int data;
+        Node* next;
+        Node(int data) {
+            this->data = data;
+            this->next = NULL;
+        }
 };
 
-//constructor for new listNode
-listNode* newNode(int data) {
-    listNode* node = new listNode;
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
+class LinkedList {
+    public:
+        Node* head;
 
-//construct linked list
-void construct_linkedList(listNode* &head) {
-    head                   = newNode(-4);
-    head->next             = newNode(-6);
-    head->next->next       = newNode(-2);
-    head->next->next->next = newNode(-7);
-    return;
-}
+        LinkedList() {
+            this->head = NULL;
+        }
 
-//print linkedlist
-void print_linkedList(listNode* head) {
-    if (head == NULL)
-        return;
+        void constructLinkedList() {
+            head                   = new Node(-4);
+            head->next             = new Node(-6);
+            head->next->next       = new Node(-2);
+            head->next->next->next = new Node(-7);
+            return;
+        }
 
-    cout << head->data << " ";
-    print_linkedList(head->next);
-}
+        void printLinkedList() {
+            if(head == NULL) {
+                return;
+            }
 
-// find max in linkedlist recursively
-int findMax(listNode* head) {
-    if(head == NULL) {
-        return 0;
-    }
+            Node* temp = head;
+            while(temp) {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+            return;
+        }
 
-    if(head->next == NULL) {
-        return head->data;
-    }
+        // find max in linkedlist recursively
+        int findMax() {
+            return findMaxUtil(head);
+        }
 
-    int curr_val = head->data;
+        int findMaxUtil(Node* head) {
+            if(head == NULL) {
+                return 0;
+            }
 
-    int max = findMax(head->next);
+            if(head->next == NULL) {
+                return head->data;
+            }
 
-    if(curr_val > max) {
-        max = curr_val;
-    }
-    return max;
-}
+            int curr_val = head->data;
+
+            int max = findMaxUtil(head->next);
+
+            if(curr_val > max) {
+                max = curr_val;
+            }
+            return max;
+        }
+};
+
 
 int main() {
 
-    // make linked list head
-    listNode* head;
-    cout << "constructing linked list" << endl;
-    construct_linkedList(head);
-    print_linkedList(head);
-    cout << endl << "---------------" << endl;
+    LinkedList linkedlist;
+    linkedlist.constructLinkedList();
 
-    cout << "finding max in linked list" << endl;
-    cout << "Max element = " << findMax(head) << endl;
+    linkedlist.printLinkedList();
+
+    cout << "Max element = " << linkedlist.findMax() << endl;
 
     return 0;
 }
