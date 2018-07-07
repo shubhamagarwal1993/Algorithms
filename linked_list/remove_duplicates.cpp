@@ -1,73 +1,94 @@
 #include <iostream>
 #include <unordered_map>
+
 using namespace std;
 
 // Linkedlist Node
-struct Node {
-    int data;
-    Node* next;
+class Node {
+    public:
+        int data;
+        Node* next;
+        Node(int data) {
+            this->data = data;
+            this->next = NULL;
+        }
 };
 
-// Constructor for new Node
-Node* newNode(int data) {
-    Node* node = new Node;
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
+class LinkedList {
+    public:
+        Node* head;
+        
+        LinkedList() {
+            this->head = NULL;
+        }
 
-// linkedlist Node
-struct listNode {
-    int data;
-//    listNode* prev;
-    listNode* next;
+        void constructLinkedList() {
+            head                         = new Node(1);
+            head->next                   = new Node(2);
+            head->next->next             = new Node(3);
+            head->next->next->next       = new Node(4);
+            head->next->next->next->next = new Node(2);
+            return;
+        }
+
+        void printLinkedList() {
+            if(head == NULL) {
+                return;
+            }
+
+            Node*temp = head;
+            while(temp) {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+            return;
+        }
+
+        // removed duplicates
+        void removeDuplicates() {
+            if((head == NULL) || (head->next == NULL)) {
+                return;
+            }
+
+            // map will store values seen, add first node
+            unordered_map<int, bool> valuesMap;
+            valuesMap[head->data] = true;
+
+            // This pointer to delete the next node
+            Node* prev = head;
+
+            // This pointer to check for duplicates
+            Node* curr = prev->next;
+
+            while(curr != NULL) {
+                auto search = valuesMap.find(curr->data);
+
+                // if found delete node, else insert data into map
+                if(search != valuesMap.end()) {
+                    prev->next = curr->next;
+                    delete(curr);
+                } else {
+                    valuesMap[curr->data] = true;
+                    prev = curr;
+                }
+
+                curr = curr->next;
+            }
+        }
 };
-
-// construct linked list
-void construct_linkedList(listNode* &head) {
-    head                      = newNode(1);
-    head->next                = newNode(2);
-    head->next->next          = newNode(3);
-    head->next->next->next    = newNode(4);
-    return;
-}
-
-// print linkedlist
-void print_linkedList(listNode* &head) {
-    if (head == NULL)
-        return;
-
-    cout << head->data << " ";
-    print_linkedList(head->next);
-}
-
-// removed duplicates
-void remove_duplicates(listNode* &head) {
-    if ((head == NULL) || (head->next == NULL))
-        return;
-
-    unordered_map<int, int> mymap;
-
-    listNode* temp = head;
-    listNode* temp1 = head->next;
-
-    while(temp->next != NULL) {
-        temp = temp.next;
-    }
-}
 
 int main() {
-    // make head
-    listNode* head;
+
+    LinkedList linkedlist;
     cout << "constructing linked list" << endl;
-    construct_linkedList(head);
-    print_linkedList(head);
+    linkedlist.constructLinkedList();
+    linkedlist.printLinkedList();
     cout << endl;
 
     cout << "Removed duplicated from linked list" << endl;
-    remove_duplicates(head);
-    print_linkedList(head);
-    cout << endl;
+    linkedlist.removeDuplicates();
+    linkedlist.printLinkedList();
 
     return 0;
 }
