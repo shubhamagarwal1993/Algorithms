@@ -31,22 +31,25 @@ class Tree {
         Node* construct_tree() {
 
             Node* root = new Node(50);
-            Node* temp = root;
+            root->left = new Node (40);
+            root->left->left = new Node (30);
+            root->left->left->left = new Node (20);
+            //Node* temp = root;
 
-            temp->left = new Node(10);
-            temp->right = new Node(60);
+            //temp->left = new Node(10);
+            //temp->right = new Node(60);
 
-            temp = temp->left;
-            temp->left = new Node(5);
-            temp->right = new Node(20);
+            //temp = temp->left;
+            //temp->left = new Node(5);
+            //temp->right = new Node(20);
 
-            temp = root->right;
-            temp->left = new Node(55);
-            temp->right = new Node(70);
+            //temp = root->right;
+            //temp->left = new Node(55);
+            //temp->right = new Node(70);
 
-            temp->left->left = new Node(51);
-            temp->right->left = new Node(65);
-            temp->right->right = new Node(80);
+            //temp->left->left = new Node(51);
+            //temp->right->left = new Node(65);
+            //temp->right->right = new Node(80);
 
             return root;
         }

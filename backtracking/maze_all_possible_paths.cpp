@@ -55,8 +55,8 @@ void allPathsInMaze(int maze[M][N]) {
         path[i] = 0;
     }
 
-   // find all paths
-   findAllPaths(maze, 0, 0, path, 0);
+    // find all paths
+    findAllPaths(maze, 0, 0, path, 0);
 }
 
 // main

@@ -1,6 +1,7 @@
 // Print all possible partitions of a string into dictionary word
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -39,10 +40,37 @@ void wordBreak(string str, int str_size, string answer) {
     }
 }
 
+bool wordBreakTest(string str, int str_size, vector<string> vec, int index) {
+    if(index >= str_size - 1) {
+        for(int i = 0; i < vec.size(); i++) {
+            cout << vec[i] << endl;
+        }
+        return true;
+    }
+
+    for(int i = 0; i < str_size; i++) {
+        string temp = str.substr(0, i);
+
+        if(wordInDict(temp)) {
+            vec.push_back(temp);
+            bool foundWord = wordBreakTest(str.substr(i), str_size - i, vec, index+1);
+            if(foundWord) {
+                vec.clear();
+            } else {
+                vec.pop_back();
+            }
+        }
+    }
+    return false;
+}
+
 int main() {
     string str = "iloveicecreamandmango";
-    int str_size = str.size();
-    wordBreak(str, str_size, "");
+    int str_size = str.length();
+//    wordBreak(str, str_size, "");
+
+    vector<string> vec;
+    wordBreakTest(str, str_size, vec, 0);
     return 0;
 }
 

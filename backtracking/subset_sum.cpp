@@ -26,9 +26,12 @@ bool subsetSum_test(int arr[], int arr_size, int sum) {
     for(int i = 1; i < arr_size + 1; i++) {
         for(int j = 1; j < sum + 1; j++) {
             // if smaller than previous no, then keep original sum
+            // This is the without case
             if(j < arr[i-1]) {
                 subset[i][j] = subset[i-1][j];
             }
+
+            // this is the without || with case
             if(j >= arr[i-1]) {
                 subset[i][j] = subset[i-1][j] || subset[i-1][j-arr[i-1]];
             }
@@ -79,18 +82,18 @@ int main() {
 
     vector<int> vec;
     // exponential time
-    if(subsetSum(arr, arr_size, sum, vec)) {
+//  if(subsetSum(arr, arr_size, sum, vec)) {
+//      cout << "found subset" << endl;
+//  } else {
+//      cout << "no subset" << endl;
+//  }
+
+    // pseudo-polynomial time
+    if(subsetSum_test(arr, arr_size, sum)) {
         cout << "found subset" << endl;
     } else {
         cout << "no subset" << endl;
     }
-
-    // pseudo-polynomial time
-//    if(subsetSum_test(arr, arr_size, sum)) {
-//        cout << "found subset" << endl;
-//    } else {
-//        cout << "no subset" << endl;
-//    }
 
     return 0;
 }
