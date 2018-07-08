@@ -2,76 +2,117 @@
 #include <unordered_map>
 using namespace std;
 
-// Linkedlist Node
-struct listNode {
-    int data;
-    listNode* next;
-    listNode* prev;
+// LinkedList Node
+class Node {
+    public:
+        int data;
+        Node* next;
+        Node* random;
+
+        Node(int data) {
+            this->data = data;
+            this->next = NULL;
+            this->random = NULL;
+        }
 };
 
-// Constructor for new Node
-listNode* newNode(int data) {
-    listNode* node = new listNode;
-    node->data = data;
-    node->next = NULL;
-    node->prev = NULL;
-    return node;
-}
+// LinkedList
+class LinkedList {
+    public:
+        Node* head;
+        Node* duplicateHead;
 
-// construct linked list
-void construct_linkedList(listNode* &head) {
-    head                               = newNode(1);
-    head->next                         = newNode(2);
-    head->next->next                   = newNode(4);
-    head->next->next->next             = newNode(3);
-    head->next->next->next->next       = newNode(2);
-    head->next->next->next->next->next = newNode(1);
-    return;
-}
+        LinkedList() {
+            this->head = NULL;
+            this->duplicateHead = NULL;
+        }
 
-// print linkedlist
-void print_linkedList(listNode* &head) {
-    if (head == NULL)
-        return;
+        // construct linked list
+        void constructLinkedList() {
+            head                               = new Node(1);
+            head->next                         = new Node(2);
+            head->next->next                   = new Node(3);
+            head->next->next->next             = new Node(4);
+            head->next->next->next->next       = new Node(5);
 
-    cout << head->data << " ";
-    print_linkedList(head->next);
-}
+            // set random pointers
+            head->random                         = head->next->next;                // 1 -> 3
+            head->next->random                   = head;                            // 2 -> 1
+            head->next->next->random             = head->next->next->next->next;    // 3 -> 5
+            head->next->next->next->random       = head->next->next->next->next;    // 4 -> 5
+            head->next->next->next->next->random = head->next;                      // 5 -> 2
+            return;
+        }
 
-// removed duplicates
-listNode* duplicate(listNode* head) {
-    if(head == NULL) {
-        return NULL;
-    }
+        // print linkedlist
+        void printLinkedList(Node* head) {
+            if(head == NULL) {
+                return;
+            }
 
-    // temp pointer for head, temp1 for head1
-    listNode* temp_head = head;
-    listNode* temp_end = head;
+            Node* temp = head;
+            while(temp) {
+                cout << "Data: " << temp->data << " Random: " << temp->random->data << endl;
+                temp = temp->next;
+            }
+            return;
+        }
 
-    while(temp_end != NULL) {
-        temp_end = temp_end->next;
-        temp_head->next = newNode(temp_head->data);
-        temp_head = temp_head->next;
-        temp_head->next = temp_end;
-        temp_head = temp_head->next;
-    }
+        // duplicate linkedlist
+        void duplicateLinkedList() {
+            if(head == NULL) {
+                return;
+            }
 
-    return head;
-}
+            // duplicate nodes, insert additional node after every node of original list
+            Node* curr = head;
+            Node* temp = NULL;
+
+            while(curr) {
+                temp = curr->next;
+ 
+                // Inserting node
+                curr->next = new Node(curr->data);
+                curr->next->next = temp;
+                curr = temp;
+            }
+ 
+            curr = head;
+            temp = NULL;
+
+            // adjust the random pointers of the newly added nodes
+            while(curr) {
+                curr->next->random = curr->random->next;
+
+                // move to the next newly added node by
+                // skipping an original node
+                curr = curr->next?curr->next->next:curr->next;
+            }
+
+            duplicateHead = head->next;
+
+            Node* originalHead = head;
+            Node* copyHead = duplicateHead;
+
+            // now separate the original list and copied list
+            while(originalHead && copyHead) {
+                originalHead->next = originalHead->next ? originalHead->next->next : originalHead->next;
+                copyHead->next = copyHead->next ? copyHead->next->next : copyHead->next;
+                originalHead = originalHead->next;
+                copyHead = copyHead->next;
+            }
+        }
+};
 
 int main() {
-    // make head
-    listNode* head;
-    cout << "constructing linked list" << endl;
-    construct_linkedList(head);
-    print_linkedList(head);
-    cout << endl;
 
-    cout << "Duplicat original linked list" << endl;
-    listNode* newHead = duplicate(head);
-    print_linkedList(newHead);
-    cout << endl;
+    LinkedList linkedlist;
+    linkedlist.constructLinkedList();
+    linkedlist.printLinkedList(linkedlist.head);
+
+    cout << "Duplicate original linked list" << endl;
+    linkedlist.duplicateLinkedList();
+    linkedlist.printLinkedList(linkedlist.duplicateHead);
 
     return 0;
 }
-
