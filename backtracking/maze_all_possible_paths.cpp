@@ -59,6 +59,16 @@ void allPathsInMaze(int maze[M][N]) {
     findAllPaths(maze, 0, 0, path, 0);
 }
 
+int totalPaths(int row, int col) {
+    if((row == 1) || (col == 1)) {
+        return 1;
+    }
+
+    int count_rows = totalPaths(row-1, col);
+    int count_cols = totalPaths(row, col-1);
+    return count_rows + count_cols;
+}
+
 // main
 int main() {
    int maze[M][N] = {{ 1,2,3 },
@@ -66,6 +76,9 @@ int main() {
 
    allPathsInMaze(maze);
    cout<<endl;
+
+   cout << "Total paths: " << totalPaths(M, N) << endl;
+
    return 0;
 }
 
