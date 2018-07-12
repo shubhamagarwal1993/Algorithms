@@ -15,6 +15,23 @@ string changeCase(string input, int index) {
     return input;
 }
 
+// Space Complexity: O(n). This is because recursion on stack with index 0 1 2 3, then breaks at string length
+// Time Complexity : O(2^n). Check recursion tree below
+//            0                  2^0
+//           / \
+//          /   \
+//         /     \
+//        /       \
+//       /         \
+//      1           1            2^1
+//     / \         / \
+//    /   \       /   \
+//   2     2     2     2         2^2
+//  / \   / \   / \   / \
+// 3   3 3   3 3   3 3   3       2^3
+//
+// Total recursion calls = 2^0 + 2^1 + 2^2 + 2^3 = 2^n
+
 void stringCombinations(string input, int index) {
 
     if(index == input.size()) {
