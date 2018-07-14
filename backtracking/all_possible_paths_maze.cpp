@@ -89,6 +89,61 @@ void pathInMaze(int maze[M][N]) {
    }
 }
 
+void findTotalPaths(int maze[5][7]) {
+    int row = 5;
+    int col = 7;
+
+    // initialize cells in first column to 1 that are accessible from (0, 0)
+    for(int i = 0; i < row; i++) {
+        if(maze[i][0] == 0) {
+            maze[i][0] = 1;
+        } else {
+            break;
+        }
+    }
+
+    // initialize cells in first row to 1 that are accessible from (0, 0)
+    for(int i = 1; i < col; i++) {
+        if(maze[0][i] == 0) {
+            maze[0][i] = 1;
+        } else {
+            break;
+        }
+    }
+
+    // for each accessible cell, increase total count of paths
+    for(int i = 1; i < col; i++) {
+        for(int j = 1; j < row; j++) {
+            if(maze[j][i] == -1) {
+                continue;
+            }
+
+            if(maze[j][i-1] > 0) {
+                maze[j][i] = maze[j][i] + maze[j][i-1];
+            }
+
+            if(maze[j-1][i] > 0) {
+                maze[j][i] = maze[j][i] + maze[j-1][i];
+            }
+        }
+    }
+
+    cout << "---------" << endl;
+    for(int i = 0; i < row; i++) {
+        for(int j = 0; j < col; j++) {
+            if(maze[i][j] == -1) {
+                cout << maze[i][j] << " ";
+            } else {
+                cout << " " << maze[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << "---------" << endl;
+
+    cout << "Total paths in maze with barriers: " << maze[row-1][col-1] << endl;
+}
+
 // main
 int main() {
    int maze[M][N] = {{ 0,1,1,1,1,1 },
@@ -99,7 +154,14 @@ int main() {
                      { 0,0,0,0,1,0 }};
    // 1s in the maze denotes barriers (dangerous cells),
    pathInMaze(maze);
-   cout<<endl;
+   cout << endl;
+
+   int maze_with_barriers[5][7] = {{ 0,  0,  0, 0,  0, -1,  0},
+                                   { 0, -1,  0, 0,  0,  0, -1},
+                                   {-1,  0,  0, 0, -1,  0,  0},
+                                   { 0,  0, -1, 0,  0,  0,  0},
+                                   { 0,  0,  0, 0, -1,  0,  0}};
+   findTotalPaths(maze_with_barriers);
    return 0;
 }
 
