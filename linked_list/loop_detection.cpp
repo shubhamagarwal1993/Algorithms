@@ -22,8 +22,8 @@ class LinkedList {
 
         void constructLinkedList() {
 //            1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
-//
-                                ^______________|
+//                                ^______________|
+
             head                                                 = new Node(1);
             head->next                                           = new Node(2);
             head->next->next                                     = new Node(3);
