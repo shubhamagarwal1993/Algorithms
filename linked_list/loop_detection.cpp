@@ -23,7 +23,6 @@ class LinkedList {
         void constructLinkedList() {
 //            1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 //                                ^______________|
-
             head                                                 = new Node(1);
             head->next                                           = new Node(2);
             head->next->next                                     = new Node(3);
@@ -62,15 +61,14 @@ class LinkedList {
             return;
         }
 
-        Node* checkLoopUtil(Node* temp) {
-            cout << "temp data " << temp->data << endl;
+        Node* checkLoopUtil(Node* curr_head) {
 
-            if(temp == NULL) {
+            if(curr_head == NULL) {
                 return NULL;
             }
 
-            Node* slow_runner = temp;
-            Node* fast_runner = temp;
+            Node* slow_runner = curr_head;
+            Node* fast_runner = curr_head;
             Node* collision = NULL;
 
             while((fast_runner != NULL) && (fast_runner->next != NULL)) {
@@ -88,15 +86,13 @@ class LinkedList {
             }
 
             // Reusing variables
-            slow_runner = temp;
+            slow_runner = curr_head;
             fast_runner = collision;
 
             while(slow_runner != fast_runner) {
                 slow_runner = slow_runner->next;
                 fast_runner = fast_runner->next;
-            }    
-
-  
+            }
 
             return slow_runner;
         }
