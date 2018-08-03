@@ -10,7 +10,7 @@ void reverse(string &str, int left, int right) {
 
     for(int i = 0; i < (right+1-left)/2; i++) {
         char temp = str[left+i];
-        str[left+i] =     str[right-i];
+        str[left+i] = str[right-i];
         str[right-i] = temp;
     }
 
