@@ -23,11 +23,14 @@ class LinkedList {
         }
 
         void constructLinkedList() {
-            head                         = new Node(1);
-            head->next                   = new Node(2);
-            head->next->next             = new Node(3);
-            head->next->next->next       = new Node(4);
-            head->next->next->next->next = new Node(2);
+            head                                           = new Node(1);
+            head->next                                     = new Node(2);
+            head->next->next                               = new Node(3);
+            head->next->next->next                         = new Node(4);
+            head->next->next->next->next                   = new Node(2);
+            head->next->next->next->next->next             = new Node(5);
+            head->next->next->next->next->next->next       = new Node(6);
+            head->next->next->next->next->next->next->next = new Node(2);
             return;
         }
 
@@ -67,13 +70,14 @@ class LinkedList {
                 // if found delete node, else insert data into map
                 if(search != valuesMap.end()) {
                     prev->next = curr->next;
+                    curr->next = NULL;
                     delete(curr);
                 } else {
                     valuesMap[curr->data] = true;
                     prev = curr;
                 }
 
-                curr = curr->next;
+                curr = prev->next;
             }
         }
 };
