@@ -7,35 +7,27 @@
 
 using namespace std;
 
-// check if 2 strings are anagram
 bool areAnagram(string str1, string str2) {
 
-    // Create two count arrays and initialize all values as 0
-    int checker = 0;
+    unordered_map<char, int> compareMap;
 
     for(int i = 0; str1[i] && str2[i]; i++) {
 
-        // get position in str1 to flip
-        int k = 1 << ((int)str1[i] - 'a');
+        // add chars from str1
+        compareMap[str1[i]]++;
 
-        // flip bit at k
-        checker ^= k;
-
-        // get position in str2 to flip
-        k = 1 << ((int)str2[i] - 'a');
-
-        // flip bit at k
-        checker ^= k;
+        // subtract chars from str2
+        compareMap[str2[i]]--;
     }
 
-    return (checker == 0) ? 1 : 0;
+    return compareMap.empty();
 }
 
 int main() {
-    string str1 = "abcd";
-    string str2 = "acbd";
+    //string str1 = "abcd";
+    string str1 = "aabcd";
+    string str2 = "eecbd";
 
-    // check if strings are anagram
     if(areAnagram(str1, str2)) {
         cout << "Anagram True" << endl;
     } else {

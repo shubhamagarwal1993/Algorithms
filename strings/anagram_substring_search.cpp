@@ -81,7 +81,7 @@ void searchPattern(char input[], int input_size, char pat[], int pattern_size) {
 }
 
 int main() {
-    char input[] = "BACDGABCDA";
+    char input[] = "vACDGABCDA";
     int input_size = strlen(input);
     char pattern[] = "ABCD";
     int pattern_size = strlen(pattern);
