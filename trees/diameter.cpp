@@ -1,3 +1,5 @@
+// The Diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two end nodes
+
 #include <iostream>
 
 using namespace std;
