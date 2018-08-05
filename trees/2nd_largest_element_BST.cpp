@@ -32,6 +32,7 @@ class Tree {
 
             Node* root = new Node(50);
             root->left = new Node (40);
+            root->left->right = new Node (45);
             root->left->left = new Node (30);
             root->left->left->left = new Node (20);
             //Node* temp = root;
@@ -84,13 +85,13 @@ Node* get2ndLargestInBST(Node* root) {
         return NULL;
     }
 
-    Node* current = root;
+    // if tree does not have a right subtree, then largest in left subtree
+    if(root->left && (root->right == NULL)) {
+        return getRightMostNode(root->left);
+    }
 
+    Node* current = root;
     while(current) {
-        // if tree does not have a right subtree, then largest in left subtree
-        if(root->left && (root->right == NULL)) {
-            return getRightMostNode(root->left);
-        }
 
         // if current is the parent of the largest element, and the largest has no children
         if(current->right && (current->right->left == NULL) && (current->right->right == NULL)) {
