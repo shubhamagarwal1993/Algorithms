@@ -31,9 +31,8 @@ int clearBit(int num, int k) {
     return result;
 }
 
-// 
-int updateBit(int num, int k, bool bitIs1) {
-    int value = bitIs1 ? 1 : 0;
+int updateBit(int num, int k, bool bitValue) {
+    int value = bitValue ? 1 : 0;
     int mask = value << k;
     int result = clearBit(num, k) | mask;
     return result;
@@ -58,3 +57,4 @@ int main() {
 
     return 0;
 }
+
