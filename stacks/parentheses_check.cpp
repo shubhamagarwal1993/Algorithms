@@ -1,30 +1,26 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
-#include <string>
-#include <set>
 #include <stack>
 
 using namespace std;
 
 bool parentheses(string str, stack <char> s) {
-    if(str.length() == 0)
-        return true;
-    if (str.length() % 2 != 0)
-        return false;
 
-    char temp;
+    if(str.length() == 0) {
+        return true;
+    }
+
+    if(str.length() % 2 != 0) {
+        return false;
+    }
 
     for(int i = 0; i < str.length(); i++) {
         if(str[i] == '{' || str[i] == '[' || str[i] == '(') {
             s.push(str[i]);
         } else if(str[i] == '}' || str[i] == ']' || str[i] == ')') {
-            if (s.size() == 0) {
+            if(s.size() == 0) {
                 return false;
             } else {
-                temp = s.top();
+                char temp = s.top();
                 s.pop();
                 if(str[i] == '}') {
                     if(temp != '{')
@@ -48,7 +44,12 @@ bool parentheses(string str, stack <char> s) {
 int main() {
     string str = "{[()]}";
     stack <char> s;
-    cout << parentheses(str, s) << endl;
+    if(parentheses(str, s)) {
+        cout << "parentheses in string is balanced" << endl;
+    } else {
+        cout << "parentheses in string is not balanced" << endl;
+    }
+
     return 0;
 }
 
