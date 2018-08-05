@@ -49,15 +49,15 @@ class Tree {
             return root; 
         }
 
-        Node* deleteNode(Node* root, int data) {
+        Node* deleteNodeWithoutAdjustingParentPointers(Node* root, int data) {
             if(root == NULL) {
                 return root;
             }
 
             if(data < root->data) {
-                root->left = deleteNode(root->left, data);
+                root->left = deleteNodeWithoutAdjustingParentPointers(root->left, data);
             } else if(data > root->data) {
-                root->right = deleteNode(root->right, data);
+                root->right = deleteNodeWithoutAdjustingParentPointers(root->right, data);
             // We are at the node to delete
             } else {
                 // If no child
@@ -78,8 +78,98 @@ class Tree {
                 } else {
                     Node* temp = getInorderSuccessor(root->right);
                     root->data = temp->data;
-                    root->right = deleteNode(root->right, root->data);
+                    root->right = deleteNodeWithoutAdjustingParentPointers(root->right, root->data);
                 }
+            }
+
+            return root;
+        }
+
+//          1
+//         / \
+//        2   3
+//       / \   \
+//      4   5   8
+//             / \
+//            6   7
+        Node* deleteNode(Node* root, int data) {
+            if(root == NULL) {
+                return root;
+            }
+
+            // if root is the node to delete
+            if(root->data == data) {
+                delete root;
+                root = NULL;
+                return root;
+            }
+
+            return deleteNodeUtil(root, data);
+        }
+
+        // root is not the node to check or delete
+        Node* deleteNodeUtil(Node* root, int data) {
+
+            Node* temp = root->left;
+            if(temp && (temp->data == data)) {
+                // If no child
+                if(temp->left == NULL && temp->right == NULL) {
+                    delete temp;
+                    root->left = NULL;
+                    return root;
+                // if no left child, delete root and return right child
+                } else if(temp->left == NULL) {
+                    root->left = temp->right;
+                    temp->right = NULL;
+                    delete(temp);
+                    return root;
+                // if no right child, delete root and return left child
+                } else if(temp->right == NULL) {
+                    root->left = temp->left;
+                    temp->left = NULL;
+                    delete(temp);
+                    return root;
+                // Both child
+                } else {
+                    Node* in_order_successor = getInorderSuccessor(temp->right);
+                    temp->data = in_order_successor->data;
+                    temp->right = deleteNodeUtil(root->right, temp->data);
+                    return root;
+                }
+            }
+
+            temp = root->right;
+            if(temp && (temp->data == data)) {
+                // If no child
+                if(temp->left == NULL && temp->right == NULL) {
+                    delete temp;
+                    root->right = NULL;
+                    return root;
+                // if no left child, delete root and return right child
+                } else if(temp->left == NULL) {
+                    root->right = temp->right;
+                    temp->right = NULL;
+                    delete(temp);
+                    return root;
+                // if no right child, delete root and return left child
+                } else if(temp->right == NULL) {
+                    root->right = temp->left;
+                    temp->left = NULL;
+                    delete(temp);
+                    return root;
+                // Both child
+                } else {
+                    Node* in_order_successor = getInorderSuccessor(temp->right);
+                    temp->data = in_order_successor->data;
+                    temp->right = deleteNodeUtil(root->right, temp->data);
+                    return root;
+                }
+            }
+
+            if(data < root->data) {
+                root->left = deleteNodeUtil(root->left, data);
+            } else if(data > root->data) {
+                root->right = deleteNodeUtil(root->right, data);
             }
 
             return root;
@@ -134,8 +224,12 @@ int main() {
 
     cout << "----------" << endl;
 
-    // Delete node in O(n) time
+    // Delete node in O(n) time - not adjusting parent pointers
+//    tree.root = tree.deleteNodeWithoutAdjustingParentPointers(tree.root, 3);
+
+    // Delete node in O(n) time - adjusting parent pointers
     tree.root = tree.deleteNode(tree.root, 3);
+
     tree.printLevelOrder(tree.root);
 
     return 0;
