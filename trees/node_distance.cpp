@@ -2,105 +2,125 @@
 
 using namespace std;
 
-struct Node {
-    int data;
-    Node* left;
-    Node* right;
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
+
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
-Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-Node* constructTree() {
-    Node* root = newNode(8);
+        Tree() {
+            this->root = NULL;
+        }
 
-    root->left = newNode(3);
-    root->left->left = newNode(1);
-    root->left->right = newNode(6);
-    root->left->right->left = newNode(4);
-    root->left->right->right = newNode(7);
+        Node* constructTree() {
+            Node* root = new Node(8);
 
-    root->right = newNode(12);
-    root->right->left = newNode(11);
-    root->right->right = newNode(15);
-    root->right->right->left = newNode(14);
+            root->left = new Node(3);
+            root->left->left = new Node(1);
+            root->left->right = new Node(6);
+            root->left->right->left = new Node(4);
+            root->left->right->right = new Node(7);
 
-    return root;
-}
+            root->right = new Node(12);
+            root->right->left = new Node(11);
+            root->right->right = new Node(15);
+            root->right->right->left = new Node(14);
 
-Node* getLCA(Node* root, int node1, int &node1_height, int node2, int &node2_height, int &dist, int level) {
+            return root;
+        }
 
-    Node* temp = NULL;
-    if(root == NULL) {
-        return NULL;
-    }
+        Node* getLCA(Node* root, int node1, int &node1_height, int node2, int &node2_height, int &dist, int level) {
 
-    if(root->data == node1) {
-        node1_height = level;
-        temp = root;
-    }
+            Node* temp = NULL;
+            if(root == NULL) {
+                return NULL;
+            }
 
-    if(root->data == node2) {
-        node2_height = level;
-        temp = root;
-    }
+            if(root->data == node1) {
+                node1_height = level;
+                temp = root;
+            }
 
-    Node* LCALeft = getLCA(root->left, node1, node1_height, node2, node2_height, dist, level+1);
-    Node* LCARight = getLCA(root->right, node1, node1_height, node2, node2_height, dist, level+1);
+            if(root->data == node2) {
+                node2_height = level;
+                temp = root;
+            }
 
-    if(temp != NULL) {
-        return temp;
-    }
+            Node* LCALeft = getLCA(root->left, node1, node1_height, node2, node2_height, dist, level+1);
+            Node* LCARight = getLCA(root->right, node1, node1_height, node2, node2_height, dist, level+1);
 
-    // could not LCA in both subtrees
-    if(LCALeft == NULL && LCARight == NULL) {
-        return NULL;
-    // found LCA, return it
-    } else if(LCALeft != NULL && LCARight != NULL) {
-        dist = node1_height + node2_height - (2*level);
-        return root;
-    // found LCA in either of the branches, return the one with the LCA
-    } else {
-        return (LCALeft != NULL) ? LCALeft : LCARight;
-    }
-}
+            if(temp != NULL) {
+                return temp;
+            }
 
-void nodeDistance(Node* root, int node1, int node2) {
-    if(root == NULL) {
-        return;
-    }
+            // could not LCA in both subtrees
+            if(LCALeft == NULL && LCARight == NULL) {
+                return NULL;
+            // found LCA, return it
+            } else if(LCALeft != NULL && LCARight != NULL) {
+                dist = node1_height + node2_height - (2*level);
+                return root;
+            // found LCA in either of the branches, return the one with the LCA
+            } else {
+                return (LCALeft != NULL) ? LCALeft : LCARight;
+            }
+        }
 
-    // find LCA
-    int node1_height = -1;
-    int node2_height = -1;
-    int dist = -1;
-    Node* lca = getLCA(root, node1, node1_height, node2, node2_height, dist, 0);
-    if(lca == NULL || (node1_height == -1) || (node2_height == -1)) {
-        cout << "Cannot find LCA" << endl;
-    }
+        void nodeDistance(Node* root, int node1, int node2) {
+            if(root == NULL) {
+                return;
+            }
 
-    cout << "LCA: " << lca->data << endl;
-    cout << "Dist between " << node1 << " and " << node2 << ": " << dist << endl;
+            // find LCA
+            int node1_height = -1;
+            int node2_height = -1;
+            int dist = -1;
+            Node* lca = getLCA(root, node1, node1_height, node2, node2_height, dist, 0);
+            if(lca == NULL || (node1_height == -1) || (node2_height == -1)) {
+                cout << "Cannot find LCA" << endl;
+            }
 
-    return;
-}
+            cout << "LCA: " << lca->data << endl;
+            cout << "Dist between " << node1 << " and " << node2 << ": " << dist << endl;
 
-void destroyTree(Node* root) {
-    if(root) {
-        destroyTree(root->left);
-        destroyTree(root->right);
-        delete root;
-    }
-}
+            return;
+        }
+
+        void printTree(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            printTree(root->left);
+            cout << root->data << " ";
+            printTree(root->right);
+        }
+
+        void destroyTree(Node* root) {
+            if(root) {
+                destroyTree(root->left);
+                destroyTree(root->right);
+                delete root;
+            }
+        }
+};
 
 int main() {
-    Node* root = constructTree();
-    nodeDistance(root, 4, 14);
-    destroyTree(root);
+    Tree tree;
+    tree.root = tree.constructTree();
+    Node* root_copy = tree.root;
+    tree.nodeDistance(root_copy, 4, 14);
+    tree.destroyTree(tree.root);
     return 0;
 }
