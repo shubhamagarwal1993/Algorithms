@@ -37,6 +37,35 @@
     - Sinf = a(r^(n-1))
     - If -1 < r < 1, then Sinf = a/(1-r)
 
+## ASCII Table
+| Decimal | Char  |
+| ------- | ----- |
+| 0       | NULL  |
+| 32      | space |
+| 48      | 0     |
+| 57      | 9     |
+| 65      | A     |
+| 90      | Z     |
+| 97      | a     |
+| 122     | z     |
+| 127     | DEL   |
+
+- print ASCII value of chars in c++
+  - cout << int(a) where a = "a" to "z" or "A" to "Z"
+- print ASCII of integers
+
+## Primitive types and size
+| Type   | Size    |         | Total values         | Range                           |
+| ------ | ------- | ------- | -------------------- | ------------------------------- |
+| char   | 1 byte  |  8 bits | 2^8  = 256           |           -128 to 127           |
+| uchar  | 1 byte  |  8 bits | 2^8  = 256           |              0 to 256           |
+| short  | 2 bytes | 16 bits | 2^16 = 65,536        |        -32,768 to 32,767        |
+| ushort | 2 bytes | 16 bits | 2^16 = 65,536        |              0 to 65,535        |
+| int    | 4 bytes | 32 bits | 2^32 = 4,294,967,296 | -2,147,483,648 to 2,147,483,647 |
+| uint   | 4 bytes | 32 bits | 2^32 = 4,294,967,296 |              0 to 4,294,967,295 |
+| long   | 8 bytes | 64 bits | 2^64 = .......       | -...           to ...           |
+| ulong  | 8 bytes | 64 bits | 2^64 = .......       |              0 to ......        |
+
 ## Runtimes
  - Big O     : upper bound on time, less than equal to relationship
    - Some Big O runtimes - O(log N), O(N logN), O(N), O(N^2), O(2^N)
