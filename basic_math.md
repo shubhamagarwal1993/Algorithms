@@ -50,9 +50,20 @@
 | 122     | z     |
 | 127     | DEL   |
 
-- print ASCII value of chars in c++
-  - cout << int(a) where a = "a" to "z" or "A" to "Z"
-- print ASCII of integers
+- print ASCII value of chars in c++, where ascii ranges from 32 (space) to 126 (~)
+```
+    int main() {
+        char c = 'A';
+        cout << "The ASCII value of " << c << " is " << int(c) << endl;
+    }
+```
+- print chars of ASCII value in c++, where ascii ranges from 32 to 126
+```
+    int main() {
+        int ascii_val 97;
+        cout << "The char value of " << ascii_val << " is " << char(ascii_val) << endl;
+    }
+```
 
 ## Primitive types and size
 | Type   | Size    |         | Total values         | Range                           |
