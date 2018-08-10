@@ -66,6 +66,12 @@
 | long   | 8 bytes | 64 bits | 2^64 = .......       | -...           to ...           |
 | ulong  | 8 bytes | 64 bits | 2^64 = .......       |              0 to ......        |
 
+## Constants
+| Constant | Value       |
+| -------- | ----------- |
+| INT_MAX  |  2147483647 |
+| INT_MIN  | -2147483648 |
+
 ## Runtimes
  - Big O     : upper bound on time, less than equal to relationship
    - Some Big O runtimes - O(log N), O(N logN), O(N), O(N^2), O(2^N)
