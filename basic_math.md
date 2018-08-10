@@ -27,17 +27,27 @@
   n!/(k! * (n-k)!) = (n k)
 ```
 
-Big O     : upper bound on time, less than equal to relationship
-Big theta : upper and lower bound on time
-Big omega : lower bound on time, greater than equal to relationship
+## Geometric progression
+  - common ratio = r
+  - a, ar, a(r^2), a(r^3), a(r^4),....,a(r^(n-1)), a(r^n)
+  - nth term = a(r^(n-1))
+  - Sum of nth partial sum of GP, r not equal 1
+    - Sn = a(1 - (r^n))/(1 - r)
+  - Sum to infinity,
+    - Sinf = a(r^(n-1))
+    - If -1 < r < 1, then Sinf = a/(1-r)
 
-Some Big O runtimes - O(log N), O(N logN), O(N), O(N^2), O(2^N)
+## Runtimes
+ - Big O     : upper bound on time, less than equal to relationship
+   - Some Big O runtimes - O(log N), O(N logN), O(N), O(N^2), O(2^N)
+ - Big theta : upper and lower bound on time
+ - Big omega : lower bound on time, greater than equal to relationship
 
-Data Structures run times:
-	Lists					
-	Vectors / Arraylists
-	Heaps
-	Trees
-	Tries
-	Graphs
-	Hash table
+## Run times of Data Structures:
+  - Lists
+  - Vectors / Arraylists
+  - Heaps
+  - Trees
+  - Tries
+  - Graphs
+  - Hash table
