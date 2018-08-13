@@ -236,8 +236,8 @@ int main() {
     cout << endl << endl;
 
     int matrix[2][4] = {{1, 2, 3, 4}
-                    , {5, 6, 7, 8}
-                     };
+                       ,{5, 6, 7, 8}
+                       };
 
     vector<int> vec1;
     dfsMatrix(matrix, 0, 0, 1, 3, vec1);

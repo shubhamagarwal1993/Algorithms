@@ -1,8 +1,5 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
+
 using namespace std;
 
 void merge(int array[], int l, int mid, int r) {
