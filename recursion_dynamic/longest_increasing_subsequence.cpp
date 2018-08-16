@@ -1,9 +1,5 @@
-#include <cmath>
-#include <cstdio>
 #include <vector>
 #include <iostream>
-#include <algorithm>
-#include <stack>
 
 using namespace std;
 
@@ -58,8 +54,11 @@ int ceilIndex(vector<int> &vec, int l, int r, int val) {
     return r;
 }
 
-int LIS_vector(vector<int> &vec) {
-    if(vec.size() == 0) return 0;
+int LIS_vector_size(vector<int> &vec) {
+
+    if(vec.size() == 0) {
+        return 0;
+    }
 
     // make a vector of size number of elements and initialize all to 0
     // make first element as first element of lis
@@ -93,18 +92,62 @@ int LIS_vector(vector<int> &vec) {
     return length;
 }
 
+int getCeilIndex(int arr[], vector<int> &tailIndices, int l, int r, int key) {
+    while(r - l > 1) {
+        int mid = l + (r - l)/2;
+        if(arr[tailIndices[mid]] >= key) {
+            r = mid;
+        } else {
+            l = mid;
+        }
+    }
+
+    return r;
+}
+
+int LIS_vector(int arr[], int arr_size) {
+
+    vector<int> tailIndices(arr_size, 0);
+    vector<int> prevIndices(arr_size, -1);
+
+    int len = 1;
+    for(int i = 1; i < arr_size; i++) {
+
+        if(arr[i] < arr[tailIndices[0]]) {
+            tailIndices[0] = i;
+        } else if(arr[i] > arr[tailIndices[len - 1]]) {
+            prevIndices[i] = tailIndices[len-1];
+            tailIndices[len++] = i;
+        } else {
+            int pos = getCeilIndex(arr, tailIndices, -1, len - 1, arr[i]);
+            prevIndices[i] = tailIndices[pos - 1];
+            tailIndices[pos] = i;
+        }
+    }
+
+    for(int i = tailIndices[len - 1]; i >= 0; i = prevIndices[i]) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return len;
+}
+
 int main() {
 
     // Time complexity O(n^2)
-    //int arr[] = {3, 10, 2, 1, 20};
-    int arr[] = {2, 5, 3, 7, 11, 8, 10, 13, 6};
+    //int arr[] = {2, 5, 3, 7, 11, 8, 10, 13, 6};
+    int arr[] = {5, 6, 7, 8, 3};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     cout << LIS(arr, arr_size) << endl;
 
     // Time complexity O(n logn)
     vector<int> vec;
     vec.assign(arr, arr+arr_size);
-    cout << LIS_vector(vec) << endl;
+    cout << LIS_vector_size(vec) << endl;
+
+    // Time complexity O(n logn)
+    cout << LIS_vector(arr, arr_size) << endl;
 
     return 0;
 }
