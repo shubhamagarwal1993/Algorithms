@@ -3,10 +3,11 @@
 
 using namespace std;
 
-// 2d array to store phone numberpad digits to alphabets
+// array to store phone numberpad digits to alphabets
 const string hashTable[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 //                             0   1    2      3      4      5      6       7      8       9
 
+// Time complexity: O(4n) where n is number of digits in input number
 void printWordsUtil(int num_array[], int num_array_size, int curr_digit, char result[]) {
 
     // Base case, if current output word is prepared

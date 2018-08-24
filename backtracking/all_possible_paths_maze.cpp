@@ -153,8 +153,8 @@ int main() {
                      { 0,1,1,0,1,0 },
                      { 0,0,0,0,1,0 }};
    // 1s in the maze denotes barriers (dangerous cells),
-   pathInMaze(maze);
-   cout << endl;
+//   pathInMaze(maze);
+//   cout << endl;
 
    int maze_with_barriers[5][7] = {{ 0,  0,  0, 0,  0, -1,  0},
                                    { 0, -1,  0, 0,  0,  0, -1},
