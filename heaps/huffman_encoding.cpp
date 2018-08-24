@@ -12,22 +12,20 @@
 using namespace std;
 
 //tree node
-struct Node {
-    char data;
-    int freq;
-    Node* left;
-    Node* right;
-};
+class Node {
+    public:
+        char data;
+        int freq;
+        Node* left;
+        Node* right;
 
-//constructor for new node
-Node* newNode(char data, int freq) {
-    Node* node = new Node;
-    node->data = data;
-    node->freq = freq;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
+        Node(char data, int freq) {
+            this->data = data;
+            this->freq = freq;
+            this->left = NULL;
+            this->right = NULL;
+        };
+};
 
 struct compare {
     bool operator() (Node* a, Node* b) const {
@@ -47,7 +45,7 @@ Node* buildHuffmanTree(unordered_map<char, int> freq) {
     priority_queue<Node*, vector<Node*>, compare> minHeap;
     Node* root;
     for(auto v = freq.begin(); v != freq.end(); v++) {
-        root = newNode(v->first, v->second);
+        root = new Node(v->first, v->second);
         minHeap.push(root);
     }
 
@@ -59,7 +57,7 @@ Node* buildHuffmanTree(unordered_map<char, int> freq) {
         minHeap.pop();
 
         // Make new node with frequency as sum of left and right
-        Node* top = newNode('#', left->freq + right->freq);
+        Node* top = new Node('#', left->freq + right->freq);
         top->left = left;
         top->right = right;
         minHeap.push(top);

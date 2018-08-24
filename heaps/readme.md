@@ -16,6 +16,9 @@
 ## Insert a single element into an existing heap
   - O(logn) since heapifyUp will start from bottom of tree, and go to top of tree at max - height of tree is O(logn)
 
+## Remove top element from an existing heap
+  - O(logn) since heapifyDown
+
 ## buildHeap is an O(n) time operation
   - The buildHeap function takes an array of unsorted items
   - There are two approaches one might take for buildHeap using the siftUp and siftDown operations:
@@ -39,3 +42,9 @@
   - Although both operations are O(log n) in the worst case, in a heap, only one node is at the top whereas half the nodes lie in the bottom layer
   - If we have to apply an operation to every node, we would prefer siftDown over siftUp
 
+## Binary Heap
+  - A Binary Heap is a complete Binary Tree, were all levels are completely filled except possibly the last level and the last level has all keys as left as possible. This property of Binary Heap makes them suitable to be stored in an array
+  - The root element will be at Arr[0]
+  - Arr[(i - 1) / 2] returns the parent node
+  - Arr[(2 * i) + 1] returns the left child node
+  - Arr[(2 * i) + 2] returns the right child node
