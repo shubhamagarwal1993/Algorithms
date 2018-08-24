@@ -38,7 +38,6 @@ bool subsetSum_test(int arr[], int arr_size, int sum) {
         }
     }
 
-    //
     return subset[arr_size][sum];
 }
 
@@ -82,11 +81,11 @@ int main() {
 
     vector<int> vec;
     // exponential time
-  if(subsetSum(arr, arr_size, sum, vec)) {
-      cout << "found subset" << endl;
-  } else {
-      cout << "no subset" << endl;
-  }
+    if(subsetSum(arr, arr_size, sum, vec)) {
+        cout << "found subset" << endl;
+    } else {
+        cout << "no subset" << endl;
+    }
 
     // pseudo-polynomial time
     if(subsetSum_test(arr, arr_size, sum)) {
