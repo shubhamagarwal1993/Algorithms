@@ -44,6 +44,20 @@ void print_top_right(int matrix[M][N], int row_start, int column_start, int row_
     return;
 }
 
+int** createSpiralMatrix() {
+
+    int** arr = 0;
+    arr = new int*[N];
+
+    for(int i = 0; i < N; i++) {
+        arr[i] = new int[N];
+        for(int j = 0; j < N; j++) {
+            arr[i][j] = 0;
+        }
+    }
+    return arr;
+}
+
 int main() {
     int matrix[M][N] = { {1 , 2 , 3 , 4}
                        , {12, 13, 14, 5}
@@ -52,5 +66,13 @@ int main() {
                        };
     print_top_right(matrix, 0, 0, M-1, N-1);
     cout << endl;
+
+    int** arr = createSpiralMatrix();
+    for(int i = 0; i < N; i++) {
+        for(int j = 0; j < N; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
     return 0;
 }

@@ -19,6 +19,20 @@ void printPathMatrix(int path[M][N]) {
 }
 
 // check if we can move to a particular cell
+bool safeCell(int maze[5][7], int r_idx, int c_idx) {
+    // invalid M index
+    if (r_idx < 0 || r_idx >= 5) return false;
+
+    // inavlid N index
+    if (c_idx < 0 || c_idx >= 7) return false;
+
+    // cannot move to this cell
+    if (maze[r_idx][c_idx] != 0) return false;
+
+    return true;
+}
+
+// check if we can move to a particular cell
 bool validCell(int maze[M][N], int r_idx, int c_idx, int path[M][N]) {
     // invalid M index      
     if (r_idx < 0 || r_idx >= M) return false;
@@ -144,6 +158,42 @@ void findTotalPaths(int maze[5][7]) {
     cout << "Total paths in maze with barriers: " << maze[row-1][col-1] << endl;
 }
 
+void printAllPathsUtil(int maze[5][7], int row, int col, int path[11], int path_index) {
+
+    if((row == 4) && (col == 6)) {
+        path[path_index] = maze[row][col];
+        for(int i = 0; i < 11; i++) {
+            cout << path[i] << " ";
+        }
+        cout << endl;
+        return;
+    }
+
+    if(safeCell(maze, row, col)) {
+
+        path[path_index] = maze[row][col];
+
+        printAllPathsUtil(maze, row, col+1, path, path_index+1);
+        printAllPathsUtil(maze, row+1, col, path, path_index+1);
+
+        path[path_index] = 0;
+    }
+
+    return;
+}
+
+void printAllPaths(int maze[5][7]) {
+
+    int ROW = 5;
+    int COL = 7;
+    int path[ROW + COL - 1];
+    for(int i = 0; i < ROW + COL - 1; i++) {
+        path[i] = 0;
+    }
+
+    printAllPathsUtil(maze, 0, 0, path, 0);
+}
+
 // main
 int main() {
    int maze[M][N] = {{ 0,1,1,1,1,1 },
@@ -161,7 +211,10 @@ int main() {
                                    {-1,  0,  0, 0, -1,  0,  0},
                                    { 0,  0, -1, 0,  0,  0,  0},
                                    { 0,  0,  0, 0, -1,  0,  0}};
-   findTotalPaths(maze_with_barriers);
+//   findTotalPaths(maze_with_barriers);
+
+    printAllPaths(maze_with_barriers);
+
    return 0;
 }
 

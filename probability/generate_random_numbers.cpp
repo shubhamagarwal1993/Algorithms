@@ -87,8 +87,6 @@ int randomNumberArbitraryProbability() {
     // Find index of ceiling of r in prefix arrat
     int indexc = findCeil(prefix, r, 0, arr_size - 1);
     return arr[indexc];
-    
-    return 0;
 }
 
 int main() {
