@@ -1,4 +1,9 @@
 #include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <string>
+#include <sstream>
+#include <utility>
 
 using namespace std;
 
@@ -15,6 +20,11 @@ class Point {
         }
         int getY() {
             return this->y;
+        }
+
+        bool pointsAreSame(Point a) {
+            return (this->getX() == a.getX())
+                && (this->getY() == a.getY());
         }
 };
 
@@ -85,6 +95,76 @@ Point getIntersection(Point start1, Point end1, Point start2, Point end2) {
     }
 }
 
+int gcd(int a, int b) {
+
+    // Everything divides 0
+    if(a == 0 || b == 0) {
+        return 0;
+    }
+ 
+    // base case
+    if(a == b) {
+        return a;
+    }
+ 
+    // a is greater
+    if(a > b) {
+        return gcd(a-b, b);
+    }
+
+    return gcd(a, b-a);
+}
+
+// Max number of point which lie on same line are 4 -> {0, 0}, {1, 1}, {2, 2}, {3, 3}
+// Method
+//   - For each point, calculate slope with other points
+//     - Store count in map to see how many points have same slope
+//   - for calculating slope, store slope as pair ((y2 - y1), (x2 - x1)) by reducing them by their dcg
+//   - repeated points and points with vertical slopes need to be treated separately
+// Time complexity: O(n^2)
+void maxPointsOnSameLine(vector<Point> set_points) {
+
+    std::pair<int,int> foo;
+
+    //unordered_map<pair<int, int>, int> slope_map;
+    unordered_map<std::pair<int,int>, int> slopeMap;
+
+    for(int i = 0; i < set_points.size(); i++) {
+
+        int vertical_points = 0;
+        int repeating_points = 0;
+        int curr_max = 0;
+
+        for(int j = i + 1; j < set_points.size(); j++) {
+
+            // check if repeating points
+            if(set_points[i].pointsAreSame(set_points[j])) {
+                repeating_points++;
+            } else if(set_points[i].getX() == set_points[j].getX()) {
+                vertical_points++;
+            } else {
+                int y_diff = set_points[j].getY() - set_points[i].getY();
+                int x_diff = set_points[i].getX() - set_points[i].getX();
+                int slope_gcd = gcd(x_diff, y_diff);
+                y_diff /= slope_gcd;
+                x_diff /= slope_gcd;
+
+                slope_map[make_pair(x_diff, y_diff)]++;
+                curr_max = max(curr_max, slope_map[make_pair(x_diff, y_diff)]);
+            }
+            curr_max = max(curr_max, vertical_points);
+        }
+
+        // updating global maximum by current point's maximum
+        maxPoint = max(maxPoint, curMax + overlapPoints + 1);
+
+        cout << "Max colinear point which contains current point are : " << curMax + overlapPoints + 1 << endl;
+        slopeMap.clear();
+    }
+
+    return maxPoint;
+}
+
 int main() {
 
     Point start1(-2, 0);
@@ -93,6 +173,17 @@ int main() {
     Point end2(1, 1);
 
     getIntersection(start1, end1, start2, end2);
-	return 0;
+
+    // given set of points, find line with max points on it
+    vector<Point> set_points;
+    set_points.push_back(Point(-1, 1));
+    set_points.push_back(Point( 0, 0));
+    set_points.push_back(Point( 1, 1));
+    set_points.push_back(Point( 2, 2));
+    set_points.push_back(Point( 3, 3));
+    set_points.push_back(Point( 4, 4));
+    maxPointsOnSameLine(set_points);
+
+    return 0;
 }
 
