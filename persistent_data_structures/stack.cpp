@@ -65,6 +65,47 @@ class Stack {
         }
 };
 
+class InternalStack {
+    public:
+        Node* top;
+        Stack s;
+
+        InternalStack(Stack s) {
+            this->top = NULL;
+            this->s = s;
+        }
+};
+
+class PersistentStack {
+
+    public:
+        int top;
+        InternalStack is(Stack());
+
+        PersistentStack() {
+            this->top = -1;
+        }
+
+        bool isEmpty() {
+            return (this->is.top == NULL;
+        }
+
+//        Node* peek() {
+//            if(this->is.top == NULL) {
+//                return NULL;
+//            }
+//            return this->is.top;
+//        }
+//
+//        PersistentStack push(int data) {
+//            return PersistentStack(data, this->is);
+//        }
+//
+//        PersistentStack pop() {
+//            return PersistentStack(this->is.top->data, this->is);
+//        }
+};
+
 int main() {
     Stack s;
     cout << s.isEmpty() << endl;
@@ -78,5 +119,9 @@ int main() {
     } else {
         cout << "empty stack" << endl;
     }
+
+    //
+    InternalStack is(s);
+    PersistentStack ps;
     return 0;
 }
