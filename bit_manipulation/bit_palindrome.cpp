@@ -52,7 +52,7 @@ bool isPalindrome(unsigned int num) {
 int main() {
 
     // binary representation 0000010001010001
-    //int num = 1105;
+    // int num = 1105;
     int num = 8840;
     if(isPalindrome(num)) {
         cout << "bit representation of " << num << " is a palindrome" << endl;

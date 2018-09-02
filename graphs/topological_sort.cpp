@@ -84,20 +84,20 @@ void Graph::topologicalSort() {
 
     // Mark all the vertices as not visited
     bool *visited = new bool[V];
-    for (int i = 0; i < V; i++) {
+    for(int i = 0; i < V; i++) {
         visited[i] = false;
     }
 
     // Call the recursive helper function to store Topological
     // Sort starting from all vertices one by one
-    for (int i = 0; i < V; i++) {
-        if (visited[i] == false) {
+    for(int i = 0; i < V; i++) {
+        if(visited[i] == false) {
             topologicalSortUtil(i, visited, Stack);
         }
     }
 
     // Print contents of stack
-    while (Stack.empty() == false) {
+    while (!Stack.empty()) {
         cout << Stack.top() << " ";
         Stack.pop();
     }
