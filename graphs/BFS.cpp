@@ -1,7 +1,21 @@
 #include <iostream>
 #include <list>
+#include <vector>
 
 using namespace std;
+
+#define ROW 6
+#define COL 4
+
+class Point {
+    public:
+        int x;
+        int y;
+        Point(int x, int y) {
+            this->x = x;
+            this->y = y;
+        }
+};
 
 // This class represents a directed graph using adjacency list representation
 class Graph {
@@ -12,7 +26,7 @@ class Graph {
         // Pointer to an array containing adjacency lists
         list<int> *adj;
 
-        void printAllPathsUtil(int src, int dest, bool visited[], int path[], int path_index);
+        void printAllPathsUtil(int src, int dest, bool visited[], vector<int> path, vector<int> &shortest_path);
 
     public:
         // Constructor
@@ -32,6 +46,7 @@ class Graph {
         void BFS(int s);
         void anyPath(int s, int d);
         void allPaths(int s, int d);
+        void findPathInMatrix();
 
         // construct graph
         //  ____   0 ---> 1
@@ -150,23 +165,31 @@ void Graph::allPaths(int src, int dest) {
     }
  
     // Create an array to store paths
-    int path[V];
-    int path_index = 0;
+    vector<int> path;
+    vector<int> shortest_path;
  
     // Call the recursive helper function to print all paths
-    printAllPathsUtil(src, dest, visited, path, path_index);
+    printAllPathsUtil(src, dest, visited, path, shortest_path);
+    cout << "Shortest Path from 1 to 5: ";
+    for(int i = 0; i < shortest_path.size(); i++) {
+        cout << shortest_path[i] << " ";
+    }
+    cout << endl;
 }
 
-void Graph::printAllPathsUtil(int src, int dest, bool visited[], int path[], int path_index) {
+void Graph::printAllPathsUtil(int src, int dest, bool visited[], vector<int> path, vector<int> &shortest_path) {
 
     // Mark the current node and store it in path
     visited[src] = true;
-    path[path_index] = src;
-    path_index++;
+    path.push_back(src);
 
     // If current vertex is same as destination, then print current path
     if(src == dest) {
-        for(int i = 0; i < path_index; i++) {
+        if(shortest_path.size() == 0 || shortest_path.size() > path.size()) {
+            shortest_path = path;
+        }
+
+        for(int i = 0; i < path.size(); i++) {
             cout << path[i] << " ";
         }
         cout << endl;
@@ -175,14 +198,117 @@ void Graph::printAllPathsUtil(int src, int dest, bool visited[], int path[], int
         list<int>::iterator i;
         for(i = adj[src].begin(); i != adj[src].end(); i++) {
             if(!visited[*i]) {
-                printAllPathsUtil(*i, dest, visited, path, path_index);
+                printAllPathsUtil(*i, dest, visited, path, shortest_path);
             }
         }
     }
 
     // Backtrack - Remove current vertex from path[] and mark it as unvisited
-    path_index--;
+    path.pop_back();
     visited[src] = false;
+    return;
+}
+
+bool samePoint(Point a, Point b) {
+    return (a.x == b.x) && (a.y == b.y);
+}
+
+bool safeCell(int matrix[ROW][COL], int new_row, int new_col) {
+    if(new_row >= ROW || new_row < 0) {
+        return false;
+    }
+    if(new_col >= COL || new_col < 0) {
+        return false;
+    }
+    if(!matrix[new_row][new_col]) {
+        return false;
+    }
+    return true;
+}
+
+void anyPathInMatrix(int matrix[ROW][COL], Point src, Point dest) {
+
+    // Mark all the vertices as not visited
+    bool visited[ROW][COL];
+    for(int i = 0; i < ROW; i++) {
+        for(int j = 0; j < COL; j++) {
+            visited[i][j] = false;
+        }
+    }
+
+    // Create a queue for BFS
+    list<Point> queue;
+    queue.push_back(src);
+
+    // store path here
+    list<Point> path;
+    list<Point>::iterator it;
+
+    // Mark the current node as visited and enqueue it
+    visited[src.x][src.y] = true;
+
+    while(!queue.empty()) {
+        Point curr_point = queue.front();
+        cout << curr_point.x << " " << curr_point.y << endl;
+        queue.pop_front();
+        path.push_back(curr_point);
+
+        if(samePoint(curr_point, dest)) {
+            for(it = path.begin(); it != path.end(); it++) {
+                Point temp = *it;
+                cout << "(" << temp.x << ", " << temp.y << ") ";
+            }
+            cout << endl;
+            return;
+        }
+
+        // Get all adjacent vertices of path_last_node
+        // If a adjacent has not been visited, then mark it visited and enqueue it
+        // row, col + 1
+        // row, col - 1
+        // row + 1, col
+        // row - 1, col
+        int new_row = src.x;
+        int new_col = src.y + 1;
+        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+            visited[new_row][new_col] = true;
+            queue.push_back(Point(new_row, new_col));
+        }
+        new_row = src.x;
+        new_col = src.y - 1;
+        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+            visited[new_row][new_col] = true;
+            queue.push_back(Point(new_row, new_col));
+        }
+        new_row = src.x + 1;
+        new_col = src.y;
+        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+            visited[new_row][new_col] = true;
+            cout << "here" << endl;
+            Point temp(new_row, new_col);
+            queue.push_back(temp);
+        }
+        new_row = src.x - 1;
+        new_col = src.y;
+        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+            visited[new_row][new_col] = true;
+            queue.push_back(Point(new_row, new_col));
+        }
+    }
+}
+
+void Graph::findPathInMatrix() {
+   int matrix[ROW][COL] = {{ 1, 0, 1, 1},
+                           { 1, 0, 1, 0},
+                           { 1, 1, 1, 0},
+                           { 1, 0, 0, 0},
+                           { 1, 1, 1, 0},
+                           { 1, 0, 1, 1}};
+    Point src(1, 2);
+    Point dest(4, 1);
+
+    anyPathInMatrix(matrix, src, dest);
+    return;
 }
 
 int main() {
@@ -205,9 +331,8 @@ int main() {
     g.allPaths(1, 5);
     cout << endl << endl;
 
-    // BFS - iteratvely (does this even exist)
-    // BFS - shortest path from source node to dest node
     // BFS - on matrix
+    g.findPathInMatrix();
 
     return 0;
 }
