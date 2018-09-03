@@ -35,11 +35,17 @@ class Graph {
             this->adj = new list<int>[V];
         }
 
-        // function to add an edge to graph
-        void addEdge(int v, int w) {
+        // function to add a directed edge to graph
+        void addDirectedEdge(int v, int w) {
             // Add w to v’s list
-            int adj_size = sizeof(this->adj)/sizeof(this->adj[0]);
             this->adj[v].push_back(w);
+        }
+
+        // function to add an undirected edge to graph
+        void addUndirectedEdge(int v, int w) {
+            // Add w to v’s list and vice versa
+            this->adj[v].push_back(w);
+            this->adj[w].push_back(v);
         }
 
         // prints BFS traversal from a given source s
@@ -47,23 +53,37 @@ class Graph {
         void anyPath(int s, int d);
         void allPaths(int s, int d);
         void findPathInMatrix();
+        void BBFS(int s, int t);
 
         // construct graph
         //  ____   0 ---> 1
         //  \  /   ^\\   /
         //   ^v       v v
         //    3 <---- 2
-        void construct_graph() {
-            addEdge(0, 1);
-            addEdge(0, 2);
-            addEdge(0, 6);
-            addEdge(1, 2);
-            addEdge(1, 4);
-            addEdge(2, 3);
-            addEdge(2, 4);
-            addEdge(3, 4);
-            addEdge(4, 5);
-            addEdge(5, 6);
+        void constructDirectedGraph() {
+            addDirectedEdge(0, 1);
+            addDirectedEdge(0, 2);
+            addDirectedEdge(0, 6);
+            addDirectedEdge(1, 2);
+            addDirectedEdge(1, 4);
+            addDirectedEdge(2, 3);
+            addDirectedEdge(2, 4);
+            addDirectedEdge(3, 4);
+            addDirectedEdge(4, 5);
+            addDirectedEdge(5, 6);
+        }
+
+        void constructUndirectedGraph() {
+            addUndirectedEdge(0, 1);
+            addUndirectedEdge(0, 2);
+            addUndirectedEdge(0, 6);
+            addUndirectedEdge(1, 2);
+            addUndirectedEdge(1, 4);
+            addUndirectedEdge(2, 3);
+            addUndirectedEdge(2, 4);
+            addUndirectedEdge(3, 4);
+            addUndirectedEdge(4, 5);
+            addUndirectedEdge(5, 6);
         }
 };
 
@@ -311,10 +331,110 @@ void Graph::findPathInMatrix() {
     return;
 }
 
+// The function to do Bi-directional BFS traversal
+void Graph::BBFS(int s, int t) {
+
+    // Mark all the vertices as not visited
+    bool s_visited[V];
+    bool t_visited[V];
+    for(int i = 0; i < V; i++) {
+        s_visited[i] = false;
+        t_visited[i] = false;
+    }
+
+    // keep track of parents to print path later on
+    int s_parent[V];
+    int t_parent[V];
+
+    // Create a queue for BBFS - for front and backward search
+    list<int> s_queue;
+    list<int> t_queue;
+
+    // flag to detect if s and t ever intersect
+    int intersectNode = -1;
+
+    // Mark the starting node as visited and enqueue it
+    s_visited[s] = true;
+    s_queue.push_back(s);
+    s_parent[s] = -1;
+
+    // Mark the target node as visited and enqueue it
+    t_visited[t] = true;
+    t_queue.push_back(t);
+    t_parent[t] = -1;
+
+    while(!s_queue.empty() && !t_queue.empty()) {
+
+        // Dequeue starting vertex from queue and add neighbors to queue
+        int s_current = s_queue.front();
+        s_queue.pop_front();
+        list<int>::iterator s_i;
+        for(s_i = adj[s_current].begin(); s_i != adj[s_current].end(); s_i++) {
+            if(!s_visited[*s_i]) {
+                s_parent[*s_i] = s_current;
+                s_visited[*s_i] = true;
+                s_queue.push_back(*s_i);
+            }
+        }
+
+        // Dequeue target vertex from queue and add neighbors to queue
+        int t_current = t_queue.front();
+        t_queue.pop_front();
+        list<int>::iterator t_i;
+        for(t_i = adj[t_current].begin(); t_i != adj[t_current].end(); t_i++) {
+            if(!t_visited[*t_i]) {
+                t_parent[*t_i] = t_current;
+                t_visited[*t_i] = true;
+                t_queue.push_back(*t_i);
+            }
+        }
+
+        // check if any intersecting vertex
+        for(int i = 0; i < V; i++) {
+            if(s_visited[i] && t_visited[i]) {
+                intersectNode = i;
+                break;
+            }
+        }
+
+        // if intersectNode, then we can stop BBFS and print path
+        if(intersectNode != -1) {
+            vector<int> path;
+            path.push_back(intersectNode);
+
+            int i = intersectNode;
+            while(i != s) {
+                path.push_back(s_parent[i]);
+                i = s_parent[i];
+            }
+
+            std::reverse(path.begin(), path.end());
+
+            i = intersectNode;
+            while(i != t) {
+                path.push_back(t_parent[i]);
+                i = t_parent[i];
+            }
+
+            // print path
+            vector<int>::iterator it;
+            cout << endl << "*****Path*****" << endl;
+            for(it = path.begin(); it != path.end(); it++) {
+                cout << *it << " ";
+            }
+            cout << endl;
+            return;
+        }
+    }
+
+    cout << "No Path exists between " << s << " and " << t << endl;
+    return;
+}
+
 int main() {
 
     Graph g(10);
-    g.construct_graph();
+    g.constructDirectedGraph();
 
     // simple BFS, Time: O(V + E), Space: O(V^2)
     cout << "Simple BFS starting from 2: ";
@@ -333,6 +453,11 @@ int main() {
 
     // BFS - on matrix
     g.findPathInMatrix();
+
+    // Bidirectional BFS
+    Graph g1(10);
+    g1.constructUndirectedGraph();
+    g1.BBFS(1, 5);
 
     return 0;
 }
