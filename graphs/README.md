@@ -1,4 +1,7 @@
-### 3 ways to represent graphs:
+## Graph Representation:
+  - Many ways to repesent graphs like adjacency list, adjacency matrix, incidence matrix, indecidece list, etc.
+
+### 3 main ways to represent graphs:
 
 #### Adjacency List: (For a good example, check out Bidirectional BFS example)
  - Pros:
