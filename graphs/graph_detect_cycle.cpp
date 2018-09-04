@@ -5,15 +5,38 @@
 
 using namespace std;
 
+class Edge {
+    private:
+        int src;
+        int dest;
+        int weight;
+    public:
+        Edge(int src, int dest, int weight) {
+            this->src = src;
+            this->dest = dest;
+            this->weight = weight;
+        }
+        int getSrc() {
+            return this->src;
+        }
+        int getDest() {
+            return this->dest;
+        }
+};
+
 class Graph {
     private:
         int V;
+        int E;
         list<int> *adj;
+        list<int> *edge;
 
     public:
-        Graph(int V) {
+        Graph(int V, int E) {
             this->V = V;
+            this->E = E;
             this->adj = new list<int>[V];
+            this->edge = new list<int>[V];
         }
 
         void addDirectedEdge(int u, int w) {
@@ -23,6 +46,23 @@ class Graph {
         void addUndirectedEdge(int u, int w) {
             this->adj[u].push_back(w);
             this->adj[w].push_back(u);
+
+            // check if edge exists
+            list<int>::iterator it;
+            for(it = edge[u].begin(); it != edge[u].end(); it++) {
+                if(*it == w) {
+                    return;
+                }
+            }
+            for(it = edge[w].begin(); it != edge[w].end(); it++) {
+                if(*it == u) {
+                    return;
+                }
+            }
+
+            // edge not found, add it
+            this->edge[u].push_back(w);
+            return;
         }
 
         void constructDirectedGraph() {
@@ -147,6 +187,73 @@ class Graph {
         }
 
         /**
+         * Print cycle
+         */
+        void printPath(vector<Edge> path, int dest) {
+
+            int path_size = path.size();
+            bool visited[path_size];
+            for(int i = 0; i < path_size; i++) {
+                visited[i] = false;
+            }
+
+            int src = -1;
+            // initialize first edge
+            for(int i = 0; i < path_size; i++) {
+                int curr_src = path[i].getSrc();
+                int curr_dest = path[i].getDest();
+                if(curr_src == dest || curr_dest == dest) {
+                    visited[i] = true;
+                    if(curr_src == dest) {
+                        src = curr_dest;
+                    } else {
+                        src = curr_src;
+                    }
+                    break;
+                }
+            }
+
+            vector<int> new_path;
+            new_path.push_back(dest);
+            new_path.push_back(src);
+
+            bool not_found = true;
+            int last_src = -1;
+            while(src != dest) {
+
+                for(int i = 0; i < path_size; i++) {
+                    if(!visited[i]) {
+                        if(path[i].getSrc() == src) {
+                            visited[i] = true;
+                            last_src = src;
+                            src = path[i].getDest();
+                            not_found = false;
+                            break;
+                        } else if(path[i].getDest() == src) {
+                            visited[i] = true;
+                            last_src = src;
+                            src = path[i].getSrc();
+                            not_found = false;
+                            break;
+                        }
+                    }
+                }
+
+                if(not_found) {
+                    src = last_src;
+                    new_path.pop_back();
+                } else {
+                    new_path.push_back(src);
+                    not_found = true;
+                }
+            }
+            for(int i = 0; i < new_path.size(); i++) {
+                cout << new_path[i] << " ";
+            }
+            cout << endl;
+        }
+
+        /**
          * Takes a vertex and finds its main parent
          */
         int find(int parent[], int i) {
@@ -187,29 +294,36 @@ class Graph {
          *      - For each edge, make subsets using both the vertices of the edge
          *      - If both the vertices are in the same subset, a cycle is found
          *      - If vertices are in different subset, take union of them. Make node 0 parent of node 1
-         * TODO: an edge tables needs to be added and this algo should be run on edges instead of vertices
          */
         void undirectedGraphIsCyclicUsingUnionFind() {
-
-            // store path of cycle
-            vector<int> path;
 
             int parent[V];
             for(int i = 0; i < V; i++) {
                 parent[i] = -1;
             }
 
+            vector<Edge> path;
+
             list<int>::iterator it;
             // Iterate through all edges of graph
-            for(int i = 0; i < V; i++) {
+            for(int i = 0; i < E; i++) {
 
-                for(it = adj[i].begin(); it != adj[i].end(); it++) {
+                for(it = edge[i].begin(); it != edge[i].end(); it++) {
+
+                    Edge temp(i, *it, 1);
+                    path.push_back(temp);
+
+                    int src = i;
+                    int dest = *it;
                     int src_parent = find(parent, i);
                     int dest_parent = find(parent, *it);
 
                     // both points in same set
                     if(src_parent == dest_parent) {
-                        cout << "&&Found cycle&&" << endl;
+                        //cout << src << " " << dest << " " << src_parent << " " << dest_parent << endl;
+                        cout << "Found cycle - caused by edge " << src << "-" << dest << endl;
+                        printPath(path, dest);
+                        cout << endl;
                         break;
                     }
 
@@ -225,7 +339,7 @@ int main() {
     // Detect cycle in directed graph
     // Can use DFS, tarjan's algo, graph coloring. All take time O(V + E)
     // DFS - Time Complexity: O(V + E), space O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
-    Graph g_directed(4);
+    Graph g_directed(4, 5);
     g_directed.constructDirectedGraph();
     g_directed.directedGraphIsCyclic();
 
@@ -233,7 +347,7 @@ int main() {
 
     // Detect cycle in undirected graph
     // Can use union-find, DFS, BFS, and graph coloring. All take time O(V + E) except union-find which takes O(E logV)
-    Graph g_undirected(5);
+    Graph g_undirected(5, 5);
     g_undirected.constructUndirectedGraph();
     // DFS - Time Complexity: O(V + E), space O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
     g_undirected.undirectedGraphIsCyclicUsingDFS();
