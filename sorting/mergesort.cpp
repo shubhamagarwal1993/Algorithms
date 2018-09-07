@@ -96,6 +96,82 @@ void printArray(int arr[], int arr_size) {
     return;
 }
 
+/**
+ * Merge function for inplace mergesort
+ *
+ * we want to store arr[i] and arr[j] both at index i (means in arr[i])
+ *
+ * First we have to find a ‘maxval’ greater than both arr[i] and arr[j]
+ * Now we can store as arr[i] = arr[i] + (arr[j] * maxval)
+ *
+ * (arr[i] % maxval) will give the original value of arr[i]
+ * (arr[i] / maxval) will give the value of arr[j]
+ */
+void merge(int arr[], int l, int mid, int r, int max_val) {
+
+    int arr_l_index = l;
+    int arr_r_index = mid + 1;
+    int arr_index = l;
+
+    while(arr_l_index <= mid && arr_r_index <= r) {
+        if(arr[arr_l_index] % max_val <= arr[arr_r_index] % max_val) {
+            arr[arr_index] = arr[arr_index] + (arr[arr_l_index] % max_val) * max_val;
+            arr_l_index++;
+        } else {
+            arr[arr_index] = arr[arr_index] + (arr[arr_r_index] % max_val) * max_val;
+            arr_r_index++;
+        }
+        arr_index++;
+    }
+
+    // copy any remaining value into array
+    // only one while loop will run below, the longer array
+    while(arr_l_index <= mid) {
+        arr[arr_index] = arr[arr_index] + (arr[arr_l_index] % max_val) * max_val;
+        arr_l_index++;
+        arr_index++;
+    }
+
+    while(arr_r_index <= r) {
+        arr[arr_index] = arr[arr_index] + (arr[arr_r_index] % max_val) * max_val;
+        arr_r_index++;
+        arr_index++;
+    }
+
+    // Obtaining actual values
+    for(int i = l; i <= r; i++) {
+        arr[i] = arr[i] / max_val;
+    }
+}
+
+void inplaceMergesortRecursiveUtil(int arr[], int l, int r, int max_val) {
+
+    if(l < r) {
+        int mid = (l+r)/2;      // if size 10; l=0, r = 9, mid = 4
+
+        inplaceMergesortRecursiveUtil(arr, l, mid, max_val);
+        inplaceMergesortRecursiveUtil(arr, mid+1, r, max_val);
+
+        merge(arr, l, mid, r, max_val);
+    }
+}
+
+void inplaceMergesortRecursive(int arr[], int l, int r) {
+
+    // Max val is the largest number in the array + 1
+    // This is so that mod can return the largest number
+    int max_val = arr[0];
+    for(int i = l; i < r; i++) {
+        if(arr[i] > max_val) {
+            max_val = arr[i];
+        }
+    }
+    max_val += 1;
+
+    inplaceMergesortRecursiveUtil(arr, l, r, max_val);
+
+}
+
 int main() {
 
     // Recursive merge sort
@@ -112,6 +188,18 @@ int main() {
     mergesortIterative(arr2, arr2_size);
     for(int i = 0; i < arr2_size; i++) {
         cout << arr2[i] << " ";
+    }
+    cout << endl;
+
+    // Inplace recursive merge sort
+    int arr3[] = {6, 5, 2, 1};
+    int arr3_size = sizeof(arr3)/sizeof(arr3[0]);
+    left_index = 0;
+    right_index = arr3_size - 1;
+    inplaceMergesortRecursive(arr3, left_index, right_index);
+    cout << "Inplace Merge sort: " << endl;
+    for(int i = 0; i < arr3_size; i++) {
+        cout << arr3[i] << " ";
     }
     cout << endl;
 
