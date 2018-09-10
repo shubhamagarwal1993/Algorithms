@@ -107,7 +107,7 @@ void printArray(int arr[], int arr_size) {
  * (arr[i] % maxval) will give the original value of arr[i]
  * (arr[i] / maxval) will give the value of arr[j]
  */
-void merge(int arr[], int l, int mid, int r, int max_val) {
+void inplaceMerge(int arr[], int l, int mid, int r, int max_val) {
 
     int arr_l_index = l;
     int arr_r_index = mid + 1;
@@ -140,8 +140,10 @@ void merge(int arr[], int l, int mid, int r, int max_val) {
 
     // Obtaining actual values
     for(int i = l; i <= r; i++) {
+        cout << arr[i] << " ";
         arr[i] = arr[i] / max_val;
     }
+    cout << endl;
 }
 
 void inplaceMergesortRecursiveUtil(int arr[], int l, int r, int max_val) {
@@ -152,7 +154,7 @@ void inplaceMergesortRecursiveUtil(int arr[], int l, int r, int max_val) {
         inplaceMergesortRecursiveUtil(arr, l, mid, max_val);
         inplaceMergesortRecursiveUtil(arr, mid+1, r, max_val);
 
-        merge(arr, l, mid, r, max_val);
+        inplaceMerge(arr, l, mid, r, max_val);
     }
 }
 
@@ -191,6 +193,7 @@ int main() {
     }
     cout << endl;
 
+    cout << "--------" << endl;
     // Inplace recursive merge sort
     int arr3[] = {6, 5, 2, 1};
     int arr3_size = sizeof(arr3)/sizeof(arr3[0]);

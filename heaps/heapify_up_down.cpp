@@ -2,28 +2,6 @@
 
 using namespace std;
 
-//tree node
-class Node {
-    public:
-        char data;
-        int freq;
-        Node* left;
-        Node* right;
-
-        Node(char data, int freq) {
-            this->data = data;
-            this->freq = freq;
-            this->left = NULL;
-            this->right = NULL;
-        };
-};
-
-struct compare {
-    bool operator() (Node* a, Node* b) const {
-        return a->freq > b->freq;
-    }
-};
-
 // take an index in a heap, and heapify up to place it at its correct index
 void heapifyUp(int arr[], int arr_size, int curr_index) {
 
