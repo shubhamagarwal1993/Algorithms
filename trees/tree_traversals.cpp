@@ -291,15 +291,11 @@ void levelOrderIterative(Node* root) {
 
 int num_nodes(Node* root) {
 
-    int count_nodes = 0;
     if(root == NULL) {
-        return count_nodes;
+        return 0;
     }
 
-    num_nodes(root->left);
-    count_nodes++;
-    num_nodes(root->right);
-    return count_nodes;
+    return 1 + num_nodes(root->left) + num_nodes(root->right);
 }
 
 void reverseLevelOrderIterative(Node* root) {
