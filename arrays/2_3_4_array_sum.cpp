@@ -10,6 +10,7 @@
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
@@ -48,6 +49,83 @@ void three_sum(int arr[], int arr_size, int sum) {
             }
         }
     }
+}
+
+#include <iostream>
+
+using namespace std;
+
+class Triplet {
+public:
+    int first;
+    int second;
+    int third;
+
+    Triplet(int i, int j, int k) {
+        this->first = i;
+        this->second = j;
+        this->third = k;
+    }
+};
+
+/**
+ * Find unique triplets that sum up to a given value
+ */
+bool findTriplets(int arr[], int arr_size, int sum) {
+
+    // Vector to store all unique triplets
+    vector<Triplet> triplets;
+
+    // map to store already found triplets to avoid duplication
+    unordered_set<string> uniqTriplets;
+
+    // Variable used to hold triplet converted to string form
+    string triplet_key;
+
+    // Sort the input array
+    sort(arr, arr + arr_size);
+
+    // i will be the first element
+    for(int i = 0; i < arr_size - 2; i++) {
+
+        // j will be the second element, k the third element
+        int j = i + 1;
+        int k = arr_size - 1;
+
+        while(j < k) {
+
+            if(arr[i] + arr[j] + arr[k] == sum) {
+                triplet_key = to_string(arr[i]) + " : " + to_string(arr[j]) + " : " + to_string(arr[k]);
+                
+                // if this triplet has not been seen before
+                if(uniqTriplets.find(triplet_key) == uniqTriplets.end()) {
+                    uniqTriplets.insert(triplet_key);
+                    Triplet newTriplet(arr[i], arr[j], arr[k]);
+                    triplets.push_back(newTriplet);
+                }
+
+                // continue for more triplets with current i
+
+                j++;
+                k--;
+            } else if(arr[i] + arr[j] + arr[k] > sum) {
+                k--;
+            } else {
+                j++;
+            }
+        }
+    }
+
+    if(triplets.size() == 0) {
+        return false;
+    }
+
+    // Print all unique triplets stored in vector
+    for(int i = 0; i < triplets.size(); i++) {
+        cout << "[" << triplets[i].first << ", " << triplets[i].second << ", " << triplets[i].third <<"], " << endl;
+    }
+
+    return true;
 }
 
 class x_y {
@@ -100,13 +178,13 @@ void four_sum(int arr[], x_y temp_arr[], int arr_size, int temp_arr_size, int fi
 }
 
 int main() {
-
+/*
     // 2 sum
     int arr[] = {1, 4, 45, 10, 6, 8, 8, 8, 4, 4, 10, 12};
     int sum = 16;
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     two_sum(arr, arr_size, sum);
-
+*/
 /*
     // 3 sum
     int arr[8] = {1, 4, 45, 6, 10, 8, 19, 2};
@@ -114,6 +192,15 @@ int main() {
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     three_sum(arr, arr_size, sum);
 */
+
+    // 3 sum - unique numbers only
+    int arr[8] = {1, 4, 45, 6, 10, 8, 19, 2};
+    int sum = 22;
+    int arr_size = sizeof(arr)/sizeof(arr[0]);
+    if(!findTriplets(arr, arr_size, sum)) {
+        cout << "No triplets can be formed.";
+    }
+
 /*
     // 4 sum
     int arr[8] = {10, 20, 30, 40, 1, 2, 25, 16};
@@ -125,4 +212,6 @@ int main() {
 */
     return 0;
 }
+
+
 
