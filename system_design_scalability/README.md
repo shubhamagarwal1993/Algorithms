@@ -9,6 +9,7 @@
  - something for logic, like for APIs or proccesses
  - scaling (caching, load balancing, non-relational databases, microservices, and sharding)
  - distributed systems, SOA, n-tiered software architecture
+ - stream processing, batch processing, search, and retrieval
 
 ### Steps
  - Ask questions. Write requirements or key points on board
@@ -30,3 +31,15 @@
      --------                                                                       |         |
             <------------------------------------------------| image | -------------|_________|
 
+
+
+### Solving steps:
+  - draw a few basic boxes first (5 - 6 components)
+    - compute
+    - storage
+    - front-end
+    - back-end
+    - caching
+    - queueing
+    - networking
+    - load-balancing

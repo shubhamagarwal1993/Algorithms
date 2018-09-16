@@ -56,7 +56,7 @@ class Tree {
             int lHeight = getHeight(root->left);
             int rHeight = getHeight(root->right);
 
-            return std::max(lHeight, rHeight) + 1;
+            return max(lHeight, rHeight) + 1;
         }
 
         int getWidthAtLevel(Node* root, int level) {
@@ -125,6 +125,11 @@ class Tree {
 void help() {
     Tree tree;
     tree.root = tree.constructTree();
+
+    cout << "root data - " << tree.root->data << endl;
+    cout << "height of tree - " << tree.getHeight(tree.root) << endl;
+    cout << "root data after moving node - " << tree.root->data << endl;
+
     cout << "Inorder Traversal: ";
     tree.printInOrder(tree.root);
     cout << endl;

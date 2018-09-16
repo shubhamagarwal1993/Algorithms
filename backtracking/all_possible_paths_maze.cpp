@@ -211,9 +211,9 @@ int main() {
                                    {-1,  0,  0, 0, -1,  0,  0},
                                    { 0,  0, -1, 0,  0,  0,  0},
                                    { 0,  0,  0, 0, -1,  0,  0}};
-//   findTotalPaths(maze_with_barriers);
+   findTotalPaths(maze_with_barriers);
 
-    printAllPaths(maze_with_barriers);
+//    printAllPaths(maze_with_barriers);
 
    return 0;
 }

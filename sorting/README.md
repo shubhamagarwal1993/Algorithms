@@ -15,6 +15,7 @@ Sorting algorithms
 |     |                       |               |         |                                                                                    |
 | Yes | merge sort            | O(n logn)     | O(n)    | best sorting algo for general purposes, takes extra array space to merge elements  |
 | Yes | in-place merge sort   | O(n logn)     | O(1)    |                                                                                    |
+| Yes | linkedlist merge sort | O(n logn)     | O(1)    | best sorting algo for linked list. Only moves pointers and not the data            |
 |     |                       |               |         |                                                                                    |
 
 
@@ -22,16 +23,14 @@ Sorting algorithms
 
 | Yes | quick sort            | O(n^2)        | log(n)    | partition with pivot and swap                                                 |
 |     |                       |               |           |                                                                               |
-|     | Bucket sort           | O(n^2)        | O(nk)     | E.g. sort numbers between 0 and 1, n is num of buckets, k is significant bits |
+| Yes | heap sort             | O(n logn)     | O(1)      | create a max heap, remove max element from heap, repeat                       |
 |     |                       |               |           |                                                                               |
-|     | heap sort             | O(n logn)     | O(1)      | create a max heap, remove max element from heap, repeat                       |
+
+
+
+|     | Bucket sort           | O(n^2)        | O(nk)     | E.g. sort numbers between 0 and 1, n is num of buckets, k is significant bits |
 |     |                       |               |           |                                                                               |
 |     | cubesort              | nlogn         | O(n)      | partitions data into groups and sorts like bucket sort                        |
 |     |                       |               |           |                                                                               |
-
-
-
-
-
 | No  | bubble sort           | n^2           | O(1)    | switch adjacent elements till all done                                        |
 |-----|-----------------------|---------------|---------|-------------------------------------------------------------------------------|

@@ -10,6 +10,7 @@ using namespace std;
 #define MIN_IP_VALUE 0
 #define ASCII_NUM_0 48
 #define ASCII_NUM_9 57
+#define IP_SEGMENTS_COUNT 4
 
 bool checkValidIpSegment(string ip_addr_segment) {
 
@@ -19,6 +20,7 @@ bool checkValidIpSegment(string ip_addr_segment) {
 
     // each segment should lie from 0 to 255
     if((stoi(ip_addr_segment) < MIN_IP_VALUE) || (stoi(ip_addr_segment) > MAX_IP_VALUE)) {
+//        cout << "Given IP segment " << ip_addr_segment << " out of range" << endl;
         return false;
     }
     return true;
@@ -29,12 +31,14 @@ bool checkValidIp(string ip_addr) {
     // ip addr string length check
     if((ip_addr.length() > MAX_IP_STRING_LEN)
     && (ip_addr.length() < MIN_IP_STRING_LEN)) {
+        cout << "Given ip length invalid" << endl;
         return false;
     }
 
     // count for 3 dots in string
     size_t ip_addr_break_points = count(ip_addr.begin(), ip_addr.end(), '.');
     if(ip_addr_break_points != 3) {
+        cout << "Given ip segments count invalid" << endl;
         return false;
     }
 
@@ -46,6 +50,7 @@ bool checkValidIp(string ip_addr) {
         ip_addr_vec.push_back(ip_addr_segment);
     }
     if(ip_addr_vec.size() != 4) {
+        cout << "Given ip segments count invalid" << endl;
         return false;
     }
 
@@ -63,7 +68,7 @@ bool checkValidIp(string ip_addr) {
 bool printAllValidIpAddr(string ip_string, int ip_string_length, vector<string> vec) {
 
     // base case - vec size is 4 and ip_string_length is 0
-    if((ip_string_length == 0) && (vec.size() == 4)){
+    if((ip_string_length == 0) && (vec.size() == IP_SEGMENTS_COUNT)){
         for(int i = 0; i < vec.size(); i++) {
             cout << vec[i];
             if(i < vec.size() - 1) {
@@ -96,9 +101,9 @@ bool printAllValidIpAddr(string ip_string, int ip_string_length, vector<string> 
     return false;
 }
 
-bool stringOfDigits(string str) {
-    int str_length = str.length();
-    for(int i = 0; i < str_length; i++) {
+bool stringOfDigits(string str, int ip_string_length) {
+
+    for(int i = 0; i < ip_string_length; i++) {
         char curr_char = str[i];
         int char_ascii = int(curr_char);
         if((char_ascii < ASCII_NUM_0) || (char_ascii > ASCII_NUM_9)) {
@@ -119,10 +124,9 @@ int main() {
 
     string ip_string = "256545";
     int ip_string_length = ip_string.length();
-    int ip_index = 0;
     vector<string> vec;
     // check if given string contains only digits
-    if(stringOfDigits(ip_string)) {
+    if(stringOfDigits(ip_string, ip_string_length)) {
         cout << "All possible ip addresses for " << ip_string << endl;
         printAllValidIpAddr(ip_string, ip_string_length, vec);
         cout << endl;
@@ -132,3 +136,4 @@ int main() {
 
     return 0;
 }
+

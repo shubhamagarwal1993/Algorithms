@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -37,24 +38,43 @@ class Graph {
         }
 
         // function to add an edge to graph
-        void addEdge(int v, int w) {
+        void addEdgeDirected(int v, int w) {
             // Add w to v’s list
             adj[v].push_back(w);
+        }
+
+        void addEdgeUndirected(int v, int w) {
+            adj[v].push_back(w);
+            adj[w].push_back(v);
         }
 
         // prints DFS traversal of the complete graph
         void DFS();
         void DFS_trial(vector<int> &vec);
 
+        void DFSIterative(int start);
+
         Graph construct_graph() {
             Graph g(4);
-            g.addEdge(0, 1);
-            g.addEdge(0, 2);
-            g.addEdge(1, 2);
-            g.addEdge(2, 0);
-            g.addEdge(2, 3);
-            g.addEdge(3, 3);
+            g.addEdgeDirected(0, 1);
+            g.addEdgeDirected(0, 2);
+            g.addEdgeDirected(1, 2);
+            g.addEdgeDirected(2, 0);
+            g.addEdgeDirected(2, 3);
+            g.addEdgeDirected(3, 3);
             return g;
+        }
+
+        //  1   3
+        //   \ /
+        //    0
+        //   / \
+        //  2   4
+        void constructGraphIterative() {
+            addEdgeUndirected(0, 1);
+            addEdgeUndirected(0, 3);
+            addEdgeUndirected(2, 3);
+            addEdgeUndirected(1, 4);
         }
 };
 
@@ -168,6 +188,40 @@ bool dfsMatrix(int matrix[2][4], int row, int col, int row_end, int col_end, vec
     return false;
 }
 
+void Graph::DFSIterative(int start) {
+
+    bool visited[5];
+    for(int i = 0; i < V; i++) {
+        visited[i] = false;
+    }
+
+    stack<int> s;
+    s.push(start);
+    visited[start] = true;
+    cout << start << endl;
+
+    list<int>::iterator iter;
+
+    while(!s.empty()) {
+
+        bool found_neighbor = false;
+        int curr = s.top();
+        for(iter = adj[curr].begin(); iter != adj[curr].end(); iter++) {
+            if(!visited[*iter]) {
+                found_neighbor = true;
+                s.push(*iter);
+                visited[*iter] = true;
+                cout << *iter << endl;
+                break;
+            }
+        }
+
+        if(!found_neighbor) {
+            s.pop();
+        }
+    }
+}
+
 int main() {
     // construct graph
     //   ___   0 - 1
@@ -181,7 +235,6 @@ int main() {
     cout << "Depth First Traversal: ";
     g.DFS();
     cout << endl;
-
 
     cout << endl << endl << "Trial DFS: ";
     vector<int> vec;
@@ -202,5 +255,10 @@ int main() {
     }
     cout << endl << endl;
 
+    Graph g1(5);
+    g1.constructGraphIterative();
+    g1.DFSIterative(0);
+
     return 0;
 }
+

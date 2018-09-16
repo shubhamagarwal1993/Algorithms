@@ -45,7 +45,7 @@ int countWays_iterative(int total) {
     return table[total];
 }
 
-int countWays_recursive(int denominations[], int den_size, int total, vector<int> &vec) {
+int countWays_recursive(int denominations[], int den_size, int total, vector<int> vec) {
 
     if(total == 0) {
         for(int i = 0; i < vec.size(); i++) {
@@ -59,7 +59,7 @@ int countWays_recursive(int denominations[], int den_size, int total, vector<int
         return 0;
     }
 
-    if(den_size <= 0 && total >= 1) {
+    if(den_size == 0 && total > 0) {
         return 0;
     }
 
@@ -68,6 +68,7 @@ int countWays_recursive(int denominations[], int den_size, int total, vector<int
     vec.push_back(denominations[den_size - 1]);
     int with = countWays_recursive(denominations, den_size, total - denominations[den_size - 1], vec);
     vec.pop_back();
+
     return with + without;
 }
 

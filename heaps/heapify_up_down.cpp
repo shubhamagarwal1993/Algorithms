@@ -62,6 +62,26 @@ void convertMaxHeapToMinHeap(int arr[], int arr_size) {
     }
 }
 
+bool isMaxHeap(int arr[], int index, int arr_size) {
+
+    // If a leaf node
+    if(index > (arr_size - 2)/2) {
+        return true;
+    }
+
+    int left_child_index = (2*index + 1);
+    int right_child_index = (2*index + 2);
+
+    if((arr[index] >= arr[left_child_index])
+    && (arr[index] >= arr[right_child_index])
+    && (isMaxHeap(arr, left_child_index, arr_size))
+    && (isMaxHeap(arr, right_child_index, arr_size))) {
+        return true;
+    }
+
+    return false;
+}
+
 int main() {
 
     // array representing Min Heap
@@ -93,6 +113,25 @@ int main() {
         cout << arr[i] << " ";
     }
     cout << endl;
+
+    cout << "-------" << endl;
+    int arr1[] = {3, 5, 6, 8, 9, 9, 10, 12, 18, 20};
+    int arr1_size = sizeof(arr)/sizeof(arr[0]);
+
+    cout << "Sorted Array : ";
+    for(int i = 0; i < arr1_size; i++) {
+        cout << arr1[i] << " ";
+    }
+    cout << endl;
+ 
+    // convert a min heap to a max heap - Time complexity O(n), Space complexity O(1)
+    convertMinHeapToMaxHeap(arr1, arr1_size);
+    cout << "Max Heap array : ";
+    for(int i = 0; i < arr1_size; i++) {
+        cout << arr1[i] << " ";
+    }
+    cout << endl;
+    cout << "Is a heap: " << isMaxHeap(arr1, 0, arr1_size) << endl;
 
     return 0;
 }

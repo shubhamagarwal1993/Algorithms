@@ -1,173 +1,55 @@
-// Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering
-// of vertices such that for every directed edge uv, vertex u comes before v
-// in the ordering.
-// Topological Sorting for a graph is not possible if the graph is not a DAG
-
-// The first vertex in topological sorting is always a vertex with in-degree as 0
-// (a vertex with no in-coming edges).
-
 #include <iostream>
 #include <list>
 #include <stack>
 #include <vector>
 
 using namespace std;
- 
-// Class to represent a graph
+
 class Graph {
-    // No. of vertices
-    int V;
+    private:
+        // no. of vertices
+        int V;
 
-    // Pointer to an array containing adjacency lists
-    list<int> *adj;
+        // adjacency list
+        list<int> *adj;
 
-    // Vector to store indegree of vertices
-    vector<int> indegree;
+        // indegree - how many nodes are pointing to current node
+        vector<int> indegree;
 
-    // A function used by topologicalSort
-    void topologicalSortUtil(int v, bool visited[], stack<int> &Stack);
-
-    // A function used by topologicalSort
-    void allTopologicalSortsHelper(vector<int> &res, bool visited[]);
+        // helper functions
+        void topologicalSortUtil(int vertex, bool* visited, stack<int> &s);
+        void allTopologicalSortsUtil(bool* visited, vector<int> &vec);
 
     public:
-        // Constructor
         Graph(int V);
 
-        // function to add an edge to graph
+        // add edge
         void addEdge(int v, int w);
 
-        // prints a Topological Sort of the complete graph
+        // get any topological sort for the graph
         void topologicalSort();
 
-        // prints all Topological Sorts of the complete graph
+        // get all topological sorts for the graph
         void allTopologicalSorts();
 };
 
 Graph::Graph(int V) {
     this->V = V;
-    adj = new list<int>[V];
+    this->adj = new list<int>[V];
 
-    // initialize all indegree to 0
     for(int i = 0; i < V; i++) {
         indegree.push_back(0);
     }
 }
 
 void Graph::addEdge(int v, int w) {
-    // Add w to v’s list
     adj[v].push_back(w);
 
+    // v points to w, so w has a new indegree
     indegree[w]++;
 }
 
-// Helper function for TopologicalSort
-void Graph::topologicalSortUtil(int v, bool visited[], stack<int> &Stack) {
-    // Mark the current node as visited
-    visited[v] = true;
-
-    // Recur for all the vertices adjacent to this vertex
-    list<int>::iterator i;
-    for (i = adj[v].begin(); i != adj[v].end(); ++i) {
-        if (!visited[*i]) {
-            topologicalSortUtil(*i, visited, Stack);
-        }
-    }
-
-    // Push current vertex to stack which stores result
-    Stack.push(v);
-}
-
-// Topological Sort using recursion
-void Graph::topologicalSort() {
-    stack<int> Stack;
-
-    // Mark all the vertices as not visited
-    bool *visited = new bool[V];
-    for(int i = 0; i < V; i++) {
-        visited[i] = false;
-    }
-
-    // Call the recursive helper function to store Topological
-    // Sort starting from all vertices one by one
-    for(int i = 0; i < V; i++) {
-        if(visited[i] == false) {
-            topologicalSortUtil(i, visited, Stack);
-        }
-    }
-
-    // Print contents of stack
-    while (!Stack.empty()) {
-        cout << Stack.top() << " ";
-        Stack.pop();
-    }
-}
-
-// Helper function for allTopologicalSorts
-void Graph::allTopologicalSortsHelper(vector<int> &res, bool visited[]) {
-
-    // check if we found a topological sort
-    bool flag = false;
-
-    // Recur for all the vertices
-    for(int i = 0; i < V; i++) {
-
-        // find last element of topological sort - all incoming edges
-        if((indegree[i] == 0) && !visited[i]) {
-            
-            // include this in result
-            res.push_back(i);
-            visited[i] = true;
-
-            // reduce indegree of all adjacent vertices
-            // When they reach 0, they can be caught in this condition
-            list<int>::iterator j;
-            for(j = adj[i].begin(); j != adj[i].end(); j++) {
-                indegree[*j]--;
-            }
-
-            // process remaining vertices
-            allTopologicalSortsHelper(res, visited);
-
-            // Backtrack for other possible solutions
-            // resetting visited, res, and indegree
-            visited[i] = false;
-            res.erase(res.end() - 1);
-            for(j = adj[i].begin(); j != adj[i].end(); j++) {
-                indegree[*j]++;
-            }
-
-            // found a topological sort
-            flag = true;
-        }
-    }
-
-    // print all topological sorts
-    if(!flag) {
-        for(int i = 0; i < res.size(); i++) {
-            cout << res[i] << " ";
-        }
-        cout << endl;
-    }
-}
-
-// All Topological Sorts using recursion and backtracking
-void Graph::allTopologicalSorts() {
-
-    // Mark all the vertices as not visited
-    bool *visited = new bool[V];
-    for (int i = 0; i < V; i++) {
-        visited[i] = false;
-    }
-
-    vector<int> res;
-
-    // Call the recursive helper function to store Topological
-    // Sort starting from all vertices one by one
-    allTopologicalSortsHelper(res, visited);
-}
-
-Graph construct_graph() {
+Graph constructGraph() {
     Graph g(6);
     g.addEdge(5, 2);
     g.addEdge(5, 0);
@@ -178,9 +60,105 @@ Graph construct_graph() {
     return g;
 }
 
-// Driver program to test above functions
-int main() {
+void Graph::topologicalSortUtil(int vertex, bool* visited, stack<int> &s) {
 
+    visited[vertex] = true;
+
+    list<int>::iterator i;
+    for(i = adj[vertex].begin(); i != adj[vertex].end(); i++) {
+        if(visited[*i] != true) {
+            topologicalSortUtil(*i, visited, s);
+        }
+    }
+
+    // recursion breaks here and last element in topological sort will be the first one here
+    // Stock this in stack so that the latest / first element in sort is on top
+    s.push(vertex);
+    return;
+}
+
+void Graph::topologicalSort() {
+
+    // Will store topological sort to print later
+    stack<int> s;
+
+    bool visited[V];
+    for(int i = 0; i < V; i++) {
+        visited[i] = false;
+    }
+
+    for(int i = 0; i < V; i++) {
+        if(visited[i] == false) {
+            topologicalSortUtil(i, visited, s);
+        }
+    }
+
+    cout << "Any Topological Sort: ";
+    while(!s.empty()) {
+        cout << s.top() << " ";
+        s.pop();
+    }
+    cout << endl;
+
+    return;
+}
+
+void Graph::allTopologicalSortsUtil(bool* visited, vector<int> &vec) {
+
+    // loop over all vertices and check for vertex with no indegree - first node to start with
+    for(int i = 0; i < V; i++) {
+
+        if(indegree[i] == 0 && visited[i] == false) {
+
+            // put current vertex as potential soln
+            vec.push_back(i);
+            visited[i] = true;
+
+            // reduce the indegree of vertex around it 
+            // This would be like getting rid of current vertex, so vectices with 0 indegree can be picked up in the next round
+            list<int>::iterator j;
+            for(j = adj[i].begin(); j != adj[i].end(); j++) {
+                indegree[*j]--;
+            }
+
+            // check for remaining vertices
+            allTopologicalSortsUtil(visited, vec);
+
+            // Backtrack to check for other possible topological sorts
+            // reset visited, remove element, and increate indegree
+            visited[i] = false;
+            //vec.pop_back();
+            vec.erase(vec.end() - 1);
+            for(j = adj[i].begin(); j != adj[i].end(); j++) {
+                indegree[*j]++;
+            }
+        }
+    }
+
+    // if sort was found then print it
+    if(vec.size() == V) {
+        for(int i = 0; i < vec.size(); i++) {
+            cout << vec[i] << " ";
+        }
+        cout << endl;
+    }
+    return;
+}
+
+void Graph::allTopologicalSorts() {
+
+    // vector to hold all the sorts
+    vector<int> res;
+
+    bool visited[V];
+    for(int i = 0; i < V; i++) {
+        visited[i] = false;
+    }
+
+    allTopologicalSortsUtil(visited, res);
+}
+
+int main() {
     // construct graph
     //        5   4        5 -> 2    5 -> 0
     //       / \ / \       4 -> 1    4 -> 0
@@ -188,18 +166,9 @@ int main() {
     //       \     /       3 -> 1
     //        \   /
     //          3
-    Graph g = construct_graph();
 
-    // Any 1 possible topological sort
-    cout << "Any possible Topological Sort : ";
+    Graph g = constructGraph();;
     g.topologicalSort();
-    cout << endl << endl;
-
-    // All possible topological sort
-    cout << "All possible Topological Sorts : " << endl;
     g.allTopologicalSorts();
-    cout << endl;
-
     return 0;
 }
-

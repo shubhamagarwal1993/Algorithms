@@ -1,9 +1,3 @@
-// We will get the median of a running stream of integers
-// For total of odd numbers - return the middle position integer
-// For total of even numbers - return the avg of the 2 middle position integers
-//
-// We will solve by maintaining a max heap for the left side of the integers of the median, and a min heap for the right side
-
 #include <iostream>
 #include <unordered_map>
 #include <queue>

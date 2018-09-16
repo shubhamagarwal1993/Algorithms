@@ -52,6 +52,7 @@ void primMST(int graph[5][5]) {
     key[0] = 0;	    // Making key 0 so that this vertex is picked as first vertex
     parent[0] = -1; // First node is always root of MST
 
+    // A min spanning tree has V - 1 edges
     for(int count = 0; count < V-1; count++) {
         // Pick the minimum key vertex from the set of vertices not yet included in MST
         int u = minKey(key, mstSet);
