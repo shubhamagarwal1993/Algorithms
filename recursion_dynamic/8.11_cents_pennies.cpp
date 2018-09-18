@@ -73,7 +73,8 @@ int countWays_recursive(int denominations[], int den_size, int total, vector<int
 }
 
 bool doubleEquals(double a, double b, double epsilon = 0.001) {
-    return std::abs(a - b) < epsilon;
+    //return std::abs(a - b) < epsilon;
+    return fabs(a - b) < std::numeric_limits<double>::epsilon();
 }
 
 int countWaysRecursive(double denominations[], int den_size, double total, vector<double> vec, double finalVal) {
