@@ -50,7 +50,7 @@ class Graph {
 
         // prints BFS traversal from a given source s
         void BFS(int s);
-        void anyPath(int s, int d);
+        void anyPath(int s, int d, bool visited[], vector<int> path);
         void allPaths(int s, int d);
         void findPathInMatrix();
         void BBFS(int s, int t);
@@ -82,7 +82,7 @@ class Graph {
             addUndirectedEdge(2, 3);
             addUndirectedEdge(2, 4);
             addUndirectedEdge(3, 4);
-            addUndirectedEdge(4, 5);
+            //addUndirectedEdge(4, 5);
             addUndirectedEdge(5, 6);
         }
 };
@@ -122,58 +122,31 @@ void Graph::BFS(int s) {
     }
 }
 
-//void printVector(vector<int> path) {
-//    int size = path.size();
-//    for(int i = 0; i < path.size(); i++) {
-//        cout << path[i] << " ";
-//    }
-//
-//    cout << endl;
-//}
+void Graph::anyPath(int src, int dest, bool visited[], vector<int> path) {
 
-void Graph::anyPath(int src, int dest) {
-
-    // Mark all the vertices as not visited
-    bool visited[V];
-    for(int i = 0; i < V; i++) {
-        visited[i] = false;
-    }
-
-    // Create a queue for BFS
-    list<int> queue;
-    queue.push_back(src);
-
-    // store path here
-    list<int> path;
-
-    // Mark the current node as visited and enqueue it
     visited[src] = true;
+    path.push_back(src);
 
-    // 'i' will be used to get all adjacent vertices of a vertex
-    list<int>::iterator i;
-
-    while(!queue.empty()) {
-        int curr_node = queue.front();
-        queue.pop_front();
-        path.push_back(curr_node);
-
-        if(curr_node == dest) {
-            for(i = path.begin(); i != path.end(); i++) {
-                cout << *i << " ";
-            }
-            cout << endl;
-            return;
+    if(src == dest) {
+        cout << endl << "Any path ";
+        for(int it = 0; it < path.size(); it++) {
+            cout << path[it] << " ";
         }
+        cout << endl;
+        return;
+    }
 
-        // Get all adjacent vertices of path_last_node
-        // If a adjacent has not been visited, then mark it visited and enqueue it
-        for(i = adj[curr_node].begin(); i != adj[curr_node].end(); i++) {
-            if(!visited[*i]) {
-                visited[*i] = true;
-                queue.push_back(*i);
-            }
+    list<int>::iterator i;
+    for(i = adj[src].begin(); i != adj[src].end(); i++) {
+        if(!visited[*i]) {
+            anyPath(*i, dest, visited, path);
         }
     }
+
+    // Backtrack - Remove current vertex from path[] and mark it as unvisited
+    path.pop_back();
+    visited[src] = false;
+    return;
 }
 
 void Graph::allPaths(int src, int dest) {
@@ -246,75 +219,53 @@ bool safeCell(int matrix[ROW][COL], int new_row, int new_col) {
     return true;
 }
 
-void anyPathInMatrix(int matrix[ROW][COL], Point src, Point dest) {
+void anyPathInMatrix(int matrix[ROW][COL], Point src, Point dest, bool visited[ROW][COL], vector<Point> vec) {
 
-    // Mark all the vertices as not visited
-    bool visited[ROW][COL];
-    for(int i = 0; i < ROW; i++) {
-        for(int j = 0; j < COL; j++) {
-            visited[i][j] = false;
-        }
-    }
-
-    // Create a queue for BFS
-    list<Point> queue;
-    queue.push_back(src);
-
-    // store path here
-    list<Point> path;
-    list<Point>::iterator it;
-
-    // Mark the current node as visited and enqueue it
+    // Mark the current node as visited and add it to path
+    vec.push_back(src);
     visited[src.x][src.y] = true;
 
-    while(!queue.empty()) {
-        Point curr_point = queue.front();
-        cout << curr_point.x << " " << curr_point.y << endl;
-        queue.pop_front();
-        path.push_back(curr_point);
-
-        if(samePoint(curr_point, dest)) {
-            for(it = path.begin(); it != path.end(); it++) {
-                Point temp = *it;
-                cout << "(" << temp.x << ", " << temp.y << ") ";
-            }
-            cout << endl;
-            return;
+    if(samePoint(src, dest)) {
+        cout << "Any path in matrix" << endl;
+        for(int i = 0; i < vec.size(); i++) {
+            Point temp = vec[i];
+            cout << "(" << temp.x << ", " << temp.y << ") ";
         }
-
-        // Get all adjacent vertices of path_last_node
-        // If a adjacent has not been visited, then mark it visited and enqueue it
-        // row, col + 1
-        // row, col - 1
-        // row + 1, col
-        // row - 1, col
-        int new_row = src.x;
-        int new_col = src.y + 1;
-        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
-            visited[new_row][new_col] = true;
-            queue.push_back(Point(new_row, new_col));
-        }
-        new_row = src.x;
-        new_col = src.y - 1;
-        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
-            visited[new_row][new_col] = true;
-            queue.push_back(Point(new_row, new_col));
-        }
-        new_row = src.x + 1;
-        new_col = src.y;
-        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
-            visited[new_row][new_col] = true;
-            cout << "here" << endl;
-            Point temp(new_row, new_col);
-            queue.push_back(temp);
-        }
-        new_row = src.x - 1;
-        new_col = src.y;
-        if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
-            visited[new_row][new_col] = true;
-            queue.push_back(Point(new_row, new_col));
-        }
+        cout << endl;
+        return;
     }
+
+    int new_row = src.x - 1;
+    int new_col = src.y;
+    Point curr_point = Point(new_row, new_col);
+    if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+        anyPathInMatrix(matrix, curr_point, dest, visited, vec);
+    }
+
+    new_row = src.x;
+    new_col = src.y - 1;
+    curr_point = Point(new_row, new_col);
+    if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+        anyPathInMatrix(matrix, curr_point, dest, visited, vec);
+    }
+
+    new_row = src.x;
+    new_col = src.y + 1;
+    curr_point = Point(new_row, new_col);
+    if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+        anyPathInMatrix(matrix, curr_point, dest, visited, vec);
+    }
+
+    new_row = src.x + 1;
+    new_col = src.y;
+    curr_point = Point(new_row, new_col);
+    if(safeCell(matrix, new_row, new_col) && !visited[new_row][new_col]) {
+        anyPathInMatrix(matrix, curr_point, dest, visited, vec);
+    }
+
+    vec.pop_back();
+    visited[src.x][src.y] = false;
+    return;
 }
 
 void Graph::findPathInMatrix() {
@@ -327,7 +278,19 @@ void Graph::findPathInMatrix() {
     Point src(1, 2);
     Point dest(4, 1);
 
-    anyPathInMatrix(matrix, src, dest);
+    // Mark all the vertices as not visited
+    bool visited[ROW][COL];
+    for(int i = 0; i < ROW; i++) {
+        for(int j = 0; j < COL; j++) {
+            visited[i][j] = false;
+        }
+    }
+
+    // Create a queue for BFS
+    vector<Point> vec;
+
+    anyPathInMatrix(matrix, src, dest, visited, vec);
+
     return;
 }
 
@@ -433,17 +396,24 @@ void Graph::BBFS(int s, int t) {
 
 int main() {
 
-    Graph g(10);
+    int V = 10;
+
+    Graph g(V);
     g.constructDirectedGraph();
 
-    // simple BFS, Time: O(V + E), Space: O(V^2)
+//    // simple BFS, Time: O(V + E), Space: O(V^2)
     cout << "Simple BFS starting from 2: ";
     g.BFS(2);
     cout << endl << endl;
 
     // BFS - any path from source node to dest node, Time: O(V + E), Space: O(V^2)
-    cout << "BFS all paths from 1 to 5: ";
-    g.anyPath(1, 5);
+    cout << "BFS any path from 1 to 5: ";
+    vector<int> path;
+    bool visited[V];
+    for(int i = 0; i < V; i++) {
+        visited[i] = false;
+    }
+    g.anyPath(0, 5, visited, path);
     cout << endl << endl;
 
     // BFS all paths from source node to dest node, Time: O(V + E), Space: O(V^2)
