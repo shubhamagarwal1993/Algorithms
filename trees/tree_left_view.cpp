@@ -2,44 +2,64 @@
 
 using namespace std;
 
-struct Node {
-    int data;
-    Node* left;
-    Node* right;
+class Node {
+    public:
+        int data;
+        Node* left;
+        Node* right;
+
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
-Node* newNode(int data) {
-    Node* root = new Node();
-    root->data = data;
-    root->left = NULL;
-    root->right = NULL;
-    return root;
-}
+class Tree {
+    public:
+        Node* root;
 
-void leftView(Node* root, int level, int &max) {
-    if(root == NULL) {
-        return;
-    }
+        Tree() {
+            this->root = NULL;
+        }
 
-    if(level > max) {
-        cout << root->data << endl;
-        max = level;
-    }
-    leftView(root->left, level+1, max);
-    leftView(root->right, level+1, max);
-}
+        void construct() {
+            Node* root = new Node(4);
+            root->left = new Node(5);
+            root->right = new Node(2);
+            root->right->left = new Node(3);
+            root->right->right = new Node(1);
+            root->right->left->left = new Node(6);
+            root->right->left->right = new Node(7);
+
+            this->root = root;
+        }
+
+        void leftView() {
+            int max = 0;
+            this->leftViewUtil(root, 1, max);
+        }
+
+    private:
+        void leftViewUtil(Node* root, int level, int &max) {
+            if(root == NULL) {
+                return;
+            }
+
+            if(level > max) {
+                cout << root->data << endl;
+                max = level;
+            }
+            leftViewUtil(root->left, level+1, max);
+            leftViewUtil(root->right, level+1, max);
+        }
+};
 
 int main() {
-    Node* root = newNode(4);
-    root->left = newNode(5);
-    root->right = newNode(2);
-    root->right->left = newNode(3);
-    root->right->right = newNode(1);
-    root->right->left->left = newNode(6);
-    root->right->left->right = newNode(7);
+    Tree tree;
+    tree.construct();
 
-    int max = 0;
-    leftView(root, 1, max);
+    tree.leftView();
 
     return 0;
 }
