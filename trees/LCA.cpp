@@ -23,7 +23,7 @@ class Tree {
             this->root = NULL;
         }
 
-        Node* constructTree() {
+        void constructTree() {
             Node* root = new Node(8);
 
             root->left = new Node(3);
@@ -37,7 +37,8 @@ class Tree {
             root->right->right = new Node(15);
             root->right->right->left = new Node(14);
 
-            return root;
+            this->root = root;
+            return;
         }
 
         void findLCA(Node* root, int node1, int node2) {
@@ -62,12 +63,27 @@ class Tree {
             return;
         }
 
+        void destroyTree(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            destroyTree(root->left);
+            destroyTree(root->right);
+            root->left = NULL;
+            root->right = NULL;
+            delete root;
+        }
+
+    private:
         Node* findLCAUtil(Node* root, int node1, bool &node1_exists, int node2, bool &node2_exists) {
 
-            Node* test = NULL;
             if(root == NULL) {
                 return NULL;
             }
+
+            // This will store LCA to return the search earlier
+            Node* test = NULL;
 
             if(root->data == node1) {
                 node1_exists = true;
@@ -79,6 +95,7 @@ class Tree {
                 test = root;
             }
 
+            // If LCA already found, return it.
             if(node1_exists && node2_exists && test != NULL) {
                 return test;
             }
@@ -99,25 +116,15 @@ class Tree {
                 return (LCALeft != NULL) ? LCALeft : LCARight;
             }
         }
-
-        void destroyTree(Node* root) {
-            if(root == NULL) {
-                return;
-            }
-
-            destroyTree(root->left);
-            destroyTree(root->right);
-            root->left = NULL;
-            root->right = NULL;
-            delete root;
-        }
 };
 
 int main() {
     Tree tree;
-    tree.root = tree.constructTree();
+    tree.constructTree();
+
     tree.findLCA(tree.root, 14, 11);
     tree.findLCA(tree.root, 8, 3);
+
     tree.destroyTree(tree.root);
     tree.root = NULL;
 

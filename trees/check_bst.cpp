@@ -6,15 +6,15 @@ using namespace std;
 
 class Node {
     public:
-    int data;
-    Node* left;
-    Node* right;
+        int data;
+        Node* left;
+        Node* right;
 
-    Node(int data) {
-        this->data = data;
-        this->left = NULL;
-        this->right = NULL;
-    }
+        Node(int data) {
+            this->data = data;
+            this->left = NULL;
+            this->right = NULL;
+        }
 };
 
 class Tree {
@@ -25,7 +25,7 @@ class Tree {
             this->root = NULL;
         }
 
-        Node* constructTree() {
+        void constructTree() {
 
             Node* root = new Node(8);
 
@@ -40,7 +40,8 @@ class Tree {
             root->right->right = new Node(15);
             root->right->right->left = new Node(14);
 
-            return root;
+            this->root = root;
+            return;
         }
 
         void printTree(Node* root) {
@@ -63,13 +64,13 @@ class Tree {
                 return false;
             }
 
-            return checkBST(root->left, min, min_char, root->data, false) && checkBST(root->right, root->data, false, max, max_char);
+            return checkBST(root->left, min, min_char, root->data, true) && checkBST(root->right, root->data, true, max, max_char);
         }
 };
 
 int main() {
     Tree tree;
-    tree.root = tree.constructTree();
+    tree.constructTree();
 
     // print tree
     tree.printTree(tree.root);
