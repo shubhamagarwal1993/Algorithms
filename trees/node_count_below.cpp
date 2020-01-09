@@ -24,7 +24,14 @@ class Tree {
             this->root = NULL;
         }
 
-        Node* constructTree() {
+        void constructTree() {
+            //     1
+            //    / \
+            //   2   3
+            //  / \   \
+            // 4   5   8
+            //        / \
+            //       6   7
             Node* root = new Node(1);
 
             root->left = new Node(2);
@@ -35,24 +42,29 @@ class Tree {
             root->right->right = new Node(8);
             root->right->right->left = new Node(6);
             root->right->right->right = new Node(7);
-            return root;
-        //              1
-        //             / \
-        //            2   3
-        //           / \   \
-        //          4   5   8
-        //                 / \
-        //                6   7
+
+            this->root = root;
+            return;
         }
 
-        int countBelowEachNode(Node* root) {
+        void countBelowEachNode() {
+            if(this->root == NULL) {
+                return;
+            }
 
+            Node* root = this->root;
+            countBelowEachNodeUtil(root);
+            return;
+        }
+
+    private:
+        int countBelowEachNodeUtil(Node* root) {
             if(root == NULL) {
                 return 0;
             }
 
-            int left_count = countBelowEachNode(root->left);
-            int right_count = countBelowEachNode(root->right);
+            int left_count = countBelowEachNodeUtil(root->left);
+            int right_count = countBelowEachNodeUtil(root->right);
 
             if(root->left != NULL) {
                 left_count += 1;
@@ -68,10 +80,10 @@ class Tree {
 
 int main() {
     Tree tree;
-    tree.root = tree.constructTree();
+    tree.constructTree();
 
     // O(n) time and O(1) space
-    tree.countBelowEachNode(tree.root);
+    tree.countBelowEachNode();
 
     return 0;
 }
