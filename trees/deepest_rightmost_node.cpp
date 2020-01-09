@@ -32,7 +32,7 @@ class Tree {
         //  4   5     8
         //           / \
         //          6   7
-        Node* constructTree() {
+        void constructTree() {
             Node* root = new Node(1);
 
             root->left = new Node(2);
@@ -44,15 +44,11 @@ class Tree {
             root->right->right->left = new Node(6);
             root->right->right->right = new Node(7);
 
-
-            //Node* root = new Node(1);
-            //root->left = new Node(2);
-            //root->left->left = new Node(4);
-            //root->right = new Node(3);
-            return root;
+            this->root = root;
+            return;
         }
 
-        void findDeepestValue(Node* root) {
+        void findDeepestValue() {
             int max_level = 0;
             int curr_level = 0;
             int result = 0;
@@ -82,8 +78,8 @@ class Tree {
 
 int main() {
     Tree tree;
-    tree.root = tree.constructTree();
-    tree.findDeepestValue(tree.root);
+    tree.constructTree();
+    tree.findDeepestValue();
 
     return 0;
 }
