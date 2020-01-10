@@ -163,6 +163,16 @@ class Tree {
             return root;
         }
 
+        void totalNodes() {
+            if(this->root == NULL) {
+                return;
+            }
+
+            Node* root = this->root;
+            cout << "Total nodes in tree: " << totalNodesUtil(root) << endl;
+            return;
+        }
+
     private:
         void insertBSTUtil(Node* root, int data) {
             if(root == NULL) {
@@ -236,6 +246,14 @@ class Tree {
             }
             return root; 
         }
+
+        int totalNodesUtil(Node* root) {
+            if(root == NULL) {
+                return 0;
+            }
+
+            return 1 + totalNodesUtil(root->left) + totalNodesUtil(root->right);
+        }
 };
 
 int main() {
@@ -249,6 +267,7 @@ int main() {
     tree.insertBST(70);
     tree.insertBST(80);
     tree.printInorder();
+    tree.totalNodes();
 
     // insert a node at lowerst possible level in the tree
     tree.insertLowestLevel(60);
