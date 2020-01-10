@@ -173,6 +173,30 @@ class Tree {
             return;
         }
 
+        void getMaximumWidth() {
+            if(this->root == NULL) {
+                return;
+            }
+
+            Node* root = this->root;
+            int height = getHeight(root);
+            vector<int> widthCount;
+            for(int i = 0; i < height; i++) {
+                widthCount.push_back(0);
+            }
+            getMaximumWidthHelper(root, widthCount, 0);
+
+            int maxWidth = 0;
+            for(int i = 0; i < widthCount.size(); i++) {
+                if(widthCount[i] > maxWidth) {
+                     maxWidth = widthCount[i];
+                }
+            }
+
+            cout << "Max width recursively: " << maxWidth << endl;
+            return;
+        }
+
     private:
         void insertBSTUtil(Node* root, int data) {
             if(root == NULL) {
@@ -254,6 +278,25 @@ class Tree {
 
             return 1 + totalNodesUtil(root->left) + totalNodesUtil(root->right);
         }
+
+        int getHeight(Node* root) {
+            if(root == NULL) {
+                return 0;
+            }
+
+            int lHeight = getHeight(root->left);
+            int rHeight = getHeight(root->right);
+
+            return max(lHeight, rHeight) + 1;
+        }
+
+        void  getMaximumWidthHelper(Node* root, vector<int> &widthCount, int level) {
+            if(root) {
+                widthCount[level]++;
+                getMaximumWidthHelper(root->left, widthCount, level+1);
+                getMaximumWidthHelper(root->right, widthCount, level+1);
+            }
+        }
 };
 
 int main() {
@@ -276,6 +319,9 @@ int main() {
     // delete a node
     tree.deleteBST(40);
     tree.printInorder();
+
+    // O(n) time and O(n) space
+    tree.getMaximumWidth();
 
     // free memory
     tree.destroyTree();
