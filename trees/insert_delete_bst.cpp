@@ -197,6 +197,19 @@ class Tree {
             return;
         }
 
+        void diameter() {
+            if(this->root == NULL) {
+                return;
+            }
+
+            Node* root = this->root;
+
+            int sum = 0;
+            diameterUtil(root, sum);
+            cout << "Diameter: " << sum << endl;
+            return;
+        }
+
     private:
         void insertBSTUtil(Node* root, int data) {
             if(root == NULL) {
@@ -297,6 +310,20 @@ class Tree {
                 getMaximumWidthHelper(root->right, widthCount, level+1);
             }
         }
+
+        int diameterUtil(Node* root, int &sum) {
+            if(root == NULL) {
+                return 0;
+            }
+
+            int left = diameterUtil(root->left, sum);
+            int right = diameterUtil(root->right, sum);
+
+            if(left + right + 1 > sum) {
+                sum = left + right + 1;
+            }
+            return std::max(left, right) + 1;
+        }
 };
 
 int main() {
@@ -320,8 +347,11 @@ int main() {
     tree.deleteBST(40);
     tree.printInorder();
 
-    // O(n) time and O(n) space
+    // O(N) time and O(N) space
     tree.getMaximumWidth();
+
+    // O(N) time complexity
+    tree.diameter();
 
     // free memory
     tree.destroyTree();
