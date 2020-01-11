@@ -33,11 +33,11 @@ class LinkedList {
         }
 
         void print_linkedList() {
-            if(head == NULL) {
+            if(this->head == NULL) {
                 return;
             }
 
-            Node* temp = head;
+            Node* temp = this->head;
             while(temp != NULL) { 
                 cout << temp->data << " ";
                 temp = temp->next;
@@ -48,20 +48,20 @@ class LinkedList {
 
         // reverse linkedlist iteratively
         void iterative_reverse() {
-            if((head == NULL) || (head->next == NULL)) {
+            if((this->head == NULL) || (this->head->next == NULL)) {
                 return;
             }
 
-            Node* temp = head->next;
+            Node* temp = this->head->next;
             Node* temp1 = NULL;
 
-            while(head->next != NULL) {
-                head->next = temp1;
-                temp1 = head;
-                head = temp;
+            while(this->head->next != NULL) {
+                this->head->next = temp1;
+                temp1 = this->head;
+                this->head = temp;
                 temp = temp->next;        
             }
-            head->next = temp1;
+            this->head->next = temp1;
 
             return;
         }
