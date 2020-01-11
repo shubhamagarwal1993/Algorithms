@@ -27,50 +27,40 @@ class Tree {
             this->root = NULL;
         }
 
-        int height(Node* node) {
-            if(node == NULL) {
-                return 0;
+        void inorder() {
+            if(this->root == NULL) {
+                return;
             }
-            
-            // compute the height of each subtree
-            int lheight = height(node->left);
-            int rheight = height(node->right);
 
-            // use the larger one
-            return max(lheight, rheight) + 1;
+            Node* root = this->root;
+            inorderUtil(root);
+            cout << endl;
+            return;
         }
 
-        // Print nodes at a given level
-        void printGivenLevel(Node* root, int level) {
+        void constructTree() {
+
+            vector<int> inorder{5, 10, 20, 50, 51, 55, 60, 65, 70, 80};
+            vector<int> levelorder{50, 10, 60, 5, 20, 55, 70, 51, 65, 80};
+
+            int inorder_start = 0;
+            int inorder_end = inorder.size() - 1;
+
+            this->root = constructTreeUtil(inorder, levelorder, inorder_start, inorder_end);
+            return;
+        }
+
+    private:
+        void inorderUtil(Node* root) {
             if(root == NULL)
                 return;
 
-            if(level == 1)
-                cout << root->data << " ";
-
-            else if(level > 1) {
-                printGivenLevel(root->left, level-1);
-                printGivenLevel(root->right, level-1);
-            }
-        }
-
-        //print tree to check
-        void printLevelOrder(Node* root) {
-            int h = height(root);
-            for(int i = 1; i <= h; i++)
-                printGivenLevel(root, i);
-        }
-
-        void in_order(Node* root) {
-            if(root == NULL)
-                return;
-
-            in_order(root->left);
+            inorderUtil(root->left);
             cout << root->data << " ";
-            in_order(root->right);
+            inorderUtil(root->right);
         }
 
-        int search(int inorder[], int in_start, int in_end, int data) {
+        int search(vector<int> inorder, int in_start, int in_end, int data) {
 
             for(int i = in_start; i <= in_end; i++) {
                 if(data == inorder[i]) {
@@ -81,17 +71,17 @@ class Tree {
             return -1;
         }
 
-        int *extractKeys(int inorder[], int levelorder[], int in_index, int size) {
-            int *arr = new int [in_index];
-            int j = 0;
-            for(int i = 0; i < size; i++) {
-                if(search(inorder, 0, in_index-1, levelorder[i]) != -1) {
-                    arr[j] = levelorder[i];
-                    j++;
+        vector<int> extractKeys(vector<int> inorder, vector<int> levelorder, int inorder_start, int inorder_end) {
+            vector<int> levelorder_new;
+            int index = 0;
+
+            for(int i = 0; i < levelorder.size(); i++) {
+                int search_idx = search(inorder, inorder_start, inorder_end, levelorder[i]);
+                if(search_idx != -1) {
+                    levelorder_new.push_back(levelorder[i]);
                 }
             }
-
-            return arr;
+            return levelorder_new;
         }
 
         // construct a bst using inorder & levelorder traversals.
@@ -104,58 +94,48 @@ class Tree {
         //  5   20    55    70
         //            /     /  \
         //          51     65    80
-        Node* construct_tree(int inorder[], int levelorder[], int in_start, int in_end, int size, int &level_index) {
+        Node* constructTreeUtil(vector<int> inorder, vector<int>levelorder, int inorder_start, int inorder_end) {
 
-            if(in_start > in_end) {
+            if(inorder_start > inorder_end) {
                 return NULL;
             }
 
             // The first node in level order traversal is root
-            Node* root = new Node(levelorder[level_index]);
-            level_index++;
-
-        //    if(in_start == in_end) {
-        //        return root;
-        //    }
+            Node* root = new Node(levelorder[0]);
+            if(inorder_start == inorder_end) {
+                return root;
+            }
 
             // find index of root in inorder array
-            int in_index = search(inorder, in_start, in_end, root->data);
-            if(in_index == -1) {
+            // All nodes to left of in_index belong to left subtree, and right to right subtree
+            int inorder_index = search(inorder, inorder_start, inorder_end, root->data);
+            if(inorder_index == -1) {
                 return NULL;
             }
 
-            // separate left keys from level order traversal - return an array
-        //    int *left_index = extractKeys(inorder, levelorder, in_index, size);
+            // separate keys from levelorder traversal in the same order
+            vector<int> levelorder_left = extractKeys(inorder, levelorder, inorder_start, inorder_index - 1);
+            vector<int> levelorder_right = extractKeys(inorder, levelorder, inorder_index + 1, inorder_end);
 
-            // separate right keys from level order traversal - return an array
-        //    int *right_index = extractKeys(inorder + in_index + 1, levelorder, size - in_index - 1, size);
-
-            //using in_index from inorder array, constructing left & right subtrees.
-        //    root->left  = construct_tree(inorder, left_index, in_start, in_index-1, size);
-        //    root->right = construct_tree(inorder, right_index, in_index+1, in_end, size);
-
-            root->left  = construct_tree(inorder, levelorder, in_start, in_index-1, size, level_index);
-            root->right = construct_tree(inorder, levelorder, in_index+1, in_end, size, level_index);
-        //    delete [] left_index;
-        //    delete [] right_index;
+            root->left = constructTreeUtil(inorder, levelorder_left, inorder_start, inorder_index - 1);
+            root->right = constructTreeUtil(inorder, levelorder_right, inorder_index + 1, inorder_end);
 
             return root;
+        }
+
+        bool in_vector(vector<int> vec, int data) {
+            if(std::count(vec.begin(), vec.end(), data)) {
+                return true;
+            }
+
+            return false;
         }
 };
 
 int main() {
-
-    int inorder[10] = {5, 10, 20, 50, 51, 55, 60, 65, 70, 80};
-    int levelorder[10] = {50, 10, 60, 5, 20, 55, 70, 51, 65, 80};
-    int size = sizeof(inorder)/sizeof(inorder[0]);
-    int in_start = 0;
-    int in_end = size - 1;
-    int level_index = 0;
-
     Tree tree;
-    tree.root = tree.construct_tree(inorder, levelorder, in_start, in_end, size, level_index);
-    tree.in_order(tree.root);
-    cout << endl;
+    tree.constructTree();
+    tree.inorder();
 
     return 0;
 }
