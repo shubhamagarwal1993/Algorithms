@@ -67,12 +67,12 @@ int main() {
     print_top_right(matrix, 0, 0, M-1, N-1);
     cout << endl;
 
-    int** arr = createSpiralMatrix();
-    for(int i = 0; i < N; i++) {
-        for(int j = 0; j < N; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << endl;
-    }
+    //int** arr = createSpiralMatrix();
+    //for(int i = 0; i < N; i++) {
+    //    for(int j = 0; j < N; j++) {
+    //        cout << arr[i][j] << " ";
+    //    }
+    //    cout << endl;
+    //}
     return 0;
 }
