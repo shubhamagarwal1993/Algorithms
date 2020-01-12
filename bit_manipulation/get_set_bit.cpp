@@ -6,13 +6,7 @@ using namespace std;
 bool getBit(int num, int k) {
     int mask = (1 << k);
     int result = num & mask;
-    if(result != 0) {
-        return true;
-    } else {
-        return false;
-    }
-    // This entire function can simple be written as
-    // return ((num & (1 << k)) != 0);
+    return result;
 }
 
 // set bit at kth position
@@ -20,8 +14,6 @@ int setBit(int num, int k) {
     int mask = (1 << k);
     int result = num | mask;
     return result;
-    // This entire function can simple be written as
-    // return (num | (1 << k);
 }
 
 // clears or makes bit at position k 0
@@ -43,7 +35,7 @@ int main() {
     int k = 2;   // 7 6 5 4 3 2 1 0
 
     // get value of bit at kth position
-    cout << getBit(num, k) << endl;
+    cout << "Get bit " << getBit(num, k) << endl;
 
     // set value of bit at kth position
     k = 1;
