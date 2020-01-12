@@ -11,7 +11,7 @@ bool bitValueAtK(unsigned int num, int k) {
 bool isPalindrome(unsigned int num) {
 
     // assume long int
-    int int_max_bits = 32;
+    int unsigned_int_max_bits = 32;
 
     // get total bits num needs, excluding leading 0s
     int total_bits = 0;
@@ -21,7 +21,7 @@ bool isPalindrome(unsigned int num) {
         num_temp = num_temp >> 1;
     }
 
-    // count ending 0s
+    // Count ending 0s
     int total_trailing_0s = 0;
     num_temp = num;
     while(!(1 & num_temp)) {
@@ -30,7 +30,7 @@ bool isPalindrome(unsigned int num) {
     }
 
     // Check if we have enough space to put 0s in the front of the num
-    if(total_bits + total_trailing_0s > int_max_bits) {
+    if(total_bits + total_trailing_0s > unsigned_int_max_bits) {
         return false;
     }
 
@@ -51,9 +51,8 @@ bool isPalindrome(unsigned int num) {
 
 int main() {
 
-    // binary representation 0000010001010001
-    // int num = 1105;
-    int num = 8840;
+    // binary representation 0000010001010001000
+    unsigned int num = 8840;
     if(isPalindrome(num)) {
         cout << "bit representation of " << num << " is a palindrome" << endl;
     } else {
