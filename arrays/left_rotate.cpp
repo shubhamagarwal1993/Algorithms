@@ -22,9 +22,7 @@ int getGCD(int a, int b) {
 }
 
 // Move the elements within sets
-// number of sets = GCD of arr_size and d
-//
-//
+// number of sets = GCD of arr_size and rotate_index
 void leftRotate(int arr[], int arr_size, int rotate_index) {
 
     int set_size = getGCD(arr_size, rotate_index);
@@ -60,7 +58,9 @@ void leftRotate(int arr[], int arr_size, int rotate_index) {
 
 int main() {
     int arr[12] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    leftRotate(arr, 12, 3);
+    int arr_size = sizeof(arr)/sizeof(arr[0]);
+    int rotate_idx = 3;
+    leftRotate(arr, arr_size, rotate_idx);
 
     return 0;
 }
