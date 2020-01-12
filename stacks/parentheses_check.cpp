@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool parentheses(string str, stack <char> s) {
+bool parentheses(string str, stack<char> s) {
 
     if(str.length() == 0) {
         return true;
@@ -19,31 +19,31 @@ bool parentheses(string str, stack <char> s) {
         } else if(str[i] == '}' || str[i] == ']' || str[i] == ')') {
             if(s.size() == 0) {
                 return false;
-            } else {
-                char temp = s.top();
-                s.pop();
-                if(str[i] == '}') {
-                    if(temp != '{')
-                        return false;
-                } else if(str[i] == ']') {
-                    if(temp != '[')
-                        return false;                    
-                } else if(str[i] == ')') {
-                    if (temp != '(')
-                        return false;                    
-                }
+            }
+
+            char temp = s.top();
+            s.pop();
+
+            if(str[i] == '}' && temp != '{') {
+                return false;
+            } else if(str[i] == ']' && temp != '[') {
+                return false;
+            } else if(str[i] == ')' && temp != '(') {
+                return false;
             }
         }
     }
 
-    if (s.size() == 0)
+    if(s.size() == 0) {
         return true;
+    }
+
     return false;
 }
 
 int main() {
     string str = "{[()]}";
-    stack <char> s;
+    stack<char> s;
     if(parentheses(str, s)) {
         cout << "parentheses in string is balanced" << endl;
     } else {
