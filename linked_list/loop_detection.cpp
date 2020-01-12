@@ -23,15 +23,15 @@ class LinkedList {
         void constructLinkedList() {
 //            1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 //                                ^______________|
-            head                                                 = new Node(1);
-            head->next                                           = new Node(2);
-            head->next->next                                     = new Node(3);
-            head->next->next->next                               = new Node(4);
-            head->next->next->next->next                         = new Node(5);
-            head->next->next->next->next->next                   = new Node(6);
-            head->next->next->next->next->next->next             = new Node(7);
-            head->next->next->next->next->next->next->next       = new Node(8);
-            head->next->next->next->next->next->next->next->next = head->next->next->next->next;
+            this->head                                                 = new Node(1);
+            this->head->next                                           = new Node(2);
+            this->head->next->next                                     = new Node(3);
+            this->head->next->next->next                               = new Node(4);
+            this->head->next->next->next->next                         = new Node(5);
+            this->head->next->next->next->next->next                   = new Node(6);
+            this->head->next->next->next->next->next->next             = new Node(7);
+            this->head->next->next->next->next->next->next->next       = new Node(8);
+            this->head->next->next->next->next->next->next->next->next = head->next->next->next->next;
             return;
         }
 
@@ -52,6 +52,7 @@ class LinkedList {
         // check for loop in linked list
         void checkLoop() {
 
+            Node* head = this->head;
             Node* loopNode = checkLoopUtil(head);
             if(loopNode == NULL) {
                 cout << "Linked list does not have a loop" << endl;
@@ -61,14 +62,13 @@ class LinkedList {
             return;
         }
 
-        Node* checkLoopUtil(Node* curr_head) {
-
-            if(curr_head == NULL) {
+        Node* checkLoopUtil(Node* head) {
+            if(head == NULL) {
                 return NULL;
             }
 
-            Node* slow_runner = curr_head;
-            Node* fast_runner = curr_head;
+            Node* slow_runner = head;
+            Node* fast_runner = head;
             Node* collision = NULL;
 
             while((fast_runner != NULL) && (fast_runner->next != NULL)) {
@@ -81,12 +81,13 @@ class LinkedList {
                 }
             }
 
+            // No loop found
             if(collision == NULL) {
                 return NULL;
             }
 
             // Reusing variables
-            slow_runner = curr_head;
+            slow_runner = head;
             fast_runner = collision;
 
             while(slow_runner != fast_runner) {

@@ -21,19 +21,19 @@ class LinkedList {
         }
 
         void constructLinkedList() {
-            head                   = new Node(-4);
-            head->next             = new Node(-6);
-            head->next->next       = new Node(-2);
-            head->next->next->next = new Node(-7);
+            this->head                   = new Node(-4);
+            this->head->next             = new Node(-6);
+            this->head->next->next       = new Node(-2);
+            this->head->next->next->next = new Node(-7);
             return;
         }
 
         void printLinkedList() {
-            if(head == NULL) {
+            if(this->head == NULL) {
                 return;
             }
 
-            Node* temp = head;
+            Node* temp = this->head;
             while(temp) {
                 cout << temp->data << " ";
                 temp = temp->next;
@@ -44,6 +44,7 @@ class LinkedList {
 
         // find max in linkedlist recursively
         int findMax() {
+            Node* head = this->head;
             return findMaxUtil(head);
         }
 
