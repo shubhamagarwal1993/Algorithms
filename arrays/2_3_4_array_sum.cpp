@@ -140,9 +140,12 @@ bool comp(x_y const & a, x_y const & b) {
 }
 
 bool not_repeat(x_y a, x_y b) {
-    if (a.x == b.x || a.x == b.y || a.y == b.x || a.y == b.y)
-        return false;
-    return true;
+    bool res = true;
+    if((a.x == b.x && a.y == b.y) || (a.x == b.y && a.y == b.x)) {
+        res = false;
+    }
+
+    return res;
 }
 
 void four_sum(int arr[], x_y temp_arr[], int arr_size, int temp_arr_size, int final_sum) {
@@ -150,24 +153,27 @@ void four_sum(int arr[], x_y temp_arr[], int arr_size, int temp_arr_size, int fi
     for (int i = 0; i < arr_size-1; i++) {
         for (int j = i+1; j < arr_size; j++) {
             temp_arr[k].sum = arr[i]+arr[j];
-            temp_arr[k].x = i;
-            temp_arr[k].y = j;
+            temp_arr[k].x = arr[i];
+            temp_arr[k].y = arr[j];
             k++;
         }
     }
 
-//    for (int q = 0; q < k; q++)
-//        cout << temp_arr[q].sum << endl;
-
     std::sort(temp_arr, temp_arr+temp_arr_size, comp);
 
-//    for (int q = 0; q < k; q++)
-//        cout << temp_arr[q].sum << endl;
+    //for(int i = 0; i < temp_arr_size; i++) {
+    //    cout << "(" << temp_arr[i].x << ", " << temp_arr[i].y << ") " << "-> " <<  temp_arr[i].sum << endl;
+    //}
 
-    int l = 0, r = arr_size-1;
-    while(r >= 0 && l < temp_arr_size) {
-        if ((temp_arr[l].sum + temp_arr[r].sum == final_sum) && (not_repeat(temp_arr[l], temp_arr[r]))) {
-            cout << final_sum << " = " << arr[temp_arr[l].x] << ", " << arr[temp_arr[l].y] << ", " << arr[temp_arr[r].x] << ", " << arr[temp_arr[r].y] << endl;
+    int l = 0, r = temp_arr_size-1;
+    while(l < r) {
+        if(temp_arr[l].sum + temp_arr[r].sum == final_sum) {
+            if(not_repeat(temp_arr[l], temp_arr[r])) {
+                cout << final_sum << " = " << temp_arr[l].x << ", " << temp_arr[l].y << ", " << temp_arr[r].x << ", " << temp_arr[r].y << endl;
+                l++;
+            } else {
+                r--;
+            }
             l++;
         } else if(temp_arr[l].sum + temp_arr[r].sum < final_sum) {
             l++;
@@ -194,22 +200,22 @@ int main() {
 */
 
     // 3 sum - unique numbers only
-    int arr[8] = {1, 4, 45, 6, 10, 8, 19, 2};
-    int sum = 22;
-    int arr_size = sizeof(arr)/sizeof(arr[0]);
-    if(!findTriplets(arr, arr_size, sum)) {
-        cout << "No triplets can be formed.";
-    }
+    //int arr[8] = {1, 4, 45, 6, 10, 8, 19, 2};
+    //int sum = 22;
+    //int arr_size = sizeof(arr)/sizeof(arr[0]);
+    //if(!findTriplets(arr, arr_size, sum)) {
+    //    cout << "No triplets can be formed.";
+    //}
 
-/*
+
     // 4 sum
-    int arr[8] = {10, 20, 30, 40, 1, 2, 25, 16};
+    int arr[9] = {10, 20, 30, 40, 10, 1, 2, 25, 16};
     int final_sum = 91;
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     int temp_arr_size = arr_size*(arr_size-1)/2;
     x_y temp_arr[temp_arr_size];                    //will store all sum pairs here
     four_sum(arr, temp_arr, arr_size, temp_arr_size, final_sum);
-*/
+
     return 0;
 }
 
