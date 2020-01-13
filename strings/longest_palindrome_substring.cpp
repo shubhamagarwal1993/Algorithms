@@ -62,8 +62,8 @@ void printLongestPalindromeWithExtraSpace(char str[], int str_length) {
 void printLongestPalindromeWithoutExtraSpace(char str[], int str_length) {
 
     int longest_palindrome_length = 1;
+    int longest_palindrome_start_index = 0;
 
-    int start_index = 0;
     int low = 0;
     int high = 0;
 
@@ -75,7 +75,7 @@ void printLongestPalindromeWithoutExtraSpace(char str[], int str_length) {
         while((low >= 0) && (high < str_length) && (str[low] == str[high])) {
             if(high - low + 1 > longest_palindrome_length) {
                 longest_palindrome_length = high - low + 1;
-                start_index = low;
+                longest_palindrome_start_index = low;
             }
             low--;
             high++;
@@ -87,7 +87,7 @@ void printLongestPalindromeWithoutExtraSpace(char str[], int str_length) {
         while((low >= 0) && (high < str_length) && (str[low] == str[high])) {
             if(high - low + 1 > longest_palindrome_length) {
                 longest_palindrome_length = high - low + 1;
-                start_index = low;
+                longest_palindrome_start_index = low;
             }
             low--;
             high++;
@@ -95,7 +95,7 @@ void printLongestPalindromeWithoutExtraSpace(char str[], int str_length) {
     }
 
     cout << "Longest substring palindrome is ";
-    for(int i = start_index; i < start_index + longest_palindrome_length; i++) {
+    for(int i = longest_palindrome_start_index; i < longest_palindrome_start_index + longest_palindrome_length; i++) {
         cout << str[i];
     }
     cout << " with length " << longest_palindrome_length << endl;
