@@ -17,7 +17,6 @@ Network core:
 - interconnected routers
 - network of routers
 
-
 Other
     Http
     DNS
@@ -34,3 +33,19 @@ Security
     RSA
 
 Sensor networks
+
+ -----------------------------------------------------------------------------------------------------------------------
+| TCP/IP         | OSI Model    |                   |                                                                   |
+|-------------------------------|-------------------|-------------------------------------------------------------------|
+| Application    | Application  | Data              | High level APIs, remote file access                               |
+|                | Presentation | Data              | Encrypt/Decrypt, data compression                                 |
+|                | Session      | Data              | Continuous exchange of info                                       |
+|                |              |                   |                                                                   |
+| Host to host   | Transport    | Segment, Datagram | Acks, TCP, UDP                                                    |
+|                |              |                   |                                                                   |
+| Internet       | Network      | Packet            | Routing, Traffic control                                          |
+|                |              |                   |                                                                   |
+| Network Access | Data Link    | Frame             | Reliable transmission between 2 nodes connected by physical layer |
+|                | Physical     | Hardware          | Transmission of raw bit streams over a physical medium            |
+|-------------------------------|-------------------|-------------------------------------------------------------------|
+
