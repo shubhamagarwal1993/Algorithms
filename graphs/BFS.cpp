@@ -401,7 +401,7 @@ int main() {
     Graph g(V);
     g.constructDirectedGraph();
 
-//    // simple BFS, Time: O(V + E), Space: O(V^2)
+    // simple BFS, Time: O(V + E), Space: O(V^2)
     cout << "Simple BFS starting from 2: ";
     g.BFS(2);
     cout << endl << endl;
