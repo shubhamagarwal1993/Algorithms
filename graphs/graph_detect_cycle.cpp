@@ -31,6 +31,38 @@ class Graph {
         list<int> *adj;
         list<int> *edge;
 
+        bool directedGraphIsCyclicUtil(int v, bool visited[], int recStack[], vector<int> path) {
+
+
+            if(visited[v] == false) {
+                // Mark the current node as visited and part of recursion stack
+                visited[v] = true;
+                recStack[v] = v;
+                path.push_back(v);
+
+                // Recur for all the vertices adjacent to this vertex
+                list<int>::iterator i;
+                for(i = adj[v].begin(); i != adj[v].end(); ++i) {
+                    if(!visited[*i] && directedGraphIsCyclicUtil(*i, visited, recStack, path)) {
+                        return true;
+                    } else if(recStack[*i] >= 0) {
+                        path.push_back(*i);
+                        cout << "Cycle at node: " << v << " " << recStack[*i] << endl;
+                        for(int i = 0; i < path.size(); i++) {
+                            cout << path[i] << " ";
+                        }
+                        cout << endl;
+                        return true;
+                    }
+                }
+            }
+
+            // Backtrack, remove vertex from recursion stack, and not in cyclic path
+            recStack[v] = -1;
+            path.pop_back();
+            return false;
+        }
+
     public:
         Graph(int V, int E) {
             this->V = V;
@@ -66,6 +98,18 @@ class Graph {
         }
 
         void constructDirectedGraph() {
+
+            //    ________
+            //   /        \
+            //  /          V
+            // 0 --> 1 --> 2
+            // ^          /
+            //  \________/
+            //
+            // 3 ----
+            // ^    |
+            // |____|
+
             addDirectedEdge(0, 1);
             addDirectedEdge(0, 2);
             addDirectedEdge(1, 2);
@@ -74,6 +118,14 @@ class Graph {
         }
 
         void constructUndirectedGraph() {
+
+            // 1
+            // |
+            // |
+            // 0 --- 2 --- 4
+            // |           |
+            // |____ 3 ____|
+
             addUndirectedEdge(0, 1);
             addUndirectedEdge(0, 2);
             addUndirectedEdge(0, 3);
@@ -83,7 +135,9 @@ class Graph {
 
         void directedGraphIsCyclic() {
 
+            // Path of cycle
             vector<int> path;
+
             // Mark all vertices as not visited and not part of recursion stack
             bool visited[V];
             int recStack[V];
@@ -95,43 +149,11 @@ class Graph {
             // Call recursive helper function to detect cycle in different DFS trees
             for(int i = 0; i < V; i++) {
                 if(!visited[i]) {
-                    if(directedGraphIsCyclicUtil(i, visited, recStack, path)) {
-                        cout << "Graph contains cycle" << endl;
-                        cout << endl;
-                    } else {
+                    if(!directedGraphIsCyclicUtil(i, visited, recStack, path)) {
                         cout << "Graph doesn't contain cycle" << endl;
                     }
                 }
             }
-        }
-
-        bool directedGraphIsCyclicUtil(int v, bool visited[], int recStack[], vector<int> path) {
-
-            if(visited[v] == false) {
-                // Mark the current node as visited and part of recursion stack
-                visited[v] = true;
-                recStack[v] = v;
-                path.push_back(v);
-
-                // Recur for all the vertices adjacent to this vertex
-                list<int>::iterator i;
-                for(i = adj[v].begin(); i != adj[v].end(); ++i) {
-                    if(!visited[*i] && directedGraphIsCyclicUtil(*i, visited, recStack, path)) {
-                        return true;
-                    } else if(recStack[*i] >= 0) {
-                        path.push_back(*i);
-                        cout << "Cycle at node: " << v << " " << recStack[*i] << endl;
-                        for(int i = 0; i < path.size(); i++) {
-                            cout << path[i] << " ";
-                        }
-                        cout << endl;
-                        return true;
-                    }
-                }
-            }
-            recStack[v] = -1;  // remove the vertex from recursion stack
-            path.pop_back();
-            return false;
         }
 
         void undirectedGraphIsCyclicUsingDFS() {
@@ -336,23 +358,35 @@ class Graph {
 
 int main() {
 
-    // Detect cycle in directed graph
-    // Can use DFS, tarjan's algo, graph coloring. All take time O(V + E)
-    // DFS - Time Complexity: O(V + E), space O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
+    /*
+     * Detect cycle in directed graph
+     *
+     * Algo: DFS, tarjan's algo, graph coloring
+     * DFS: Time complexity: O(V + E), Space complexity O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
+     */
     Graph g_directed(4, 5);
     g_directed.constructDirectedGraph();
     g_directed.directedGraphIsCyclic();
 
     cout << "-------" << endl;
 
-    // Detect cycle in undirected graph
-    // Can use union-find, DFS, BFS, and graph coloring. All take time O(V + E) except union-find which takes O(E logV)
-    Graph g_undirected(5, 5);
-    g_undirected.constructUndirectedGraph();
-    // DFS - Time Complexity: O(V + E), space O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
-    g_undirected.undirectedGraphIsCyclicUsingDFS();
-    // union-find - Time Complexity: O(E logV), space O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
-    g_undirected.undirectedGraphIsCyclicUsingUnionFind();
+    /*
+     * Detect cycle in undirected graph
+     *
+     * Algo: Union-find, DFS, BFS, and graph coloring
+     */
+    Graph g_undirected1(5, 5);
+    g_undirected1.constructUndirectedGraph();
+
+    /*
+     * Union-find: Time complexity: O(E logV), Space complexity: O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
+     */
+    g_undirected1.undirectedGraphIsCyclicUsingUnionFind();
+
+    /*
+     * DFS, BFS, Graph coloring: Time complexity: O(V + E), Space complexity: O(V) -> O(V) path of cycle, O(V) recursion stack, O(V) visited array
+     */
+    g_undirected1.undirectedGraphIsCyclicUsingDFS();
 
     return 0;
 }
