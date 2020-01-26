@@ -167,7 +167,7 @@ class Graph {
                     result_idx++;
                     subsets->unionFunc(subsets, x, y);
                 }
-                 // Else discard the next_edge
+                // Else discard next_edge, since it forms a cycle
             }
 
             // print the contents of result[] to display the built MST
