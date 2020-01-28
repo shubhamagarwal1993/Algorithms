@@ -13,7 +13,7 @@ bool iscombined_iterative(string str1, string str2, string str3) {
         return false;
 
     if(str1.length() == 0 || str2.length() == 0) {
-        if (str3 == str1 + str2)
+        if(str3 == str1 + str2)
             return true;
         else
             return false;

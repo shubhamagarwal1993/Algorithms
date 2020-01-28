@@ -41,15 +41,14 @@ int edit_distance(string str1, string str2) {
     int str2_len = str2.length();
 
     int dp[str1_len+1][str2_len+1];
-//    dp[0][0] = 0;
 
     // Fill d[][] in bottom up manner
     for(int i = 0; i <= str1_len; i++) {
         for(int j = 0; j <= str2_len; j++) {
-            if (i == 0)
+            if(i == 0)
                 dp[i][j] = j;
 
-            else if (j == 0)
+            else if(j == 0)
                 dp[i][j] = i;
 
             else if (str1[i-1] == str2[j-1])
@@ -73,7 +72,7 @@ int main() {
 
     //using dynamic - time O(mn)
     string str1 = "temper";
-    string str2 = "tamp";
+    string str2 = "zamp";
     cout << edit_distance(str1, str2) << endl;
     return 0;
 }
