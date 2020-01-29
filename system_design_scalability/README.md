@@ -1,18 +1,7 @@
-### Handling the questions
+# Approaching system design questions
  - go broad first, write key features on board
- - make assumptions / estimates - how much total space will be needed to store all the data
+ - make assumptions / estimates
  - scope the problem
-
-
-### Basic components
- - somthing to store data
- - something for logic, like for APIs or proccesses
- - scaling (caching, load balancing, non-relational databases, microservices, and sharding)
- - distributed systems, SOA, n-tiered software architecture
- - stream processing, batch processing, search, and retrieval
-
-### Steps
- - Ask questions. Write requirements or key points on board
  - Start with the customer in mind. Who is the customer and what problem are you solving for them
  - Draw diagram on board to express your ideas. Blocks with basic description and arrows between them
    - software components and data sources:
@@ -27,19 +16,47 @@
                                                                                     | File    |
                                                                                     | Storage |
      --------   Request image                                                       |         |
-    | Client | --------------> | Image retrieval service | -----------------------> |         |
-     --------                                                                       |         |
-            <------------------------------------------------| image | -------------|_________|
+    |        | --------------> | Image retrieval service | -----------------------> |         |
+    | Client |                                                                      |         |
+    |        | <---------------------------------------------| image | -------------|_________|
+    |--------|
 
+## Steps to follow:
+### Description
+ - Basic description of the problem
+### Requirements:
+ - Creation, and User Account
+ - Retrieval
+ - Analytics
+ - Capacity
+### Memory management and capacity calculations
+ - Traffic calculations
+ - Database memory calculations
+ - Caching memory calculations
+ - Bandwidth calculations
 
+### API Design
+ - Create: Function with arguments, and returned code/data
+ - Delete: Function with arguments, and returned code/data
 
-### Solving steps:
-  - draw a few basic boxes first (5 - 6 components)
-    - compute
-    - storage
-    - front-end
-    - back-end
-    - caching
-    - queueing
-    - networking
-    - load-balancing
+### Database Design
+ - User data
+ - Actual problem data, with inner joinable userID column. This can then be used to do analytics
+
+### Algorithm
+ - A more concreate detail of what the algorithm(s) will look like
+
+### Other things to consider
+ - Data partitioning
+ - Caching
+ - Load balancing
+ - Purging, and db cleanup
+ - Telemetry
+ - Security, and permissions
+ - Microservices
+ - Job queues
+ - stream processing, batch processing, search, and retrieval
+ - networking
+ - front-end
+ - back-end
+
