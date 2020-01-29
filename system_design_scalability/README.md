@@ -1,14 +1,15 @@
 # Approaching system design questions
- - go broad first, write key features on board
- - make assumptions / estimates
- - scope the problem
+ - Go broad first, write key features on board
+ - Make assumptions / estimates
+ - Scope the problem
  - Start with the customer in mind. Who is the customer and what problem are you solving for them
  - Draw diagram on board to express your ideas. Blocks with basic description and arrows between them
-   - software components and data sources:
-   - arrows: to show web services, APIs, and processed connecting software components
+   - Software components and data sources:
+   - Arrows: to show web services, APIs, and processed connecting software components
  - Discuss trade-offs in your design. Advantage and dis-advantanges of your system
    - Chaning a component might be a part of this discussion
 
+```
                                                                                      _________
     ---------            ---------------------   files written to persistent store  |         |
     | Images | -------> | Image write service | ----------------------------------> |         |
@@ -20,6 +21,7 @@
     | Client |                                                                      |         |
     |        | <---------------------------------------------| image | -------------|_________|
     |--------|
+```
 
 ## Steps to follow:
 ### Description
