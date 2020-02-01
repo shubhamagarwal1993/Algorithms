@@ -149,6 +149,7 @@ void Graph::anyPath(int src, int dest, bool visited[], vector<int> path) {
     return;
 }
 
+// TODO: This is actually DFS
 void Graph::allPaths(int src, int dest) {
 
     // Mark all the vertices as not visited
