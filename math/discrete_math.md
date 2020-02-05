@@ -1,10 +1,10 @@
+# Discrete Maths
 
-## Common Summation Formulas
-
-```
-  Sum of int 1 to N
-  (1 + 2 + ...... + N) = `n(n+1)/2`
-```
+## Common Summation Formulas:
+- Sum of int 1 to N
+  ```
+  (1 + 2 + ...... + N) = n(n+1)/2
+  ```
 
 ```
   Sum of powers of 2
