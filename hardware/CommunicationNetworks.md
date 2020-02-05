@@ -34,20 +34,40 @@ Security
 
 Sensor networks
 
- -----------------------------------------------------------------------------------------------------------------------
-| TCP/IP         | OSI Model    |                   |                                                                   |
-|-------------------------------|-------------------|-------------------------------------------------------------------|
-| Application    | Application  | Data              | High level APIs, remote file access                               |
-|                | Presentation | Data              | Encrypt/Decrypt, data compression                                 |
-|                | Session      | Data              | Continuous exchange of info                                       |
-|                |              |                   |                                                                   |
-| Host to host   | Transport    | Segment, Datagram | Acks, TCP, UDP                                                    |
-|                |              |                   |                                                                   |
-| Internet       | Network      | Packet            | Routing, Traffic control                                          |
-|                |              |                   |                                                                   |
-| Network Access | Data Link    | Frame             | Reliable transmission between 2 nodes connected by physical layer |
-|                | Physical     | Hardware          | Transmission of raw bit streams over a physical medium            |
-|-------------------------------|-------------------|-------------------------------------------------------------------|
+ -------------------------------------------------------------------------------------------------------------------------------------------------------
+| TCP/IP         | OSI Model    |                   |                                                                   | Comments                      |
+|-------------------------------|-------------------|-------------------------------------------------------------------|-------------------------------|
+| Application    | Application  | Data              | High level APIs, remote file access  ++++                         | encoding, representation      |
+|                | Presentation | Data              | Encrypt/Decrypt, data compression    + DNS, Telnet, TFTP, SMTP    | dialog control                |
+|                | Session      | Data              | Continuous exchange of info          ++++                         |                               |
+|                |              |                   |                                                                   |                               |
+| Host to host   | Transport    | Segment, Datagram | Acks, TCP, UDP                                                    | application data segmentation |
+|                |              |                   |                                                                   | transmission reliability      |
+| Internet       | Network      | Packet            | Routing, Traffic control              ICMP, IP, ARP               | route packets to dest         |
+|                |              |                   |                                                                   | independent of path taken     |
+| Network Access | Data Link    | Frame             | Reliable transmission between 2 nodes connected by physical layer | deals with physical issues    |
+|                | Physical     | Hardware          | Transmission of raw bit streams over a physical medium            | LAN / WAN                     |
+|-------------------------------|-------------------|-------------------------------------------------------------------|-------------------------------|
+
+# Packet structure
+
+TCP Segment format
+|-----------------------|----------------------------|
+| Source port [ip:port] | Destination port [ip:port] |
+|-----------------------|----------------------------|
+|                                                    |
+|                      Data                          |
+|----------------------------------------------------|
+
+# Domain name structure
+
+www.google.com
+com: TLD (top level domain). Others are io, gov, net, etc. ICANN is responsible for these.
+www: host.
+google.com: domain name. DNS is responsible for converting this to ip address.
+
+www.history.school.com
+history: subdomain.
 
 # DNS
                                                |------------------|
@@ -69,4 +89,12 @@ Sensor networks
  Browser and OS try to determine IP address from configuration, and cache                       |----------------------------|
  OS is configured to ask a `Resolving Name Server` if domain/IP is unknown
 
- ===
+# Router and Switch
+host: any node not a router
+node: any device
+                                                            |------------ LAN seg 1
+  network 1  |--------| network 2                       |--------|
+ ----------> | Router | ----------->                    | Switch | ------ LAN seg 2
+             |--------|                                 |--------|
+                                                            |------------ LAN seg 3
+# 

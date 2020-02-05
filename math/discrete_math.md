@@ -5,27 +5,23 @@
   ```
   (1 + 2 + ...... + N) = n(n+1)/2
   ```
-
-```
-  Sum of powers of 2
+- Sum of powers of 2
+  ```
   (2^0 +2^1 + ..... + 2^n) = `(2^(n+1))-1`
   The sum of a sequence of powers of two is rougly equal to the next value in the sequence
-```
-
-```
-  Permutations of n unique characters
+  ```
+- Permutations of n unique characters
+  ```
   n * (n-1) * (n-2) * ....... * 1 = n!
-```
-
-```
-  Forming a k length string (with all unique characters) from n total unique characters
+  ```
+- Forming a k length string (with all unique characters) from n total unique characters
+  ```
   n * (n-1) * (n-2) * ....... * (n-k+1) = n!/(n-k)!
-```
-
-```
-  How many k sized subsets are there out of n distinct elements? (order does not matter)
+  ```
+- How many k sized subsets are there out of n distinct elements? (order does not matter)
+  ```
   n!/(k! * (n-k)!) = (n k)
-```
+  ```
 
 ## Geometric progression
   - common ratio = r
@@ -51,19 +47,19 @@
 | 127     | DEL   |
 
 - print ASCII value of chars in c++, where ascii ranges from 32 (space) to 126 (~)
-```
-    int main() {
-        char c = 'A';
-        cout << "The ASCII value of " << c << " is " << int(c) << endl;
-    }
-```
+  ```
+  int main() {
+      char c = 'A';
+      cout << "The ASCII value of " << c << " is " << int(c) << endl;
+  }
+  ```
 - print chars of ASCII value in c++, where ascii ranges from 32 to 126
-```
-    int main() {
-        int ascii_val 97;
-        cout << "The char value of " << ascii_val << " is " << char(ascii_val) << endl;
-    }
-```
+  ```
+  int main() {
+      int ascii_val 97;
+      cout << "The char value of " << ascii_val << " is " << char(ascii_val) << endl;
+  }
+  ```
 
 ## Primitive types and size
 | Type   | Size    |         | Total values         | Range                           |
@@ -85,15 +81,21 @@
 
 ## Runtimes
  - Big O     : upper bound on time, less than equal to relationship
-   - Some Big O runtimes - O(log N), O(N logN), O(N), O(N^2), O(2^N)
  - Big theta : upper and lower bound on time
  - Big omega : lower bound on time, greater than equal to relationship
 
-## Run times of Data Structures:
-  - Lists
-  - Vectors / Arraylists
-  - Heaps
-  - Trees
-  - Tries
-  - Graphs
-  - Hash table
+# Probability
+## Bayes theorem
+P(A given B) = P(B given A) P(A) / P(B)
+
+probability of landing in A or B: P(A or B) = P(A) + P(B) - P(A and B)
+
+## Independence and Mutual Exclusivity
+Two events cannot be both independent and mutually exclusive
+- Independence
+  - A and B are independent (that is, one happening tells you nothing about the other happening)
+  - P(A and B) = P(A) P(B)
+- Mutual Exclusivity 
+  - A and B are mutually exclusive (that is, if one happens, then the other cannot happen)
+  - P(A or B) = P(A) + P(B). This is because P(A and B) = 0
+
