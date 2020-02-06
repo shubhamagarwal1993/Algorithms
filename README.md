@@ -15,6 +15,7 @@ References I commonly refer for solutions, and hints:
 - Cracking the coding interview (6th edition)
 - http://geeksforgeeks.org/
 - Stack overflow
+- Wikipedia for theory
 
 Futher questions, solutions will come from:
 - Programming Pearls (Problem solving)
