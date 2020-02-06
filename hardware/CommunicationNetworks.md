@@ -2,10 +2,10 @@ Communication Networks
 ======================
 
 Internet / Protocol
-    Network edge - hosts, access net
-    Network core - packet/circuit switching, internet structure
-    Performance - loss, delay, throughput
-    Protocol layers
+    Network edge - hosts, access net  
+    Network core - packet/circuit switching, internet structure  
+    Performance - loss, delay, throughput  
+    Protocol layers  
     service models
 
 Protocols: control sending / receiving of messages
@@ -17,7 +17,7 @@ Network core:
 - interconnected routers
 - network of routers
 
-Other
+Other  
     Http  
     DNS  
     Sockets / Ports  
@@ -25,7 +25,7 @@ Other
     Routing / Basic Graphs / Dijakstra's algo / IP  
     CSMA / TDMA / token  
 
-Wireless networks
+Wireless networks  
     wifi / ad hoc / mesh  
     cellular networks / mobile networks / Satellite networks  
 
@@ -42,31 +42,32 @@ Sensor networks
 |                |              |                   |                                                                   |                               |
 | Host to host   | Transport    | Segment, Datagram | Acks, TCP, UDP                                                    | application data segmentation |
 |                |              |                   |                                                                   | transmission reliability      |
+|                |              |                   |                                                                   |                               |
 | Internet       | Network      | Packet            | Routing, Traffic control              ICMP, IP, ARP               | route packets to dest         |
 |                |              |                   |                                                                   | independent of path taken     |
+|                |              |                   |                                                                   |                               |
 | Network Access | Data Link    | Frame             | Reliable transmission between 2 nodes connected by physical layer | deals with physical issues    |
 |                | Physical     | Hardware          | Transmission of raw bit streams over a physical medium            | LAN / WAN                     |
-|----------------|--------------|-------------------|-------------------------------------------------------------------|-------------------------------|
 
 # Packet structure
 
 TCP Segment format
-|-----------------------|----------------------------|
-| Source port [ip:port] | Destination port [ip:port] |
-|-----------------------|----------------------------|
-|                                                    |
-|                      Data                          |
+|-----------------------|----------------------------|  
+| Source port [ip:port] | Destination port [ip:port] |  
+|-----------------------|----------------------------|  
+|                                                    |  
+|                      Data                          |  
 |----------------------------------------------------|
 
 # Domain name structure
 
-www.google.com
-com: TLD (top level domain). Others are io, gov, net, etc. ICANN is responsible for these.
-www: host.
-google.com: domain name. DNS is responsible for converting this to ip address.
+www.google.com  
+com: TLD (top level domain). Others are io, gov, net, etc. ICANN is responsible for these  
+www: host  
+google.com: domain name. DNS is responsible for converting this to ip address
 
-www.history.school.com
-history: subdomain.
+www.history.school.com  
+history: subdomain
 
 # DNS
                                                |------------------|
