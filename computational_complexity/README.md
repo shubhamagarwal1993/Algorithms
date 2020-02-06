@@ -16,7 +16,7 @@ One of the roles of computational complexity theory is to determine the practica
 # P vs NP problem
 It asks whether every problem whose solution can be quickly verified can also be solved quickly.
 ![P vs NP](./resources/P_NP_1.svg)  
-[A brief video explanation]: https://www.youtube.com/watch?v=YX40hbAHx3s
+[A brief video explanation](https://www.youtube.com/watch?v=YX40hbAHx3s)
 
 ## Polynomial time
 An algorithm for which a deterministic polynomial time algorithm exists belong to the complexity class P.
