@@ -2,14 +2,18 @@ Communication Networks
 ======================
 
 Internet / Protocol
-    Network edge - hosts, access net  
-    Network core - packet/circuit switching, internet structure  
-    Performance - loss, delay, throughput  
-    Protocol layers  
-    service models
+- Network edge - hosts, access net  
+- Network core - packet/circuit switching, internet structure  
+- Performance - loss, delay, throughput  
+- Protocol layers  
+- service models
 
 Protocols: control sending / receiving of messages
-- TCP, IP, Http, Skype, 802.11
+- TCP
+- IP
+- Http
+- Skype
+- 802.11
 
 Network edges: hosts (clients, and servers), access net
 
@@ -18,19 +22,19 @@ Network core:
 - network of routers
 
 Other  
-    Http  
-    DNS  
-    Sockets / Ports  
-    Congestion Control / Flow Control / TCP  
-    Routing / Basic Graphs / Dijakstra's algo / IP  
-    CSMA / TDMA / token  
+- Http  
+- DNS  
+- Sockets / Ports  
+- Congestion Control / Flow Control / TCP  
+- Routing / Basic Graphs / Dijakstra's algo / IP  
+- CSMA / TDMA / token  
 
 Wireless networks  
-    wifi / ad hoc / mesh  
-    cellular networks / mobile networks / Satellite networks  
+- wifi / ad hoc / mesh  
+- cellular networks / mobile networks / Satellite networks  
 
 Security  
-    RSA
+- RSA
 
 Sensor networks
 
@@ -51,7 +55,7 @@ Sensor networks
 
 # Packet structure
 
-TCP Segment format
+TCP Segment format  
 |-----------------------|----------------------------|  
 | Source port [ip:port] | Destination port [ip:port] |  
 |-----------------------|----------------------------|  
@@ -70,6 +74,7 @@ www.history.school.com
 history: subdomain
 
 # DNS
+```
                                                |------------------|
                 |----------------------------> | Root Name Server | --------------------------------------------|
                 |                              |------------------|                                             |
@@ -88,12 +93,13 @@ history: subdomain
     |-------------------|                       |---------------------------------------------- | example.com name server    |
  Browser and OS try to determine IP address from configuration, and cache                       |----------------------------|  
  OS is configured to ask a `Resolving Name Server` if domain/IP is unknown
+```
 
 # Router and Switch
 host: any node not a router  
 node: any device  
-                                                            |------------ LAN seg 1
-  network 1  |--------| network 2                       |--------|
- ----------> | Router | ----------->                    | Switch | ------ LAN seg 2
-             |--------|                                 |--------|
-                                                            |------------ LAN seg 3
+                                                            |------------ LAN seg 1  
+  network 1  |--------| network 2                       |--------|  
+ ----------> | Router | ----------->                    | Switch | ------ LAN seg 2  
+             |--------|                                 |--------|  
+                                                            |------------ LAN seg 3  
