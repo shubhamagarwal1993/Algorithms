@@ -29,18 +29,18 @@ class LinkedList {
 
         // construct linked list
         void constructLinkedList() {
-            head                               = new Node(1);
-            head->next                         = new Node(2);
-            head->next->next                   = new Node(3);
-            head->next->next->next             = new Node(4);
-            head->next->next->next->next       = new Node(5);
+            this->head                               = new Node(1);
+            this->head->next                         = new Node(2);
+            this->head->next->next                   = new Node(3);
+            this->head->next->next->next             = new Node(4);
+            this->head->next->next->next->next       = new Node(5);
 
             // set random pointers
-            head->random                         = head->next->next;                // 1 -> 3
-            head->next->random                   = head;                            // 2 -> 1
-            head->next->next->random             = head->next->next->next->next;    // 3 -> 5
-            head->next->next->next->random       = head->next->next->next->next;    // 4 -> 5
-            head->next->next->next->next->random = head->next;                      // 5 -> 2
+            this->head->random                         = head->next->next;                // 1 -> 3
+            this->head->next->random                   = head;                            // 2 -> 1
+            this->head->next->next->random             = head->next->next->next->next;    // 3 -> 5
+            this->head->next->next->next->random       = head->next->next->next->next;    // 4 -> 5
+            this->head->next->next->next->next->random = head->next;                      // 5 -> 2
             return;
         }
 

@@ -28,13 +28,19 @@ int LIS_vector(int arr[], int arr_size) {
             tailIndices[0] = i;
         } else if(arr[i] > arr[tailIndices[len - 1]]) {
             prevIndices[i] = tailIndices[len-1];
-            tailIndices[len++] = i;
+            tailIndices[len] = i;
+            len += 1;
         } else {
             int pos = getCeilIndex(arr, tailIndices, -1, len - 1, arr[i]);
             prevIndices[i] = tailIndices[pos - 1];
             tailIndices[pos] = i;
         }
     }
+
+    for(int i = 0; i < prevIndices.size(); i++) {
+        cout << prevIndices[i] << " ";
+    }
+    cout << endl;
 
     for(int i = tailIndices[len - 1]; i >= 0; i = prevIndices[i]) {
         cout << arr[i] << " ";
@@ -49,7 +55,8 @@ int main() {
     // Time complexity O(n logn)
     int arr[] = {2, 3, 4, 8, 1, 2, 3, 4, 5, 6};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
-    cout << LIS_vector(arr, arr_size) << endl;
+    int len = LIS_vector(arr, arr_size);
+    cout << "Length of longest subsequence: " << len << endl;
 
     return 0;
 }
