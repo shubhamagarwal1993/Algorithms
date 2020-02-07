@@ -94,3 +94,40 @@ We assume that the new node learns the identity of an existing Chord node n' by 
    - 
  - Transferring keys:
    - Node n can become the successor only for keys that were previously the responsibility of the node immediately following n, so n only needs to contact that one node to transfer responsibility for all relevant keys
+
+# Example
+
+m = 7 (0, 127)
+Assume 6 nodes
+
+## finger table
+Can be calculated using `(n + 2^(i-1)) mod 2^m`
+| key | range     | successor | calculation   |
+|-----|-----------|-----------|---------------|
+| 81  | [81, 82)  | 96        | 80 + 1 = 81   |
+| 82  | [82, 84)  | 96        | 80 + 2 = 82   |
+| 84  | [84, 88)  | 96        | 80 + 4 = 84   |
+| 88  | [88, 96)  | 96        | 80 + 8 = 88   |
+| 96  | [96, 112) | 96        | 80 + 16 = 96  |
+| 112 | [112, 16) | 112       | 80 + 32 = 112 |
+| 16  | [16, 32)  | 16        | 80 + 64 = 144 |
+
+## Diagram
+
+                |-------|         |------|
+          ______| N 112 |----0----| N 16 |______
+         /      |-------|         |------|      \
+        |                                        |
+    |------|                                  |------|
+    | N 96 |                                  | N 32 |
+    |------|                                  |------|
+        |                                        |
+         \      |-------|         |------|      /
+          ------| N 80  |---------| N 45 |------
+                |-------|         |------|
+
+## Terminology
+nodes: map using consistent hash function  
+SHA-1: (ip-addr, port) 160 bit string truncated to m bits  
+filenames: map using consistent hash function  
+file is stored at frst peer with id greated than or equal to it's key mod 2^m.
