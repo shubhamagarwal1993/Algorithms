@@ -96,6 +96,14 @@ class Tree {
                 return NULL;
             }
 
+            // if root is to be deleted
+            if(root->data == data) {
+                Node* in_order_successor = getInorderSuccessor(root->right);
+                root->data = in_order_successor->data;
+                root->right = deleteBSTUtil(root->right, in_order_successor->data);
+                return root;
+            }
+
             // If left node is the node to be deleted
             Node* temp = root->left;
             if(temp && (temp->data == data)) {
@@ -304,11 +312,13 @@ class Tree {
         }
 
         void  getMaximumWidthHelper(Node* root, vector<int> &widthCount, int level) {
-            if(root) {
-                widthCount[level]++;
-                getMaximumWidthHelper(root->left, widthCount, level+1);
-                getMaximumWidthHelper(root->right, widthCount, level+1);
+            if(root == NULL) {
+                return;
             }
+
+            widthCount[level]++;
+            getMaximumWidthHelper(root->left, widthCount, level+1);
+            getMaximumWidthHelper(root->right, widthCount, level+1);
         }
 
         int diameterUtil(Node* root, int &sum) {
@@ -344,7 +354,7 @@ int main() {
     tree.printInorder();
 
     // delete a node
-    tree.deleteBST(40);
+    tree.deleteBST(50);
     tree.printInorder();
 
     // O(N) time and O(N) space
