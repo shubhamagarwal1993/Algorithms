@@ -84,6 +84,10 @@ int main() {
     cout << endl;
 
     Node* root = buildHuffmanTree(freq);
+    for(auto v = rootfreq.begin(); v != freq.end(); v++) {
+        cout << v->first << '-' << v->second << " ";
+    }
+    cout << endl;
 
     unordered_map<char, string> codes;
     getCodes(root, codes, "");

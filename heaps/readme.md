@@ -43,7 +43,7 @@
   - If we have to apply an operation to every node, we would prefer siftDown over siftUp
 
 ## Binary Heap
-  - A Binary Heap is a complete Binary Tree, were all levels are completely filled except possibly the last level and the last level has all keys as left as possible. This property of Binary Heap makes them suitable to be stored in an array
+  - A Binary Heap is a complete Binary Tree, where all levels are completely filled except possibly the last level and the last level has all keys as left as possible. This property of Binary Heap makes them suitable to be stored in an array
   - The root element will be at Arr[0]
   - Arr[(i - 1) / 2] returns the parent node
   - Arr[(2 * i) + 1] returns the left child node

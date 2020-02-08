@@ -9,7 +9,7 @@ void buildMaxHeap() {
     pq.push(5); pq.push(1); pq.push(10); pq.push(30); pq.push(20);
 
     // One by one extract items from max heap
-    while(pq.empty() == false) {
+    while(!pq.empty()) {
         cout << pq.top() << " ";
         pq.pop();
     }
@@ -21,7 +21,7 @@ void buildMinHeap() {
     pq.push(5); pq.push(1); pq.push(10); pq.push(30); pq.push(20);
 
     // One by one extract items from max heap
-    while(pq.empty() == false) {
+    while(!pq.empty()) {
         cout << pq.top() << " ";
         pq.pop();
     }
@@ -52,7 +52,7 @@ void buildMinHeapOfGraphPoints() {
     pq.push(Point(2, 1));
     pq.push(Point(1,5));
 
-    while(pq.empty() == false) {
+    while(!pq.empty()) {
         Point p = pq.top();
         cout << "(" << p.x << ", " << p.y << ") ";
         pq.pop();
