@@ -41,24 +41,37 @@ class Tree {
             //  \    / \   / \   / \
             //  30  0   5 21  8 7  11
 
-            Node* root               = new Node(1);
-            root->left               = new Node(10);
-            root->right              = new Node(3);
+            //Node* root               = new Node(1);
+            //root->left               = new Node(10);
+            //root->right              = new Node(3);
 
-            root->left->left         = new Node(4);
-            root->left->right        = new Node(6);
+            //root->left->left         = new Node(4);
+            //root->left->right        = new Node(6);
 
-            root->right->left        = new Node(2);
-            root->right->right       = new Node(9);
+            //root->right->left        = new Node(2);
+            //root->right->right       = new Node(9);
 
-            root->left->left->right  = new Node(30);
-            root->left->right->left  = new Node(0);
-            root->left->right->right = new Node(5);
+            //root->left->left->right  = new Node(30);
+            //root->left->right->left  = new Node(0);
+            //root->left->right->right = new Node(5);
 
-            root->right->left->left  = new Node(21);
-            root->right->left->right = new Node(8);
-            root->right->right->left = new Node(7);
-            root->right->right->right= new Node(11);
+            //root->right->left->left  = new Node(21);
+            //root->right->left->right = new Node(8);
+            //root->right->right->left = new Node(7);
+            //root->right->right->right= new Node(11);
+
+            //this->root = root;
+            //return;
+
+            Node* root               = new Node(4);
+            root->left               = new Node(2);
+            root->right              = new Node(6);
+
+            root->left->left         = new Node(1);
+            root->left->right        = new Node(3);
+
+            root->right->left        = new Node(5);
+            root->right->right       = new Node(7);
 
             this->root = root;
             return;
@@ -72,6 +85,18 @@ class Tree {
             Node* root = this->root;
             cout << "Inorder Recursive:";
             inorderRecursiveUtil(root);
+            cout << endl;
+            return;
+        }
+
+        void inorderRecursiveReverse() {
+            if(this->root == NULL) {
+                return;
+            }
+
+            Node* root = this->root;
+            cout << "Inorder Recursive Reverse:";
+            inorderRecursiveReverseUtil(root);
             cout << endl;
             return;
         }
@@ -246,6 +271,16 @@ class Tree {
             inorderRecursiveUtil(root->right);
         }
 
+        void inorderRecursiveReverseUtil(Node* root) {
+            if(root == NULL) {
+                return;
+            }
+
+            inorderRecursiveReverseUtil(root->right);
+            cout << root->data << " ";
+            inorderRecursiveReverseUtil(root->left);
+        }
+
         string inorderRecursiveStringUtil(Node* root) {
             if(root == NULL) {
                 return "";
@@ -412,6 +447,7 @@ int main() {
 
     // inorder traversal
     tree.inorderRecursive();
+    tree.inorderRecursiveReverse();
     tree.inorderRecursiveString();
     tree.inorderIterative();
 

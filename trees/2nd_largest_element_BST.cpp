@@ -142,7 +142,7 @@ int main() {
 
     // Method1: Get inorder, and 2nd node in reverse inorder
     // Running time O(n), Space O(1)
-    tree.get2ndLargestInBSTInorder();
+    cout << tree.get2ndLargestInBSTInorder() << endl;
 
     // Method2: Find the largest node, and then the second largest
     // Running time O(n), Space O(1)
