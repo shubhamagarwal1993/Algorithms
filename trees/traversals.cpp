@@ -308,22 +308,19 @@ class Tree {
                 return;
             }
 
-            Node* temp = root;
             stack<Node*> s;
-            s.push(temp);
+            s.push(root);
 
             while(!s.empty()) {
-                if(!s.empty()) {
-                    temp = s.top();
-                    s.pop();
-                    cout << temp->data << " ";
+                root = s.top();
+                s.pop();
+                cout << root->data << " ";
 
-                    if(temp->right) {
-                        s.push(temp->right);
-                    }
-                    if(temp->left) {
-                        s.push(temp->left);
-                    }
+                if(root->right) {
+                    s.push(root->right);
+                }
+                if(root->left) {
+                    s.push(root->left);
                 }
             }
         }
@@ -417,11 +414,11 @@ int main() {
     tree.inorderRecursive();
     tree.inorderRecursiveString();
     tree.inorderIterative();
-//
-//    // preorder traversal
-//    tree.preorderRecursive();
-//    tree.preorderIterative();
-//
+
+    // preorder traversal
+    tree.preorderRecursive();
+    tree.preorderIterative();
+
 //    // postorder traversal
 //    tree.postorderRecursive();
 //    tree.postorderIterative();
