@@ -419,9 +419,9 @@ int main() {
     tree.preorderRecursive();
     tree.preorderIterative();
 
-//    // postorder traversal
-//    tree.postorderRecursive();
-//    tree.postorderIterative();
+    // postorder traversal
+    tree.postorderRecursive();
+    tree.postorderIterative();
 
     // levelorder traversal
 
