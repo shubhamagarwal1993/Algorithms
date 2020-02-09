@@ -21,3 +21,7 @@ Futher questions, solutions will come from:
 - Programming Pearls (Problem solving)
 - Introduction to Information Retrieval (System design)
 - Introduction to Algorithms (3rd edition)
+
+# Taking an interview - basic things to ask
+- `https://sites.google.com/site/steveyegge2/five-essential-phone-screen-questions`
+

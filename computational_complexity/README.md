@@ -13,6 +13,9 @@ One of the roles of computational complexity theory is to determine the practica
 | O(c^n)       | exponential time     |
 | O(n!)        | factorial time       |
 
+- `http://bigocheatsheet.com`
+- CTCI Big O chapter
+
 # P vs NP problem
 It asks whether every problem whose solution can be quickly verified can also be solved quickly.
 ![P vs NP](./resources/P_NP_1.svg)  

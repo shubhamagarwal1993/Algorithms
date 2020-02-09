@@ -1,4 +1,6 @@
-// Print all possible partitions of a string into dictionary word
+/*
+ * All possible partitions of a string into dictionary word
+ */
 
 #include <iostream>
 #include <vector>

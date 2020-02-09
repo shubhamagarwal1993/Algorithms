@@ -1,11 +1,12 @@
-// A simple implementation of a hash map with inset and find functions
-// A hash table uses a hash function to compute an index into an array of buckets or slots, from which the corresponding value can be found
-
-// some missing functionality
-//   Iterators for traversal
-//   comparator for key comparisons
-//   capacity and size functions
-//
+/*
+ * A simple implementation of a hash map with insert and find functions
+ * A hash table uses a hash function to compute an index into an array of buckets or slots, from which the corresponding value can be found
+ *
+ * Missing functionality:
+ *     Iterators for traversal
+ *     Comparator for key comparisons
+ *     Capacity and size functions
+ */
 
 #include <iostream>
 
@@ -52,8 +53,7 @@ class HashNode {
 
 };
 
-// Default hash function class
-// takes a key, converts it to unsigned long int, and takes mod
+// Default hash function class takes a key, converts it to unsigned long int, and takes mod
 template <typename K>
 struct KeyHash {
     unsigned long operator()(const K key) const {
