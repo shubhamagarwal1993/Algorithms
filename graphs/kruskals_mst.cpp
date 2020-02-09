@@ -1,3 +1,21 @@
+/*
+ * Kruskal's algorithhm is a greedy algorithm to find a minimum spanning tree for a weighted undirected graph
+ * It finds a subset of the edges that forms a tree that includes every vertex, where the total weight of all the edges in the tree is minimized
+ *
+ * Generate a MST (minimum spanning tree), starting from an empty spanning tree.
+ *
+ * 1. Sort all the edges in ascending order of their weights
+ * 2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, include this edge. Else, discard it
+ * 3. Repeat step#2 until there are (V-1) edges in the spanning tree.
+ *
+ * Running Time: O(ElogE) or O(ElogV).
+ *      Sorting of edges takes O(ELogE) time.
+ *      After sorting, we iterate through all edges and apply find-union algorithm.
+ *      The find and union operations can take atmost O(LogV) time. So overall complexity is O(ELogE + ELogV) time.
+ *      The value of E can be atmost O(V^2), so O(LogV) are O(LogE) same.
+ *      Therefore, overall time complexity is O(ElogE) or O(ElogV)
+ */
+
 #include <iostream>
 #include <list>
 #include <vector>
