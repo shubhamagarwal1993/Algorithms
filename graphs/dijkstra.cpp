@@ -1,6 +1,10 @@
 /*
  * Dijkstra’s shortest path algorithm
  * Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given graph.
+ *
+ * Generate a SPT (shortest path tree) with given source as root
+ * Maintain two sets, one set contains vertices included in shortest path tree, other set includes vertices not yet included in shortest path tree
+ * At every step of the algorithm, we find a vertex which is in the other set (set of not yet included) and has a minimum distance from the source.
  */
 #include <iostream>
 #include <list>
@@ -90,7 +94,10 @@ void printSolution(int dist[]) {
     return;
 }
 
-int minDistance(int dist[9], bool sptSet[9]) {
+/*
+ * Find unvisited vertex with minimum distance from src
+ */
+int getClosestVertexFromSrc(int dist[9], bool sptSet[9]) {
     // find min distance vertex, and its index
     int min = INT_MAX;
     int min_idx = -1;
@@ -107,37 +114,42 @@ int minDistance(int dist[9], bool sptSet[9]) {
 
 void dijkstra(int graph[9][9], int src) {
 
-    int V = 9;
+    int vertex_count = 9;
 
     // final dist from src to dest will be stored here
-    int dist[V];
+    int distance_from_src[vertex_count];
 
     // true if vertex is included in shortest path
-    bool sptSet[V];
+    bool shortest_path_set[vertex_count];
 
-    for(int i = 0; i < V; i++) {
-        dist[i] = INT_MAX;
-        sptSet[i] = false;
+    for(int i = 0; i < vertex_count; i++) {
+        distance_from_src[i] = INT_MAX;
+        shortest_path_set[i] = false;
     }
 
-    dist[src] = 0;
-    for(int count = 0; count < V - 1; count++) {
+    // Distance of source vertex from itself will be 0
+    distance_from_src[src] = 0;
+
+    for(int count = 0; count < vertex_count - 1; count++) {
         // Find min dist vertex not yet processed
         // dest is equal to src in the first iteration
-        int dest = minDistance(dist, sptSet);
+        int src_new = getClosestVertexFromSrc(distance_from_src, shortest_path_set);
 
         // this vertex is now processed, and will not be touched again
-        sptSet[dest] = true;
+        shortest_path_set[src_new] = true;
 
         // Update dist of vertices adjacent to dist
-        for(int i = 0; i < V; i++) {
-            if((!sptSet[i]) && (graph[dest][i] > 0) && (dist[dest] != INT_MAX) && (dist[dest] + graph[dest][i] < dist[i])) {
-                dist[i] = dist[dest] + graph[dest][i];
+        for(int src_new_adj = 0; src_new_adj < vertex_count; src_new_adj++) {
+            // unprocessed vertex
+            // an edge exists from dest to i
+            // weight of path from src to  v through dest is smaller than current value of dist[i]
+            if((!shortest_path_set[src_new_adj]) && (graph[src_new][src_new_adj] > 0) && (distance_from_src[src_new] + graph[src_new][src_new_adj] < distance_from_src[src_new_adj])) {
+                distance_from_src[src_new_adj] = distance_from_src[src_new] + graph[src_new][src_new_adj];
             }
         }
     }
 
-    printSolution(dist);
+    printSolution(distance_from_src);
     return;
 }
 
