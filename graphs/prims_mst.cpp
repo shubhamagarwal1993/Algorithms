@@ -1,3 +1,10 @@
+/*
+ * Prim's (also alled Jarník's), is a greedy algorithm to find a minimum spanning tree for a weighted undirected graph
+ * It finds a subset of the edges that forms a tree that includes every vertex, where the total weight of all the edges in the tree is minimized
+ *
+ * Generate a MST (minimum spanning tree), starting from an empty spanning tree.
+ * At every step, it considers all the edges that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.
+ */
 #include <iostream>
 
 using namespace std;
@@ -80,16 +87,14 @@ void primMST(int graph[5][5]) {
 int main() {
 
     /*
-
-         2      3
-    (0) -- (1) -- (2)
-     |    /   \    |
-   6 | 8 /     \ 5 | 7
-     | /         \ |
-     (3) -------- (4)
-            9
-    */
-
+     *       2      3
+     *  (0) -- (1) -- (2)
+     *   |    /   \    |
+     * 6 | 8 /     \ 5 | 7
+     *   | /         \ |
+     *   (3) -------- (4)
+     *          9
+     */
     int graph[5][5] = { {0, 2, 0, 6, 0},
                         {2, 0, 3, 8, 5},
                         {0, 3, 0, 0, 7},

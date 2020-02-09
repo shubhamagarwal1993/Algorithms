@@ -1,6 +1,7 @@
 /*
  * Dijkstra’s shortest path algorithm
  * Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given graph.
+ * Can be applied to both directed, and undirected graphs
  *
  * Generate a SPT (shortest path tree) with given source as root
  * Maintain two sets, one set contains vertices included in shortest path tree, other set includes vertices not yet included in shortest path tree
