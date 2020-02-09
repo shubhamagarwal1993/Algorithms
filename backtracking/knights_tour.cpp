@@ -7,6 +7,7 @@
 #include <list>
 #include <stack>
 #include <vector>
+#include <iomanip>
 
 #define N 8
 
@@ -46,8 +47,8 @@ int main() {
     int chessboard[N][N];
 
     // possible x and y moves for a knight
-   int xMove[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
-   int yMove[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+    int xMove[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+    int yMove[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
 
     // initialize chessboard
     for(int i = 0; i < N; i++) {
@@ -64,16 +65,18 @@ int main() {
         // print chessboard
         for(int i = 0; i < N; i++) {
             for(int j = 0; j < N; j++) {
-                cout << chessboard[i][j] << " ";
+                if(chessboard[i][j] <= 9) {
+                    cout << std::setfill('0') << std::setw(2) << chessboard[i][j] << " ";
+                } else {
+                    cout << chessboard[i][j] << " ";
+                }
             }
             cout << endl;
         }
-    cout << endl;
+        cout << endl;
     } else {
         cout << "No path found" << endl;
     }
 
-
     return 0;
 }
-

@@ -20,7 +20,7 @@ bool checkValidIpSegment(string ip_addr_segment) {
 
     // each segment should lie from 0 to 255
     if((stoi(ip_addr_segment) < MIN_IP_VALUE) || (stoi(ip_addr_segment) > MAX_IP_VALUE)) {
-//        cout << "Given IP segment " << ip_addr_segment << " out of range" << endl;
+        // cout << "Given IP segment " << ip_addr_segment << " out of range" << endl;
         return false;
     }
     return true;

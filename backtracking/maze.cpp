@@ -97,9 +97,7 @@ void pathInMaze() {
     }
 }
 
-// main
 int main() {
-
     // checks if path exists in maze
     pathInMaze();
 

@@ -1,12 +1,16 @@
+/*
+ * Find a path from cell (0,0) to cell (M-1,N-1) if a path exists
+ * Print the path matrix.
+ * 1s in the maze denotes barriers (dangerous cells)
+ */
+
 #include <iostream>
+
+using namespace std;
 
 #define M 6
 #define N 6
-using namespace std;
 
-/* print the path matrix
-  '1' is present in the cell which is a part of the path
-*/
 void printPathMatrix(int path[M][N]) {
 
    cout<<"\nPath in Maze :-\n";
@@ -49,9 +53,6 @@ bool validCell(int maze[M][N], int r_idx, int c_idx, int path[M][N]) {
     return true;
 }
 
-/* finds a path from cell (0,0) to cell (M-1,N-1) if a path exists
-   (r_idx,c_idx) -> M index and N index of the cell
-*/
 bool findPath(int maze[M][N], int r_idx, int c_idx, int path[N][N]) {
 
     // base case - last cell
@@ -83,9 +84,8 @@ bool findPath(int maze[M][N], int r_idx, int c_idx, int path[N][N]) {
     return false;
 }
 
-// wrapper function
 void pathInMaze(int maze[M][N]) {
-   int path[N][N];
+   int path[M][N];
 
    // initialize path matrix
    for (int i = 0; i < M; i++) {
@@ -96,7 +96,7 @@ void pathInMaze(int maze[M][N]) {
 
    // find the path if available
    if (findPath(maze, 0, 0, path)) {
-      cout<<"\nPath exists ...\n";
+      cout << "Path exists:" << endl;
       printPathMatrix(path);
    } else {
       cout<<"\nPath doesn't exist ...\n";
@@ -194,7 +194,6 @@ void printAllPaths(int maze[5][7]) {
     printAllPathsUtil(maze, 0, 0, path, 0);
 }
 
-// main
 int main() {
    int maze[M][N] = {{ 0,1,1,1,1,1 },
                      { 0,1,0,0,0,0 },
@@ -202,9 +201,9 @@ int main() {
                      { 0,1,0,0,1,0 },
                      { 0,1,1,0,1,0 },
                      { 0,0,0,0,1,0 }};
-   // 1s in the maze denotes barriers (dangerous cells),
-//   pathInMaze(maze);
-//   cout << endl;
+
+   pathInMaze(maze);
+   cout << endl;
 
    int maze_with_barriers[5][7] = {{ 0,  0,  0, 0,  0, -1,  0},
                                    { 0, -1,  0, 0,  0,  0, -1},
@@ -213,7 +212,7 @@ int main() {
                                    { 0,  0,  0, 0, -1,  0,  0}};
    findTotalPaths(maze_with_barriers);
 
-//    printAllPaths(maze_with_barriers);
+    //    printAllPaths(maze_with_barriers);
 
    return 0;
 }

@@ -6,7 +6,7 @@ void printParenthesis(int pos, int n, int open, int close, char str[]) {
 
     if(close == n) {
         for(int i = 0; i < 2*n; i++) {
-            cout << (char)str[i] << " ";
+            cout << str[i] << " ";
         }
         cout << endl;
         return;
@@ -27,7 +27,7 @@ void printParenthesis(int pos, int n, int open, int close, char str[]) {
 
 void printParenthesis(int n) {
     if(n > 0) {
-        char str[n];
+        char str[2*n];
         printParenthesis(0, n, 0, 0, str);
     }
 
@@ -35,7 +35,6 @@ void printParenthesis(int n) {
 }
 
 int main() {
-
     int n = 3;
     printParenthesis(n);
 
