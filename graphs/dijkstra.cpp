@@ -1,11 +1,20 @@
 /*
  * Dijkstra’s shortest path algorithm
- * Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given graph.
+ * Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given graph
+ *
  * Can be applied to both directed, and undirected graphs
+ * Dijkstra’s algorithm doesn’t work for graphs with negative weight edges
  *
  * Generate a SPT (shortest path tree) with given source as root
  * Maintain two sets, one set contains vertices included in shortest path tree, other set includes vertices not yet included in shortest path tree
  * At every step of the algorithm, we find a vertex which is in the other set (set of not yet included) and has a minimum distance from the source.
+ *
+ * Running Time: O(V^2). Can be O(E log V) with the help of binary heap.
+ * Space complexity: 
+ *
+ * Reference:
+ * - https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+ * - https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/
  */
 #include <iostream>
 #include <list>
