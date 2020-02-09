@@ -4,6 +4,12 @@
  *
  * Generate a MST (minimum spanning tree), starting from an empty spanning tree.
  * At every step, it considers all the edges that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.
+ *
+ * Running Time: O(V^2), can be reduced to O(E log V) with the help of binary heap.
+ *
+ * References:
+ * - https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+ * - https://www.geeksforgeeks.org/prims-mst-for-adjacency-list-representation-greedy-algo-6/
  */
 #include <iostream>
 
