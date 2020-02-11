@@ -38,6 +38,13 @@ bool subsetSum_test(int arr[], int arr_size, int sum) {
         }
     }
 
+    for(int i = 0; i < arr_size + 1; i++) {
+        for(int j = 0; j < sum + 1; j++) {
+            cout << subset[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << subset[arr_size][sum] << endl;
     return subset[arr_size][sum];
 }
 
@@ -55,27 +62,19 @@ bool subsetSum(int arr[], int arr_size, int sum, vector<int> vec) {
         return false;
     }
 
-    bool withOut = false;
-    if(arr[arr_size-1] > sum) {
-        withOut = subsetSum(arr, arr_size-1, sum, vec);
-    }
-
     vec.push_back(arr[arr_size-1]);
     bool with = subsetSum(arr, arr_size-1, sum - arr[arr_size-1], vec);
-    if(with) {
-        vec.clear();
-    } else {
-        vec.pop_back();
-    }
+    vec.pop_back();
 
-    withOut = withOut || subsetSum(arr, arr_size-1, sum, vec);
+    bool withOut = subsetSum(arr, arr_size-1, sum, vec);
+
     return with || withOut;
 }
 
 int main() {
 
     //int arr[] = {2,5,3,9,6,1,8};
-    int arr[] = {1, 5, 10, 25};
+    int arr[] = {1, 5, 10, 15, 25};
     int arr_size = sizeof(arr)/sizeof(arr[0]);
     int sum = 25;
 

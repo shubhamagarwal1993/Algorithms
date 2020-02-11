@@ -64,6 +64,20 @@ void knapsack_dynamic() {
         mat[row][0] = 0;
     }
 
+    // 0 1 2 3 4 5 6 7 8 9 10 11
+    // 1
+    // 2
+    // 3
+    // 4
+    // 5
+    //
+    // 0 0 0 0 0 0 0 0 0 0 0 0
+    // 0
+    // 0
+    // 0
+    // 0
+    // 0
+
     for(int item_idx = 1; item_idx < items_size + 1; item_idx++) {
         for(int weight = 1; weight < weight_limit + 1; weight++) {
             // At row i and column j, we are tackling a sub-problem consisting of items 1, 2, 3 … i with a knapsack of j capacity.

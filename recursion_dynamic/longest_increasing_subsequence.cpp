@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int getCeilIndex(int arr[], vector<int> &tailIndices, int l, int r, int key) {
+int getCeilIndex(int arr[], vector<int> tailIndices, int l, int r, int key) {
     while(r - l > 1) {
         int mid = l + (r - l)/2;
         if(arr[tailIndices[mid]] >= key) {

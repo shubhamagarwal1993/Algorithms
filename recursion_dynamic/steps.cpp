@@ -58,10 +58,9 @@ int steps_recursive_util(int arr[], int arr_size, vector<int> path) {
         }
     }
 
-
-    if(arr[arr_size - 1] == 1) {
-        path.push_back(arr_size - 1);
-        steps += steps_recursive_util(arr, arr_size - 1, path);
+    if(arr[arr_size - 3] == 1) {
+        path.push_back(arr_size - 3);
+        steps += steps_recursive_util(arr, arr_size - 3, path);
         path.pop_back();
     }
 
@@ -71,9 +70,9 @@ int steps_recursive_util(int arr[], int arr_size, vector<int> path) {
         path.pop_back();
     }
 
-    if(arr[arr_size - 3] == 1) {
-        path.push_back(arr_size - 3);
-        steps += steps_recursive_util(arr, arr_size - 3, path);
+    if(arr[arr_size - 1] == 1) {
+        path.push_back(arr_size - 1);
+        steps += steps_recursive_util(arr, arr_size - 1, path);
         path.pop_back();
     }
 
@@ -84,6 +83,50 @@ int steps_recursive(int arr[], int arr_size) {
     vector<int> path;
 
     return steps_recursive_util(arr, arr_size, path);
+}
+
+int shortest_steps_util(int arr[], int arr_size, vector<int> path) {
+    int steps = 0;
+    if(arr_size < 0) {
+        return 0;
+    }
+
+    if(arr_size == 0) {
+        if(path.front() == 4) {
+            for(int i = path.size() - 1; i >= 0; i--) {
+                cout << path[i] << " ";
+            }
+            cout << endl;
+            return 1;
+        }
+    }
+
+    if(arr[arr_size - 3] == 1) {
+        path.push_back(arr_size - 3);
+        steps += steps_recursive_util(arr, arr_size - 3, path);
+        path.pop_back();
+    }
+
+    if(arr[arr_size - 2] == 1) {
+        path.push_back(arr_size - 2);
+        steps += steps_recursive_util(arr, arr_size - 2, path);
+        path.pop_back();
+    }
+
+    if(arr[arr_size - 1] == 1) {
+        path.push_back(arr_size - 1);
+        steps += steps_recursive_util(arr, arr_size - 1, path);
+        path.pop_back();
+    }
+
+    return steps;
+}
+
+void shortest_steps(int arr[], int arr_size) {
+    vector<int> path;
+
+    cout << shortest_steps_util(arr, arr_size, path) << endl;
+    return;
 }
 
 int main() {
@@ -100,7 +143,10 @@ int main() {
     // Total combinations with steps
     // Time: Exponential
     // Space: O(n) space used on stack
-    cout << "Total steps rercursively: " << steps_recursive(arr, arr_size) << endl;
+    int steps_count = steps_recursive(arr, arr_size);
+    cout << "Total steps rercursively: " << steps_count << endl;
+
+    shortest_steps(arr, arr_size);
 
     return 0;
 }
