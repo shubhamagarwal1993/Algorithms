@@ -21,7 +21,7 @@ Threads of the same process:
 - Each thread has its own registers
 - If a thread allocates some object on its stack, and sends the address to another thread, they'll both have equal access to that object
 
-# Lock, Mutex, and Semaphores:
+# Lock:
 Lock:
 - Allows only 1 thread to enter the part that's locked and the lock is not shared with any other processes
 ## Read / Write lock:
@@ -35,10 +35,12 @@ Lock:
 - Pthread mutexes are used for mutual exclusion between threads of the same process
 - System V IPC (man svipc) semaphores can be used across processes
 - Filesystem-level locks (on files or parts of files) can also used to coordinate between multiple processes
+- A mutex provides mutual exclusion, either producer or consumer can have the key (mutex) and proceed with their work. As long as the buffer is filled by producer, the consumer needs to wait, and vice versa.
 
 # Semaphore: (A kernel resource that provide synchronization services):
 - A signaling mechanism
 - A semaphore does the same as a mutex but allows x number of threads to enter, this can be used for example to limit the number of cpu, io or ram intensive tasks running at the same time
+- In lieu of single buffer, we can split the 4 KB buffer into four 1 KB buffers (identical resources). A semaphore can be associated with these four buffers. The consumer and producer can work on different buffers at the same time.
 
 # Deadlocks and Livelocks
 ## Essential conditions for deadlock:
@@ -60,6 +62,13 @@ A deadlock can by eliminated by avoiding any one of the above four condition:
 - Eliminate circular wait
   - Each resource will be assigned with a numerical number. A process can request for the resources only in increasing order of numbering
 
+- Deadlock free Class: Class provides a lock only if there are no possible deadlocks.
+  - create resources as nodes
+  - take resources needed list from processes
+  - create edges in the graph
+  - DFS to check for a cycle
+  - backtrack and remove edges
+
 ## Deadlock Avoidance:
 ### Banker’s Algorithm:
 A resource allocation and deadlock avoidance algorithm that tests for safety by simulating the allocation for predetermined maximum possible amounts of all resources. 
@@ -74,3 +83,5 @@ If after granting request system remains in the safe state it allows the request
  1. If request made by process is less than equal to max need to that process.
  2. If request made by process is less than equal to freely availbale resource in the system
 
+# Context Switch:
+- The time spent switching between 2 processes
