@@ -9,27 +9,57 @@ int min (int x, int y) {return x < y? x : y; }
 // Utility functions to get maximum of two integers
 int max (int x, int y) {return x > y? x : y; }
 
-// Running time: O(n)
+/*
+ * Returns the product of max product subarray
+ * Assumes that the given array always has a subarray with product more than 1
+ *
+ * Running time: O(n)
+ */
 int maxSubArrayProduct(int arr[], int arr_size) {
     if(arr_size == 0) {
         return 0;
     }
 
-    // Initialize:
+    // Initialize overall max product
     int max_so_far = 1;
+
+    // Max positive product ending at the current position
     int max_ending_here = 1;
+
     // min negative product ending at current position
     int min_ending_here = 1;
 
+    /*
+     * Traverse through the array. Following values are maintained after the i'th iteration:
+     *   max_ending_here is always 1 or some positive product ending with arr[i]
+     *   min_ending_here is always 1 or some negative product ending with arr[i]
+     */
     for(int i = 0; i < arr_size; i++) {
 
-        // positive number
+        /*
+         * If this element is positive, update max_ending_here.
+         * Update min_ending_here only if min_ending_here is negative
+         */
         if(arr[i] > 0) {
             max_ending_here = max_ending_here * arr[i];
             min_ending_here = min(min_ending_here * arr[i], 1);
+
+        /* If this element is 0, then the maximum product cannot end here
+         *   make both max_ending_here and min_ending_here 0
+         * Assumption: Output is alway greater than or equal to 1
+         */
         } else if(arr[i] == 0) {
             max_ending_here = 1;
             min_ending_here = 1;
+
+        /*
+         * If element is negative. This is tricky
+         *   max_ending_here can either be 1 or positive
+         *   min_ending_here can either be 1 or negative
+         *   next min_ending_here will always be prev
+         *   max_ending_here * arr[i] next max_ending_here will be 1 if prev min_ending_here is 1,
+         *   otherwise next max_ending_here will be prev min_ending_here * arr[i]
+         */
         } else {
             int orig_max_ending_here = max_ending_here;
             // max ending can be positive or 1
@@ -83,44 +113,4 @@ int main() {
 	cout << "No of subarrays with product less than " << k << " is: " << countSubArrayProductLessThanK(vec, vec.size(), k) << endl;
 	return 0;
 }
-
-
-
-//	const int n = a.size(); 
-//	long long p = 1;
-//	int res = 0;
-//	for (int start = 0, end = 0; end < n; end++) {
-//
-//		// Move right bound by 1 step. Update the product.
-//		p *= a[end];
-//		
-//		// Move left bound so guarantee that p is again 
-//		// less than k.
-//		while (start < end && p >= k) 
-//			p /= a[start++];	 
-//		
-//		// If p is less than k, update the counter.
-//		// Note that this is working even for (start == end):
-//		// it means that the previous window cannot grow 
-//		// anymore and a single array element is the only 
-//		// addendum.
-//		if (p < k) {
-//			int len = end-start+1;
-//			res += len;
-//		}
-//	}
-//
-//	return res;
-//}
-//
-//// Driver Function to count number of
-//// such arrays
-//int main()
-//{
-//	cout << countSubArrayProductLessThanK({1, 2, 3, 4, 11}, 10) << endl;
-//	cout << countSubArrayProductLessThanK({1, 9, 2, 51, 8, 6, 4, 3}, 100) << endl;
-//	cout << countSubArrayProductLessThanK({5, 3, 2}, 16) << endl;
-//	cout << countSubArrayProductLessThanK({100, 200}, 100) << endl;
-//	cout << countSubArrayProductLessThanK({100, 200}, 101) << endl;
-//}
 
