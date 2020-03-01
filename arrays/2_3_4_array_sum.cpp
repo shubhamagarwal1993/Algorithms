@@ -19,15 +19,18 @@ void two_sum(int arr[], int arr_size, int sum) {
     // num in arr and count of it
     unordered_map<int, int> mymap;
 
+    int count = 0;
     for(int i = 0; i < arr_size; i++) {
         int temp = sum - arr[i];
         if(temp >= 0 && mymap[temp] >= 1) {
             for(int j = 0; j < mymap[temp]; j++) {
+                count++;
                 cout << "Pair with given sum " << sum << " is " << arr[i] << ", " << temp << endl;
             }
         }
         mymap[ arr[i] ] ++;
     }
+    cout << count << endl;
 }
 
 void three_sum(int arr[], int arr_size, int sum) {
@@ -184,13 +187,14 @@ void four_sum(int arr[], x_y temp_arr[], int arr_size, int temp_arr_size, int fi
 }
 
 int main() {
-/*
+
     // 2 sum
     int arr[] = {1, 4, 45, 10, 6, 8, 8, 8, 4, 4, 10, 12};
+    // int arr[] = {1, 1, 1, 1, 1, 1};
     int sum = 16;
-    int arr_size = sizeof(arr)/sizeof(arr[0]);
+    int arr_size = sizeof(arr)/sizeof(arr[1]);
     two_sum(arr, arr_size, sum);
-*/
+
 /*
     // 3 sum
     int arr[8] = {1, 4, 45, 6, 10, 8, 19, 2};
@@ -209,12 +213,14 @@ int main() {
 
 
     // 4 sum
-    int arr[9] = {10, 20, 30, 40, 10, 1, 2, 25, 16};
-    int final_sum = 91;
-    int arr_size = sizeof(arr)/sizeof(arr[0]);
-    int temp_arr_size = arr_size*(arr_size-1)/2;
-    x_y temp_arr[temp_arr_size];                    //will store all sum pairs here
-    four_sum(arr, temp_arr, arr_size, temp_arr_size, final_sum);
+    /*
+     * int arr[9] = {10, 20, 30, 40, 10, 1, 2, 25, 16};
+     * int final_sum = 91;
+     * int arr_size = sizeof(arr)/sizeof(arr[0]);
+     * int temp_arr_size = arr_size*(arr_size-1)/2;
+     * x_y temp_arr[temp_arr_size];                    //will store all sum pairs here
+     * four_sum(arr, temp_arr, arr_size, temp_arr_size, final_sum);
+     */
 
     return 0;
 }
