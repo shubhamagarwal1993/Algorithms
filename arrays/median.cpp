@@ -244,7 +244,11 @@ void medianSortedArraySameSize() {
 
 int main() {
 
-    //arrays of same size
+    /*
+     * Arrays of same size
+     * Time complexing: O(log(min(n,m))) where n and m are lengths of the arrays
+     * Space Complexity: O(1)
+     */
     medianSortedArraySameSize();
 
     //int arr1[] = {900};
