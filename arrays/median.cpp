@@ -1,3 +1,9 @@
+/*
+ * This file aims to find median in arrays, with different array conditions
+ *     Single sorted arrays
+ *     2 sorted arrays of equal sizes
+ *     2 sorted arrays of different sized
+ */
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -6,42 +12,15 @@
 
 using namespace std;
 
-// Function to get median of a sorted array
-int median(int arr[], int size) {
-    if (size%2 == 0)
-        return (arr[size/2] + arr[size/2-1])/2;
-    else
-        return arr[size/2];
-}
-
-//gives median of 2 equal size sorted array
-int getMedian_equal_array(int arr1[], int arr2[], int size) {
-    // return -1  for invalid input
-    if(size <= 0)
-        return -1;
-    if(size == 1)
-        return (arr1[0] + arr2[0])/2;
-    if(size == 2)
-        return (max(arr1[0], arr2[0]) + min(arr1[1], arr2[1])) / 2;
-
-    int m1 = median(arr1, size);    // get the median of the first array
-    int m2 = median(arr2, size);    // get the median of the second array
-
-    // If medians are equal then return either m1 or m2
-    if (m1 == m2)
-        return m1;
-
-    // m1 < m2 then median must exist in arr1[m1....] and arr2[....m2]
-    if (m1 < m2) {
-        if (size % 2 == 0)
-            return getMedian_equal_array(arr1 + size/2 - 1, arr2, size - size/2 +1);
-        return getMedian_equal_array(arr1 + size/2, arr2, size - size/2);
+// Get median of a sorted array
+float median(int arr[], int arr_start_idx, int arr_end_idx) {
+    // Even array
+    int arr_size = arr_end_idx - arr_start_idx + 1;
+    if(arr_size % 2 == 0) {
+        return (arr[arr_start_idx + arr_size/2] + arr[arr_start_idx + arr_size/2-1])/2;
+    } else {
+        return arr[arr_start_idx + arr_size/2];
     }
-
-    // If m1 > m2 then median must exist in arr1[....m1] and arr2[m2...]
-    if (size % 2 == 0)
-        return getMedian_equal_array(arr2 + size/2 - 1, arr1, size - size/2 + 1);
-    return getMedian_equal_array(arr2 + size/2, arr1, size - size/2);
 }
 
 //MEDIAN FOR 2 ARRAYS OF UNEQUAL LENGTHS
@@ -202,29 +181,83 @@ void median_test(int arr1[], int arr1_size, int arr2[], int arr2_size) {
     }
 }
 
-int main() {
-/*
-    //arrays of same size
-    int arr1[] = {1, 2, 3, 6};
-    int arr2[] = {4, 6, 8, 10};
+// Median of 2 equal size sorted array
+float getMedianEqualArray(int arr1[], int arr1_start_idx, int arr1_end_idx, int arr2[], int arr2_start_idx, int arr2_end_idx) {
+    // return -1  for invalid input
+    int arr1_size = arr1_end_idx - arr1_start_idx + 1;
+    int arr2_size = arr2_end_idx - arr2_start_idx + 1;
+
+    if(arr1_size <= 0 || arr2_size <= 0) {
+        return -1;
+    }
+
+    if(arr1_size == 1 && arr2_size == 1) {
+        return (arr1[arr1_start_idx] + arr2[arr2_start_idx])/2;
+    }
+
+    if(arr1_size == 2 && arr2_size == 2) {
+        float curr_max = max(arr1[arr1_start_idx], arr2[arr2_start_idx]);
+        float curr_min = min(arr1[arr1_end_idx], arr2[arr2_end_idx]);
+        float median = (curr_max + curr_min) / 2;
+        return median;
+    }
+
+    float arr1_median = median(arr1, arr1_start_idx, arr1_end_idx);    // median of the first array
+    float arr2_median = median(arr2, arr2_start_idx, arr2_end_idx);    // median of the second array
+
+    // If medians are equal, then we have found our answer
+    // Return either m1 or m2
+    if(arr1_median == arr2_median) {
+        return arr1_median;
+    }
+
+    int arr1_mid_idx = (arr1_start_idx + arr1_end_idx)/2;
+    int arr2_mid_idx = (arr2_start_idx + arr2_end_idx)/2;
+
+    // m1 < m2 then median must exist in arr1[m1....] and arr2[....m2]
+    // m1 > m2 then median must exist in arr1[....m1] and arr2[m2....]
+    if(arr1_median < arr2_median) {
+        return getMedianEqualArray(arr1, arr1_mid_idx, arr1_end_idx, arr2, arr2_start_idx, arr2_mid_idx);
+    } else {
+        return getMedianEqualArray(arr1, arr1_start_idx, arr1_mid_idx, arr2, arr2_mid_idx, arr2_end_idx);
+    }
+}
+
+void medianSortedArraySameSize() {
+    int arr1[] = {1, 2, 3, 5, 6};
+    int arr2[] = {4, 6, 8, 9, 10};
     int arr1_size = sizeof(arr1)/sizeof(arr1[0]);
     int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
-    if (arr1_size == arr2_size)
-        cout << "Median is: " << getMedian_equal_array(arr1, arr2, arr1_size) << endl;
-    else
+
+    int arr1_start_idx = 0;
+    int arr1_end_idx = arr1_size - 1;
+    int arr2_start_idx = 0;
+    int arr2_end_idx = arr2_size - 1;
+
+    if(arr1_size == arr2_size) {
+        cout << "Median is: " << getMedianEqualArray(arr1, arr1_start_idx, arr1_end_idx, arr2, arr2_start_idx, arr2_end_idx) << endl;
+    } else {
         cout << "Doesn't work for arrays of unequal size";
-*/
-    int arr1[] = {900};
-    int arr2[] = {5, 8, 10, 20};
+    }
+    return;
+}
 
-    int arr1_size = sizeof(arr1)/sizeof(arr1[0]);
-    int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
+int main() {
 
-    if (arr1_size > arr2_size)
-        cout << "Median is: " << getMedian_unequal_array(arr2, arr2_size, arr1, arr1_size) << endl;
-    else
-        cout << "Median is: " << getMedian_unequal_array(arr1, arr1_size, arr2, arr2_size) << endl;
+    //arrays of same size
+    medianSortedArraySameSize();
 
-    median_test(arr1, arr1_size, arr2, arr2_size);
+    //int arr1[] = {900};
+    //int arr2[] = {5, 8, 10, 20};
+
+    //int arr1_size = sizeof(arr1)/sizeof(arr1[0]);
+    //int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
+
+    //if (arr1_size > arr2_size)
+    //    cout << "Median is: " << getMedian_unequal_array(arr2, arr2_size, arr1, arr1_size) << endl;
+    //else
+    //    cout << "Median is: " << getMedian_unequal_array(arr1, arr1_size, arr2, arr2_size) << endl;
+
+    //median_test(arr1, arr1_size, arr2, arr2_size);
     return 0;
 }
